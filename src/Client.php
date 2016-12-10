@@ -10,6 +10,7 @@ use Yandex\Direct\Service\AdExtensions;
 use Yandex\Direct\Service\AdGroups;
 use Yandex\Direct\Service\AdImages;
 use Yandex\Direct\Service\Ads;
+use Yandex\Direct\Service\AudienceTargets;
 use Yandex\Direct\Service\BidModifiers;
 use Yandex\Direct\Service\Bids;
 use Yandex\Direct\Service\Campaigns;
@@ -33,6 +34,7 @@ use Yandex\Direct\Service\VCards;
  * @method AdGroups adGroups(array $options = [])
  * @method AdImages adImages(array $options = [])
  * @method Ads ads(array $options = [])
+ * @method AudienceTargets audienceTargets(array $options = [])
  * @method BidModifiers bidModifiers(array $options = [])
  * @method Bids bids(array $options = [])
  * @method Campaigns campaigns(array $options = [])
@@ -50,6 +52,7 @@ use Yandex\Direct\Service\VCards;
  * @property AdGroups $adGroups
  * @property AdImages $adImages
  * @property Ads $ads
+ * @property AudienceTargets $audienceTargets
  * @property BidModifiers $bidModifiers
  * @property Bids $bids
  * @property Campaigns $campaigns
