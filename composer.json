@@ -1,6 +1,6 @@
 {
   "name": "gladyshev/yandex-direct-client",
-  "keywords": ["yandex direct"],
+  "keywords": ["yandex direct api", "yandex.direct api"],
   "description": "Yandex Direct API PHP-client",
   "type": "library",
   "license": "MIT",
@@ -15,9 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Yandex\\Direct\\": [
-        "src/"
-      ]
+      "Yandex\\Direct\\": "src/"
     }
   },
   "autoload-dev": {

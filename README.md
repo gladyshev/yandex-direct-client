@@ -3,6 +3,7 @@ Yandex Direct API v5 PHP client
 
 Поддерживается только 5-ая версия [Yandex.Direct API](https://tech.yandex.ru/direct/doc/dg/concepts/about-docpage/).
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
 ### Требования
  * PHP 5.4 и выше с curl-расширением
 
