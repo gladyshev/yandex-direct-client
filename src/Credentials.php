@@ -65,15 +65,4 @@ final class Credentials implements CredentialsInterface
     {
         return $this->login;
     }
-
-    /**
-     * @param string $login
-     * @param string $token
-     * @param string $masterToken
-     * @return Credentials
-     */
-    static public function buildCredentials($login = '', $token = '', $masterToken = '')
-    {
-        return new self($login, $token, $masterToken);
-    }
 }
