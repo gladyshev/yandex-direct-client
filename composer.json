@@ -1,9 +1,16 @@
 {
   "name": "gladyshev/yandex-direct-client",
-  "keywords": ["yandex direct api", "yandex.direct api", "yandex direct client"],
+  "keywords": ["yandex", "direct", "api", "client", "lib", "library"],
   "description": "Yandex Direct API PHP-client",
   "type": "library",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Dmitry Gladyshev",
+      "email": "deel@email.ru",
+      "homepage": "https://github.com/gladyshev"
+    }
+  ],
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.4",
