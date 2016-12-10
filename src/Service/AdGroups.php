@@ -1,0 +1,114 @@
+<?php
+/**
+ * @author Dmitry Gladyshev <deel@email.ru>
+ * @date 22/08/2016 16:05
+ */
+
+namespace Yandex\Direct\Service;
+
+
+use Yandex\Direct\Service;
+
+/**
+ * Class AdGroups
+ * @package Yandex\Direct\Service
+ */
+final class AdGroups extends Service
+{
+    /**
+     * Создает группы объявлений.
+     *
+     * @param $AdGroups
+     * @return array
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/add-docpage/
+     */
+    public function add($AdGroups)
+    {
+        return $this->request([
+            'method' => 'add',
+            'params' => [
+                'AdGroups' => $AdGroups
+            ]
+        ]);
+    }
+
+    /**
+     * Удаляет группы объявлений.
+     *
+     * @param $SelectionCriteria
+     * @return array
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
+     */
+    public function delete($SelectionCriteria)
+    {
+        return $this->request([
+            'method' => 'delete',
+            'params' => [
+                'SelectionCriteria' => $SelectionCriteria
+            ]
+        ]);
+    }
+
+    /**
+     * Возвращает параметры групп, отвечающих заданным критериям.
+     *
+     * @param $SelectionCriteria
+     * @param $FieldNames
+     * @param $MobileAppAdGroupFieldNames
+     * @param $DynamicTextAdGroupFieldNames
+     * @param $DynamicTextFeedAdGroupFieldNames
+     * @param $Page
+     * @return array
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
+     */
+    public function get($SelectionCriteria,
+                        $FieldNames,
+                        $MobileAppAdGroupFieldNames = null,
+                        $DynamicTextAdGroupFieldNames = null,
+                        $DynamicTextFeedAdGroupFieldNames = null,
+                        $Page = null
+    ) {
+        $params = [
+            'SelectionCriteria' => $SelectionCriteria,
+            'FieldNames' => $FieldNames
+        ];
+
+        if ($MobileAppAdGroupFieldNames) {
+            $params['MobileAppAdGroupFieldNames'] = $MobileAppAdGroupFieldNames;
+        }
+
+        if ($DynamicTextAdGroupFieldNames) {
+            $params['DynamicTextAdGroupFieldNames'] = $DynamicTextAdGroupFieldNames;
+        }
+
+        if ($DynamicTextFeedAdGroupFieldNames) {
+            $params['DynamicTextFeedAdGroupFieldNames'] = $DynamicTextFeedAdGroupFieldNames;
+        }
+
+        if ($Page) {
+            $params['Page'] = $Page;
+        }
+
+        return $this->request([
+            'method' => 'get',
+            'params' => $params
+        ]);
+    }
+
+    /**
+     * Изменяет параметры групп объявлений.
+     *
+     * @param $AdGroups
+     * @return array
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/update-docpage/
+     */
+    public function update($AdGroups)
+    {
+        return $this->request([
+            'method' => 'update',
+            'params' => [
+                'AdGroups' => $AdGroups
+            ]
+        ]);
+    }
+}
