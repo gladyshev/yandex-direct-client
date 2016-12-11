@@ -6,3 +6,11 @@ filter:
         - vendors/*
         - examples/*
         - tests/*
+build:
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=build/coverage_report'
+                coverage:
+                    file: 'build/coverage_report'
+                    format: 'clover'
