@@ -55,7 +55,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'delete',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -70,7 +70,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'suspend',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -85,7 +85,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'resume',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -100,7 +100,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'archive',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -115,7 +115,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'unarchive',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -130,7 +130,7 @@ final class Ads extends Service
         return $this->request([
             'method' => 'moderate',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
@@ -160,7 +160,7 @@ final class Ads extends Service
                         $Page = null
     ) {
         $params = [
-            'SelectionCriteria' => $SelectionCriteria,  /* AdsSelectionCriteria */
+            'SelectionCriteria' => $SelectionCriteria,
             'FieldNames' => $FieldNames
         ];
 

@@ -104,13 +104,11 @@ class TransportRequest
         }
     }
 
-     /**
+    /**
      * @return CredentialsInterface
      */
     public function getCredentials()
     {
         return $this->credentials;
     }
-
-
 }

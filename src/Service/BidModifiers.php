@@ -44,7 +44,7 @@ final class BidModifiers extends Service
         return $this->request([
             'method' => 'delete',
             'params' => [
-                'SelectionCriteria' => $SelectionCriteria  /* IdsCriteria */
+                'SelectionCriteria' => $SelectionCriteria
             ]
         ]);
     }
