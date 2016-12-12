@@ -40,6 +40,7 @@ $response = $api->campaigns->get(
 print_r($response);
   
 // [
+//     'request_id' => 1234567890,
 //     'units' => [
 //         'debit' => 10, 
 //         'limit' => 50,
