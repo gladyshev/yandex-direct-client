@@ -8,7 +8,7 @@ Yandex Direct API v5 PHP client
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
 
 ### Требования
- * PHP 5.5 и выше с curl-расширением
+ * PHP 5.6 и выше с curl-расширением
 
 ### Установка  
 В файле `composer.json`:
