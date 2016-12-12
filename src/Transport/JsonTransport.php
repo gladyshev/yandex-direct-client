@@ -9,6 +9,9 @@ namespace Yandex\Direct\Transport;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -50,6 +53,11 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
      * @var LoggerInterface
      */
     private $logger;
+
+    /**
+     * @var MessageFormatter
+     */
+    private $logMessageFormatter;
 
     /**
      * @var string
@@ -99,25 +107,13 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
 
         try {
             $client = $this->getHttpClient();
-            /*
-             * Build http request by transport request
-             */
-            $httpRequest = $client->createRequest('POST', $this->getServiceUrl($request->getService()), [
+
+            $httpResponse = $client->request('POST', $this->getServiceUrl($request->getService()), [
                 'headers' => $this->prepareHeaders($request),
                 'body' => $this->prepareBody($request)
             ]);
 
-            /*
-             * Requesting API with logging
-             */
-            $log->debug("[request] " . $this->formatBodyLog($httpRequest->__toString()));
-
-            $httpResponse = $client->send($httpRequest);
-
-            $log->debug("[response] " . $this->formatBodyLog($httpResponse->__toString()));
-
             $httpResponseHeaders = $httpResponse->getHeaders();
-
 
             return new TransportResponse([
                 'headers' => $httpResponse->getHeaders(),
@@ -132,9 +128,9 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
                 $e->getMessage(),
                 $e->getCode(),
                 $e->getRequest()->getHeaders(),
-                $e->getRequest()->getBody(),
+                $e->getRequest()->getBody()->__toString(),
                 $e->hasResponse() ? $e->getResponse()->getHeaders() : [],
-                $e->hasResponse() ? $e->getResponse()->getBody() : '',
+                $e->hasResponse() ? $e->getResponse()->getBody()->__toString() : '',
                 $e->getPrevious()
             );
         } catch (\Exception $e) {
@@ -148,9 +144,11 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
      */
     private function getHttpClient()
     {
-        if ($this->httpClient === null) {
+        if ($this->httpClient === null)
+        {
             $this->httpClient = new Client([
-                'baseUrl' => $this->baseUrl
+                'base_uri' => $this->baseUrl,
+                'handler' => $this->getHttpHandlers()
             ]);
         }
         return $this->httpClient;
@@ -166,6 +164,30 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
             $this->logger = new NullLogger;
         }
         return $this->logger;
+    }
+
+    /**
+     * @return MessageFormatter
+     */
+    private function getMessageFormatter()
+    {
+        if ($this->logMessageFormatter === null) {
+            $this->logMessageFormatter = new MessageFormatter(MessageFormatter::DEBUG);
+        }
+        return $this->logMessageFormatter;
+    }
+
+    /**
+     * @return HandlerStack
+     */
+    private function getHttpHandlers()
+    {
+        $stack = HandlerStack::create();
+        $stack->push(Middleware::log(
+            $this->getLogger(),
+            $this->getMessageFormatter()
+        ));
+        return $stack;
     }
 
     /**
@@ -190,19 +212,8 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     private function prepareBody(TransportRequest $request)
     {
         return json_encode(
-            array_merge([
-                'method' => $request->getMethod(),
-            ], $request->getParams()),
+            array_merge(['method' => $request->getMethod()], $request->getParams()),
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         );
-    }
-
-    /**
-     * @param $message
-     * @return string
-     */
-    private function formatBodyLog($message)
-    {
-        return "\n---\n{$message}\n---\n";
     }
 }

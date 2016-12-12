@@ -107,6 +107,8 @@ abstract class Service implements ConfigurableInterface
             'rest' => $response->getUnitsRest()
         ];
 
+        $result['request_id'] = $response->getRequestId();
+
         return $result;
     }
 

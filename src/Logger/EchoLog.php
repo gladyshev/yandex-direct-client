@@ -19,7 +19,6 @@ class EchoLog extends AbstractLogger
      */
     public function log($level, $message, array $context = [])
     {
-        echo date("Y/m/d H:i:s") . " [{$level}] " . $message . PHP_EOL;
+        echo "[$level] $message" . PHP_EOL;
     }
-
 }

@@ -13,6 +13,8 @@
         <whitelist>
             <directory suffix=".php">./src</directory>
             <exclude>
+                <directory>./src/Logger</directory>
+                <directory>./src/Services</directory>
                 <directory>./src/Exception</directory>
             </exclude>
         </whitelist>
