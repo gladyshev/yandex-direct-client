@@ -7,7 +7,10 @@
 namespace Yandex\Direct\Test;
 
 
+use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\ServiceFactory;
+use Yandex\Direct\Transport\TransportInterface;
+use Yandex\Direct\Transport\TransportRequest;
 
 
 class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
@@ -20,6 +23,10 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->factory = new ServiceFactory();
+        $this->factory->setDefaultOptions([
+            'transport' => new SfMockTransport,
+            'credentials' => new SfMockCredentials
+        ]);
     }
 
     /**
@@ -62,4 +69,17 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ['VCards'],
         ];
     }
+}
+
+
+class SfMockCredentials implements CredentialsInterface {
+    public function getMasterToken(){}
+    public function getToken(){}
+    public function getLogin(){}
+}
+
+class SfMockTransport implements TransportInterface {
+    public function setOptions(array $options){}
+    public function getServiceUrl($serviceName){}
+    public function request(TransportRequest $request){}
 }

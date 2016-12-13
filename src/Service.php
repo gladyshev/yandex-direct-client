@@ -31,7 +31,7 @@ abstract class Service implements ConfigurableInterface
     protected $transport;
 
     /**
-     * @var Credentials
+     * @var CredentialsInterface
      */
     protected $credentials;
 
@@ -46,7 +46,7 @@ abstract class Service implements ConfigurableInterface
     /**
      * @param TransportInterface $transport
      */
-    public function setTransport($transport)
+    public function setTransport(TransportInterface $transport)
     {
         $this->transport = $transport;
     }
@@ -54,7 +54,7 @@ abstract class Service implements ConfigurableInterface
     /**
      * @param CredentialsInterface $credentials
      */
-    public function setCredentials($credentials)
+    public function setCredentials(CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
     }
