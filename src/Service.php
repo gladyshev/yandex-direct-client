@@ -52,7 +52,7 @@ abstract class Service implements ConfigurableInterface
     }
 
     /**
-     * @param Credentials $credentials
+     * @param CredentialsInterface $credentials
      */
     public function setCredentials($credentials)
     {
