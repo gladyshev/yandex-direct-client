@@ -1,7 +1,7 @@
 {
   "name": "gladyshev/yandex-direct-client",
   "keywords": ["yandex", "direct", "yandex.direct", "client", "api"],
-  "description": "Yandex Direct API PHP-client",
+  "description": "Yandex Direct API PHP client",
   "type": "library",
   "license": "MIT",
   "authors": [
