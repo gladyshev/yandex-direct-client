@@ -24,5 +24,5 @@ $client->campaigns([
 
 // Можно изменить доступы
 $client->campaigns([
-    'transport' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
+    'credentials' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
 ])->get(['Ids' => [123456, 654321]], ['Funds']);
