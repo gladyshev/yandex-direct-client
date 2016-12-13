@@ -1,6 +1,6 @@
 {
   "name": "gladyshev/yandex-direct-client",
-  "keywords": ["yandex direct", "yandex direct api", "yandex direct client", "yandex direct api"],
+  "keywords": ["yandex", "direct", "yandex.direct", "client", "api"],
   "description": "Yandex Direct API PHP-client",
   "type": "library",
   "license": "MIT",
@@ -13,12 +13,12 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "php": "^5.6|^7.0",
+    "php": "^5.6||^7.0",
     "psr/log": "1.0.2",
     "guzzlehttp/guzzle": "^6.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.8|~5.5"
+    "phpunit/phpunit": "~4.8||~5.5"
   },
   "autoload": {
     "psr-4": {
