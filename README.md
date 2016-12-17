@@ -8,7 +8,7 @@ PHP-клиент [Yandex.Direct API](https://tech.yandex.ru/direct/doc/dg/concep
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
 
 ### Требования
- * PHP 5.6 и выше с curl-расширением
+ * PHP 5.6 и выше
 
 ### Установка  
 В файле `composer.json`:
