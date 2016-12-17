@@ -11,8 +11,9 @@
 
     <filter>
         <whitelist>
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">src/</directory>
             <exclude>
+                <directory suffix="Interface.php">src/</directory>
                 <directory>src/Logger</directory>
                 <directory>src/Services</directory>
                 <directory>src/Exception</directory>
