@@ -42,7 +42,7 @@ class ServiceFactory
     }
 
     /**
-     * @param $serviceName
+     * @param string $serviceName
      * @param array $options
      * @return mixed
      * @throws InvalidArgumentException

@@ -95,7 +95,7 @@ class Client
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return Service
      */
     public function __get($name)
