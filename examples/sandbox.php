@@ -4,19 +4,22 @@
  * @created 10.12.16 16:10
  */
 
+require '../vendor/autoload.php';
+
 use Yandex\Direct\Client;
 use Yandex\Direct\Credentials;
 use Yandex\Direct\Logger\EchoLog;
 use Yandex\Direct\Transport\JsonTransport;
 
-$credentials = new Credentials('_LOGIN_', '_TOKEN_');
+$credentials = new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_'));
 
-$options['transport'] = new JsonTransport;
-$options['transport']->setOptions([
+$transport = new JsonTransport([
     'baseUrl' => 'https://api-sandbox.direct.yandex.com',
     'logger' => new EchoLog
 ]);
 
-$client = new Client($credentials, $options);
+$client = new Client($credentials, ['transport' => $transport]);
 
-$client->campaigns->get(['Ids' => [123456, 654321]], ['Funds']);
+$resp = $client->campaigns->get(['Ids' => [123456, 654321]], ['Funds']);
+
+print_r($resp);

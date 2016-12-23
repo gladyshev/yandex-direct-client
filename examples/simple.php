@@ -4,25 +4,14 @@
  * @created 07.11.16 12:38
  */
 
-use Psr\Log\NullLogger;
+require '../vendor/autoload.php';
+
 use Yandex\Direct\Client;
 use Yandex\Direct\Credentials;
 
-// Создаем и инициализируем инстанс клиента
-$client = new Client(new Credentials('_LOGIN_', '_TOKEN_'));
+$client = new Client(new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_')));
 
-// Вызовы сервисов и их методов очень удобны =)
-$client->campaigns->get(['Ids' => [123456, 654321]], ['Funds']);
+// just...
+$resp = $client->campaigns->get(['Types' => ['TEXT_CAMPAIGN']], ['Funds']);
 
-// Есть множество способов переконфигурировать библиотеку, например так:
-$client->campaigns([
-    'transport' => '\\Yandex\\Direct\\Transport\\JsonTransport',
-    'transportSettings' => [
-        'logger' => new NullLogger
-    ]
-])->get(['Ids' => [123456, 654321]], ['Funds']);
-
-// Можно изменить доступы
-$client->campaigns([
-    'credentials' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
-])->get(['Ids' => [123456, 654321]], ['Funds']);
+print_r($resp);
