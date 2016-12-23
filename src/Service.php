@@ -36,6 +36,11 @@ abstract class Service implements ConfigurableInterface
     protected $credentials;
 
     /**
+     * @var bool
+     */
+    private $useOperatorUnits = true;
+
+    /**
      * @param string $name
      */
     public function setName($name)
@@ -60,6 +65,46 @@ abstract class Service implements ConfigurableInterface
     }
 
     /**
+     * @param bool $useOperatorUnits
+     */
+    public function setUseOperatorUnits($useOperatorUnits)
+    {
+        $this->useOperatorUnits = $useOperatorUnits;
+    }
+
+    /**
+     * Do API request with needle headers
+     *
+     * @param array $params
+     * @param array $headers
+     * @return mixed
+     */
+    public function request(array $params, $headers = [])
+    {
+        $response = $this->transport->request(new TransportRequest([
+            'service' => $this->name,
+            'credentials' => $this->credentials,
+            'params' => $params,
+            'headers' => $headers,
+            'useOperatorUnits' => $this->useOperatorUnits
+        ]));
+
+        self::handleErrorResponse($response);
+
+        $result = json_decode($response->getBody(), true);
+
+        $result['units'] = [
+            'debit' => $response->getUnitsDebit(),
+            'limit' => $response->getUnitsLimit(),
+            'rest' => $response->getUnitsRest()
+        ];
+
+        $result['request_id'] = $response->getRequestId();
+
+        return $result;
+    }
+
+    /**
      * @param TransportResponse $response
      * @throws ErrorResponseException
      */
@@ -78,38 +123,4 @@ abstract class Service implements ConfigurableInterface
             );
         }
     }
-
-    /**
-     * Do API request with needle headers
-     *
-     * @param array $params
-     * @param bool $useOperatorUnits
-     * @param array $headers
-     * @return mixed
-     */
-    public function request(array $params, $useOperatorUnits = true, $headers = [])
-    {
-        $response = $this->transport->request(new TransportRequest([
-            'service' => $this->name,
-            'credentials' => $this->credentials,
-            'params' => $params,
-            'headers' => $headers,
-            'useOperatorUnits' => $useOperatorUnits
-        ]));
-
-        self::handleErrorResponse($response);
-
-        $result = json_decode($response->getBody(), true);
-
-        $result['units'] = [
-            'debit' => $response->getUnitsDebit(),
-            'limit' => $response->getUnitsLimit(),
-            'rest' => $response->getUnitsRest()
-        ];
-
-        $result['request_id'] = $response->getRequestId();
-
-        return $result;
-    }
-
 }
