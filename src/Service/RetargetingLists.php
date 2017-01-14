@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Service;
 
-
 use Yandex\Direct\Service;
 
 /**
@@ -91,6 +90,4 @@ class RetargetingLists extends Service
             ]
         ]);
     }
-
-
 }

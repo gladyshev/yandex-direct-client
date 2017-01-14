@@ -9,7 +9,6 @@ namespace Yandex\Direct\Transport;
 use Yandex\Direct\ConfigurableTrait;
 use Yandex\Direct\Exception\InvalidArgumentException;
 
-
 /**
  * Class TransportRequest
  * @package Yandex\Direct

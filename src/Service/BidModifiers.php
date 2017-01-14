@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Service;
 
-
 use Yandex\Direct\Service;
 
 /**
@@ -61,13 +60,13 @@ final class BidModifiers extends Service
      * @return array
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/get-docpage/
      */
-    public function get($SelectionCriteria,
-                        $FieldNames,
-                        $MobileAdjustmentFieldNames = null,
-                        $DemographicsAdjustmentFieldNames = null,
-                        $RetargetingAdjustmentFieldNames = null,
-                        $Page = null
-
+    public function get(
+        $SelectionCriteria,
+        $FieldNames,
+        $MobileAdjustmentFieldNames = null,
+        $DemographicsAdjustmentFieldNames = null,
+        $RetargetingAdjustmentFieldNames = null,
+        $Page = null
     ) {
         $params = [
             'SelectionCriteria' => $SelectionCriteria,

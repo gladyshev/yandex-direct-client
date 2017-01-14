@@ -23,7 +23,6 @@ use Yandex\Direct\Service\RetargetingLists;
 use Yandex\Direct\Service\Sitelinks;
 use Yandex\Direct\Service\VCards;
 
-
 /**
  * Yandex.Direct v5 API client implementation
  *

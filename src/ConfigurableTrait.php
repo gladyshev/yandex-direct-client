@@ -8,7 +8,6 @@ namespace Yandex\Direct;
 
 use Yandex\Direct\Exception\InvalidArgumentException;
 
-
 /**
  * Class ConfigurableTrait
  * @package Yandex\Direct
@@ -18,8 +17,7 @@ trait ConfigurableTrait
 {
     public function setOptions(array $options, $ignoreMissingOptions = false)
     {
-        foreach ($options as $option => $value)
-        {
+        foreach ($options as $option => $value) {
             $setter = 'set' . ucfirst($option);
 
             if (method_exists($this, $setter)) {

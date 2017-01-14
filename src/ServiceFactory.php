@@ -9,7 +9,6 @@ namespace Yandex\Direct;
 use Yandex\Direct\Exception\InvalidArgumentException;
 use Yandex\Direct\Transport\TransportInterface;
 
-
 /**
  * Class ServiceFactory
  *
@@ -56,10 +55,12 @@ class ServiceFactory
             'name' => $serviceName
         ], $options);
 
-
-        // Prepare service options
+        // Create transport instance if got classname
         if (is_string($options['transport'])) {
-            $options['transport'] = $this->buildTransport($options['transport'], $options['transportOptions']);
+            $options['transport'] = $this->buildTransport(
+                $options['transport'],
+                $options['transportOptions']
+            );
         }
 
         unset($options['transportOptions']);
@@ -68,7 +69,8 @@ class ServiceFactory
             $instance = new $className($serviceName);
             if (!$instance instanceof Service) {
                 throw new InvalidArgumentException(
-                    "Service class `{$className}` is not instance of `Yandex\\Direct\\Service`.", self::E_INVALID_NAME
+                    "Service class `{$className}` is not instance of `Yandex\\Direct\\Service`.",
+                    self::E_INVALID_NAME
                 );
             }
             $instance->setOptions($options);
@@ -95,7 +97,8 @@ class ServiceFactory
         if (!$transport instanceof TransportInterface) {
             throw new InvalidArgumentException(
                 "Transport class `{$transportClass}` is not instance of 
-                `Yandex\\Direct\\Transport\\TransportInterface`", self::E_INVALID_OPTION
+                `Yandex\\Direct\\Transport\\TransportInterface`",
+                self::E_INVALID_OPTION
             );
         }
 

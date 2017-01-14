@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Exception;
 
-
 /**
  * Class TransportRequestException
  * @package Yandex\Direct\Exception
@@ -44,9 +43,16 @@ class TransportRequestException extends RuntimeException
      * @param string $responseBody
      * @param \Exception|null|Exception $previous
      */
-    public function __construct($message, $code, $requestHeaders = [], $requestBody = '',
-        $responseHeaders = [], $responseBody = '', \Exception $previous = null)
-    {
+    public function __construct(
+        $message,
+        $code,
+        $requestHeaders = [],
+        $requestBody = '',
+        $responseHeaders = [],
+        $responseBody = '',
+        \Exception $previous = null
+    ) {
+    
         $this->requestBody = $requestBody;
         $this->requestHeaders = $requestHeaders;
         $this->responseBody = $responseBody;

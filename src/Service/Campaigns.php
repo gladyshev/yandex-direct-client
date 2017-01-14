@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Service;
 
-
 use Yandex\Direct\Service;
 
 /**
@@ -74,12 +73,13 @@ final class Campaigns extends Service
      * @return array
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/get-docpage/
      */
-    public function get($SelectionCriteria,
-                        $FieldNames,
-                        $TextCampaignFieldNames = null,
-                        $MobileAppCampaignFieldNames = null,
-                        $DynamicTextCampaignFieldNames = null,
-                        $Page = null
+    public function get(
+        $SelectionCriteria,
+        $FieldNames,
+        $TextCampaignFieldNames = null,
+        $MobileAppCampaignFieldNames = null,
+        $DynamicTextCampaignFieldNames = null,
+        $Page = null
     ) {
         $params = [
             'SelectionCriteria' => $SelectionCriteria,

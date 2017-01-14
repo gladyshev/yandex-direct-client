@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Service;
 
-
 use Yandex\Direct\Service;
 
 /**
@@ -61,12 +60,13 @@ final class AdGroups extends Service
      * @return array
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
-    public function get($SelectionCriteria,
-                        $FieldNames,
-                        $MobileAppAdGroupFieldNames = null,
-                        $DynamicTextAdGroupFieldNames = null,
-                        $DynamicTextFeedAdGroupFieldNames = null,
-                        $Page = null
+    public function get(
+        $SelectionCriteria,
+        $FieldNames,
+        $MobileAppAdGroupFieldNames = null,
+        $DynamicTextAdGroupFieldNames = null,
+        $DynamicTextFeedAdGroupFieldNames = null,
+        $Page = null
     ) {
         $params = [
             'SelectionCriteria' => $SelectionCriteria,

@@ -11,7 +11,6 @@ use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\TransportRequest;
 use Yandex\Direct\Transport\TransportResponse;
 
-
 /**
  * Class Service
  * @package Yandex\Direct

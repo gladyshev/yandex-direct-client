@@ -5,7 +5,6 @@
 
 namespace Yandex\Direct\Exception;
 
-
 class RuntimeException extends Exception
 {
 }

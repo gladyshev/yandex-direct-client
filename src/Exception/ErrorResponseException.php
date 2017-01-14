@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Exception;
 
-
 /**
  * Class ErrorResponseException
  * @package Yandex\Direct\Exception

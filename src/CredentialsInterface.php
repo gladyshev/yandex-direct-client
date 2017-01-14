@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct;
 
-
 /**
  * Class CredentialsInterface
  * @package Yandex\Direct\Credentials

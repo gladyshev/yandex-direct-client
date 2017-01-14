@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Service;
 
-
 use Yandex\Direct\Service;
 
 /**
@@ -150,14 +149,15 @@ final class Ads extends Service
      * @return array
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/get-docpage/
      */
-    public function get($SelectionCriteria,
-                        $FieldNames,
-                        $TextAdFieldNames = null,
-                        $MobileAppAdFieldNames = null,
-                        $DynamicTextAdFieldNames = null,
-                        $TextImageAdFieldNames = null,
-                        $MobileAppImageAdFieldNames = null,
-                        $Page = null
+    public function get(
+        $SelectionCriteria,
+        $FieldNames,
+        $TextAdFieldNames = null,
+        $MobileAppAdFieldNames = null,
+        $DynamicTextAdFieldNames = null,
+        $TextImageAdFieldNames = null,
+        $MobileAppImageAdFieldNames = null,
+        $Page = null
     ) {
         $params = [
             'SelectionCriteria' => $SelectionCriteria,

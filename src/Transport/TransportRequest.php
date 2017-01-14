@@ -10,7 +10,6 @@ use Yandex\Direct\ConfigurableTrait;
 use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\Exception\InvalidArgumentException;
 
-
 /**
  * Class TransportRequest
  * @package Yandex\Direct

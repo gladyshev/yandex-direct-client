@@ -19,7 +19,6 @@ use Yandex\Direct\ConfigurableTrait;
 use Yandex\Direct\Exception\RuntimeException;
 use Yandex\Direct\Exception\TransportRequestException;
 
-
 /**
  * Class JsonTransport
  * @package Yandex\Direct\Transport
@@ -121,7 +120,6 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
                 'requestId' => isset($httpResponseHeaders['RequestId']) ? current($httpResponseHeaders['RequestId']) : null,
                 'units' => isset($httpResponseHeaders['Units']) ? current($httpResponseHeaders['Units']) : null
             ]);
-
         } catch (RequestException $e) {
             $log->error("Transport error: {$e->getMessage()} [CODE: {$e->getCode()}]");
             throw new TransportRequestException(
@@ -144,8 +142,7 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
      */
     private function getHttpClient()
     {
-        if ($this->httpClient === null)
-        {
+        if ($this->httpClient === null) {
             $this->httpClient = new Client([
                 'base_uri' => $this->baseUrl,
                 'handler' => $this->getHttpHandlers()

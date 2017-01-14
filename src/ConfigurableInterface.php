@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct;
 
-
 interface ConfigurableInterface
 {
     /**

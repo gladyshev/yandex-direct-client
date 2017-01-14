@@ -13,7 +13,7 @@ use Yandex\Direct\Transport\JsonTransport;
 
 $client = new Client(new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_')));
 
-// For example, change logger
+// For example, change the logger
 $resp = $client->campaigns([
     'transport' => new JsonTransport([
         'logger' => new EchoLog
