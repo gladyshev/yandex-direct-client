@@ -14,7 +14,7 @@ use Yandex\Direct\Transport\TransportInterface;
  *
  * @package Yandex\Direct
  */
-class ServiceFactory
+class ServiceFactory implements ServiceFactoryInterface
 {
     const E_INVALID_NAME = 1;
     const E_INVALID_OPTION = 2;

@@ -69,7 +69,12 @@ class Client
     /**
      * @var ServiceFactory
      */
-    protected $factory;
+    protected $serviceFactory;
+
+    /**
+     * @var CredentialsInterface
+     */
+    protected $credentials;
 
     /**
      * @param CredentialsInterface $credentials
@@ -77,9 +82,10 @@ class Client
      */
     public function __construct(CredentialsInterface $credentials, array $options = [])
     {
-        $this->factory = new ServiceFactory;
-        $this->factory->setDefaultOptions(array_merge([
-            'credentials' => $credentials
+        $this->setCredentials($credentials);
+        $this->serviceFactory = new ServiceFactory;
+        $this->serviceFactory->setDefaultOptions(array_merge([
+            'credentials' => $this->credentials
         ], $options));
     }
 
@@ -90,7 +96,7 @@ class Client
      */
     public function __call($name, array $options = [])
     {
-        return $this->factory->createService($name, current($options) ?: []);
+        return $this->serviceFactory->createService($name, current($options) ?: []);
     }
 
     /**
@@ -104,9 +110,21 @@ class Client
 
     /**
      * @param array $options
+     * @return self
      */
     public function setOptions(array $options)
     {
-        $this->factory->setDefaultOptions($options);
+        $this->serviceFactory->setDefaultOptions($options);
+        return $this;
+    }
+
+    /**
+     * @param CredentialsInterface $credentials
+     * @return self
+     */
+    public function setCredentials(CredentialsInterface $credentials)
+    {
+        $this->credentials = $credentials;
+        return $this;
     }
 }
