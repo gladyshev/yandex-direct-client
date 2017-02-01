@@ -1,7 +1,7 @@
 {
   "name": "gladyshev/yandex-direct-client",
   "keywords": ["yandex", "direct", "yandex.direct", "client", "api"],
-  "description": "Yandex Direct API v5 client with PSR-7 and PSR-3 support.",
+  "description": "Lightweight Yandex.Direct API wrapper.",
   "type": "library",
   "license": "MIT",
   "authors": [
