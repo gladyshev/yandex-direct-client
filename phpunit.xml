@@ -14,7 +14,7 @@
             <directory suffix=".php">src/</directory>
             <exclude>
                 <directory suffix="Interface.php">src/</directory>
-                <directory>src/Services</directory>
+                <directory>src/Service</directory>
                 <directory>src/Exception</directory>
             </exclude>
         </whitelist>
