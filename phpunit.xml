@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="Yandex\\Direct\\tests\\">
+        <testsuite name="all">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
