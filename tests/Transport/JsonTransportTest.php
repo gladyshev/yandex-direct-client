@@ -12,7 +12,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\Transport\JsonTransport;
-use Yandex\Direct\Transport\TransportRequest;
+use Yandex\Direct\Transport\JsonTransportRequest;
 
 /**
  * Class JsonTransport
@@ -67,7 +67,7 @@ class JsonTransportTest extends \PHPUnit_Framework_TestCase
 
     private static function buildMockTransportRequest()
     {
-        return new TransportRequest([
+        return new JsonTransportRequest([
             'credentials' => new MockCredentials,
             'service' => 'service',
             'method' => 'method'

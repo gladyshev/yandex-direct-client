@@ -46,7 +46,9 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     /**
      * @var array
      */
-    private $headers = [];
+    private $headers = [
+        'Content-Type' => 'application/json; charset=utf-8'
+    ];
 
     /**
      * @var LoggerInterface
@@ -57,11 +59,6 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
      * @var MessageFormatter
      */
     private $logMessageFormatter;
-
-    /**
-     * @var string
-     */
-    private $language = 'ru';
 
     /**
      * JsonTransport constructor.
@@ -90,6 +87,14 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
+     * @param array $headers
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = array_merge($this->headers, $headers);
+    }
+
+    /**
      * @inheritdoc
      */
     public function setLogger(LoggerInterface $logger)
@@ -98,9 +103,12 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @inheritdoc
+     * @param TransportRequestInterface $request
+     * @return JsonTransportResponse
+     * @throws RuntimeException
+     * @throws TransportRequestException
      */
-    public function request(TransportRequest $request)
+    public function request(TransportRequestInterface $request)
     {
         $log = $this->getLogger();
 
@@ -114,7 +122,7 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
 
             $httpResponseHeaders = $httpResponse->getHeaders();
 
-            return new TransportResponse([
+            return new JsonTransportResponse([
                 'headers' => $httpResponse->getHeaders(),
                 'body' => $httpResponse->getBody()->__toString(),
                 'requestId' => isset($httpResponseHeaders['RequestId']) ? current($httpResponseHeaders['RequestId']) : null,
@@ -188,25 +196,33 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param TransportRequest $request
+     * @param JsonTransportRequest | TransportRequestInterface $request
      * @return array
      */
-    private function prepareHeaders(TransportRequest $request)
+    private function prepareHeaders(TransportRequestInterface $request)
     {
-        return array_merge([
+        $headers = array_merge([
             'Authorization' => 'Bearer ' . $request->getCredentials()->getToken(),
             'Client-Login' => $request->getCredentials()->getLogin(),
-            'Use-Operator-Units' => $request->getUseOperatorUnits(),
-            'Accept-Language' => $this->language,
-            'Content-Type' => 'application/json; charset=utf-8'
+            'Accept-Language' => $request->getLanguage(),
         ], $this->headers);
+
+        if ($request->getUseOperatorUnits()) {
+            $headers['Use-Operator-Units'] = 'true';
+        }
+
+        if ($request->getService() == 'AgencyClients') {
+            unset($headers['Client-Login']);
+        }
+
+        return $headers;
     }
 
     /**
-     * @param TransportRequest $request
+     * @param JsonTransportRequest | TransportRequestInterface $request
      * @return string
      */
-    private function prepareBody(TransportRequest $request)
+    private function prepareBody(TransportRequestInterface $request)
     {
         return json_encode(
             array_merge(['method' => $request->getMethod()], $request->getParams()),

@@ -14,14 +14,14 @@ use Yandex\Direct\Exception\InvalidArgumentException;
  * Class TransportRequest
  * @package Yandex\Direct
  */
-class TransportRequest
+final class JsonTransportRequest implements TransportRequestInterface
 {
     use ConfigurableTrait;
 
     /**
-     * @var string
+     * @var bool
      */
-    protected $useOperatorUnits = 'true';
+    protected $useOperatorUnits = true;
 
     /**
      * @var string
@@ -32,6 +32,11 @@ class TransportRequest
      * @var string
      */
     protected $service;
+
+    /**
+     * @var string
+     */
+    protected $language = 'ru';
 
     /**
      * @var array
@@ -93,14 +98,7 @@ class TransportRequest
      */
     public function setUseOperatorUnits($useOperatorUnits)
     {
-        if (is_numeric($useOperatorUnits) || is_bool($useOperatorUnits)) {
-            $this->useOperatorUnits = $useOperatorUnits ? 'true' : 'false';
-        } else {
-            if (!in_array($useOperatorUnits, ['true', 'false'])) {
-                throw new InvalidArgumentException("Invalid value `\$seOperatorUnits`, valid is boolean and `true` or `false`.");
-            }
-            $this->useOperatorUnits = $useOperatorUnits;
-        }
+        $this->useOperatorUnits = $useOperatorUnits;
     }
 
     /**
@@ -109,5 +107,13 @@ class TransportRequest
     public function getCredentials()
     {
         return $this->credentials;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

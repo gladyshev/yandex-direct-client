@@ -6,20 +6,27 @@
 
 namespace Yandex\Direct\Transport;
 
-use Psr\Log\LoggerAwareInterface;
 use Yandex\Direct\ConfigurableInterface;
 
+/**
+ * Interface TransportInterface
+ * @package Yandex\Direct\Transport
+ */
 interface TransportInterface extends ConfigurableInterface
 {
     /**
+     * Resolve API url by service name.
+     *
      * @param string $serviceName
      * @return string
      */
     public function getServiceUrl($serviceName);
 
     /**
-     * @param TransportRequest $request
-     * @return TransportResponse
+     * Request API.
+     *
+     * @param TransportRequestInterface $request
+     * @return TransportResponseInterface
      */
-    public function request(TransportRequest $request);
+    public function request(TransportRequestInterface $request);
 }

@@ -13,7 +13,7 @@ use Yandex\Direct\Exception\InvalidArgumentException;
  * Class TransportRequest
  * @package Yandex\Direct
  */
-class TransportResponse
+final class JsonTransportResponse implements TransportResponseInterface
 {
     use ConfigurableTrait;
 
@@ -73,9 +73,8 @@ class TransportResponse
         }
     }
 
-
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getRequestId()
     {
@@ -83,7 +82,7 @@ class TransportResponse
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getUnitsDebit()
     {
@@ -91,7 +90,7 @@ class TransportResponse
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getUnitsRest()
     {
@@ -99,7 +98,7 @@ class TransportResponse
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getUnitsLimit()
     {
@@ -107,7 +106,7 @@ class TransportResponse
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getBody()
     {
@@ -115,15 +114,7 @@ class TransportResponse
     }
 
     /**
-     * The keys represent the header name as it will be sent over the wire, and
-     * each value is an array of strings associated with the header.
-     *
-     *     // Represent the headers as a string
-     *     foreach ($message->getHeaders() as $name => $values) {
-     *         echo $name . ": " . implode(", ", $values);
-     *     }
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getHeaders()
     {

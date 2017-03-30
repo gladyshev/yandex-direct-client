@@ -8,8 +8,8 @@ namespace Yandex\Direct;
 
 use Yandex\Direct\Exception\ErrorResponseException;
 use Yandex\Direct\Transport\TransportInterface;
-use Yandex\Direct\Transport\TransportRequest;
-use Yandex\Direct\Transport\TransportResponse;
+use Yandex\Direct\Transport\JsonTransportRequest;
+use Yandex\Direct\Transport\JsonTransportResponse;
 
 /**
  * Class Service
@@ -80,7 +80,7 @@ abstract class Service implements ConfigurableInterface
      */
     public function request(array $params, $headers = [])
     {
-        $response = $this->transport->request(new TransportRequest([
+        $response = $this->transport->request(new JsonTransportRequest([
             'service' => $this->name,
             'credentials' => $this->credentials,
             'params' => $params,
@@ -104,10 +104,10 @@ abstract class Service implements ConfigurableInterface
     }
 
     /**
-     * @param TransportResponse $response
+     * @param JsonTransportResponse $response
      * @throws ErrorResponseException
      */
-    protected static function handleErrorResponse(TransportResponse $response)
+    protected static function handleErrorResponse(JsonTransportResponse $response)
     {
         $json = json_decode($response->getBody(), true);
 
