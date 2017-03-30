@@ -59,7 +59,7 @@ interface RequestInterface
     /**
      * Language of response messages.
      *
-     * @return bool
+     * @return string
      */
     public function getLanguage();
 }

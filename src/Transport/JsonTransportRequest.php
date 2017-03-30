@@ -36,7 +36,7 @@ class JsonTransportRequest implements RequestInterface
     /**
      * @var string
      */
-    protected $language = 'ru';
+    protected $language = self::LANGUAGE_RU;
 
     /**
      * @var array
@@ -110,7 +110,7 @@ class JsonTransportRequest implements RequestInterface
     }
 
     /**
-     * @return CredentialsInterface
+     * @inheritdoc
      */
     public function getCredentials()
     {
@@ -118,7 +118,7 @@ class JsonTransportRequest implements RequestInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getLanguage()
     {
