@@ -23,7 +23,7 @@ use Yandex\Direct\Exception\TransportRequestException;
  * Class JsonTransport
  * @package Yandex\Direct\Transport
  */
-final class JsonTransport implements TransportInterface, LoggerAwareInterface
+class JsonTransport implements TransportInterface, LoggerAwareInterface
 {
     use ConfigurableTrait;
 
@@ -73,6 +73,22 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     /**
      * @inheritdoc
      */
+    public function getRequestClass()
+    {
+        return JsonTransportRequest::class;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getResponseClass()
+    {
+        return JsonTransportResponse::class;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getServiceUrl($serviceName)
     {
         if (isset($this->serviceUrls[$serviceName])) {
@@ -103,15 +119,13 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param TransportRequestInterface $request
+     * @param RequestInterface $request
      * @return JsonTransportResponse
      * @throws RuntimeException
      * @throws TransportRequestException
      */
-    public function request(TransportRequestInterface $request)
+    public function request(RequestInterface $request)
     {
-        $log = $this->getLogger();
-
         try {
             $client = $this->getHttpClient();
 
@@ -129,7 +143,7 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
                 'units' => isset($httpResponseHeaders['Units']) ? current($httpResponseHeaders['Units']) : null
             ]);
         } catch (RequestException $e) {
-            $log->error("Transport error: {$e->getMessage()} [CODE: {$e->getCode()}]");
+            $this->getLogger()->error("Transport error: {$e->getMessage()} [CODE: {$e->getCode()}]");
             throw new TransportRequestException(
                 $e->getMessage(),
                 $e->getCode(),
@@ -140,7 +154,7 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
                 $e->getPrevious()
             );
         } catch (\Exception $e) {
-            $log->error("Runtime error: {$e->getMessage()} [CODE: {$e->getCode()}]");
+            $this->getLogger()->error("Runtime error: {$e->getMessage()} [CODE: {$e->getCode()}]");
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
     }
@@ -196,10 +210,10 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param JsonTransportRequest | TransportRequestInterface $request
+     * @param JsonTransportRequest | RequestInterface $request
      * @return array
      */
-    private function prepareHeaders(TransportRequestInterface $request)
+    private function prepareHeaders(RequestInterface $request)
     {
         $headers = array_merge([
             'Authorization' => 'Bearer ' . $request->getCredentials()->getToken(),
@@ -219,10 +233,10 @@ final class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param JsonTransportRequest | TransportRequestInterface $request
+     * @param JsonTransportRequest | RequestInterface $request
      * @return string
      */
-    private function prepareBody(TransportRequestInterface $request)
+    private function prepareBody(RequestInterface $request)
     {
         return json_encode(
             array_merge(['method' => $request->getMethod()], $request->getParams()),

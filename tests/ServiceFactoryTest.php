@@ -6,13 +6,10 @@
 
 namespace Yandex\Direct\Test;
 
-
 use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\ServiceFactory;
 use Yandex\Direct\Transport\TransportInterface;
-use Yandex\Direct\Transport\JsonTransportRequest;
-use Yandex\Direct\Transport\TransportRequestInterface;
-
+use Yandex\Direct\Transport\RequestInterface;
 
 class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -82,5 +79,7 @@ class SfMockCredentials implements CredentialsInterface {
 class SfMockTransport implements TransportInterface {
     public function setOptions(array $options){}
     public function getServiceUrl($serviceName){}
-    public function request(TransportRequestInterface $request){}
+    public function request(RequestInterface $request){}
+    public function getRequestClass() { return ''; }
+    public function getResponseClass() { return ''; }
 }

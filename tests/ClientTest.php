@@ -81,6 +81,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
             ['AdGroups'],
             ['AdImages'],
             ['Ads'],
+            ['AgencyClients'],
             ['AudienceTargets'],
             ['BidModifiers'],
             ['Bids'],

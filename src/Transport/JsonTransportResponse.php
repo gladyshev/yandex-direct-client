@@ -13,13 +13,13 @@ use Yandex\Direct\Exception\InvalidArgumentException;
  * Class TransportRequest
  * @package Yandex\Direct
  */
-final class JsonTransportResponse implements TransportResponseInterface
+class JsonTransportResponse implements ResponseInterface
 {
     use ConfigurableTrait;
 
-    const UNITS_TYPE_DEBIT = 0;
-    const UNITS_TYPE_REST = 1;
-    const UNITS_TYPE_LIMIT = 2;
+    const UNITS_TYPE_DEBIT  = 0;
+    const UNITS_TYPE_REST   = 1;
+    const UNITS_TYPE_LIMIT  = 2;
 
     /**
      * TransportResponse constructor.

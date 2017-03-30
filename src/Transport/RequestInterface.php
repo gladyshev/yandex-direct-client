@@ -6,17 +6,37 @@
 
 namespace Yandex\Direct\Transport;
 
-
 use Yandex\Direct\CredentialsInterface;
 
-interface TransportRequestInterface
+/**
+ * Interface RequestInterface
+ * @package Yandex\Direct\Transport
+ */
+interface RequestInterface
 {
+    const LANGUAGE_RU = 'ru';
+    const LANGUAGE_EN = 'en';
+    const LANGUAGE_TR = 'tr';
+    const LANGUAGE_UK = 'uk';
+
     /**
+     * Build instance of request by array.
+     *
+     * @param array $request
+     * @return RequestInterface
+     */
+    public static function fromArray(array $request);
+
+    /**
+     * API service name.
+     *
      * @return string
      */
     public function getService();
 
     /**
+     * Method name of service.
+     *
      * @return string
      */
     public function getMethod();
@@ -37,6 +57,8 @@ interface TransportRequestInterface
     public function getCredentials();
 
     /**
+     * Language of response messages.
+     *
      * @return bool
      */
     public function getLanguage();

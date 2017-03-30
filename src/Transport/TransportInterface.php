@@ -15,6 +15,20 @@ use Yandex\Direct\ConfigurableInterface;
 interface TransportInterface extends ConfigurableInterface
 {
     /**
+     * Return classname using as TransportRequestInterface.
+     *
+     * @return string
+     */
+    public function getRequestClass();
+
+    /**
+     * Return classname using as TransportResponseInterface.
+     *
+     * @return string
+     */
+    public function getResponseClass();
+
+    /**
      * Resolve API url by service name.
      *
      * @param string $serviceName
@@ -25,8 +39,8 @@ interface TransportInterface extends ConfigurableInterface
     /**
      * Request API.
      *
-     * @param TransportRequestInterface $request
-     * @return TransportResponseInterface
+     * @param RequestInterface $request
+     * @return ResponseInterface
      */
-    public function request(TransportRequestInterface $request);
+    public function request(RequestInterface $request);
 }

@@ -6,10 +6,11 @@
 
 namespace Yandex\Direct\Transport;
 
-
-interface TransportResponseInterface
+interface ResponseInterface
 {
     /**
+     * Returns API internal request ID.
+     *
      * @return string
      */
     public function getRequestId();
