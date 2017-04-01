@@ -13,7 +13,7 @@ use Yandex\Direct\Exception\InvalidArgumentException;
  * Class TransportRequest
  * @package Yandex\Direct
  */
-class JsonTransportResponse implements ResponseInterface
+class Response implements ResponseInterface
 {
     use ConfigurableTrait;
 
@@ -22,13 +22,13 @@ class JsonTransportResponse implements ResponseInterface
     const UNITS_TYPE_LIMIT  = 2;
 
     /**
-     * TransportResponse constructor.
+     * Response constructor.
      *
-     * @param array $options
+     * @param array $responseAttributes
      */
-    public function __construct(array $options)
+    public function __construct(array $responseAttributes)
     {
-        $this->setOptions($options);
+        $this->setOptions($responseAttributes);
     }
 
     /**

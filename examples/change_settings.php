@@ -9,13 +9,13 @@ require '../vendor/autoload.php';
 use Yandex\Direct\Client;
 use Yandex\Direct\Credentials;
 use Yandex\Direct\Logger\EchoLog;
-use Yandex\Direct\Transport\JsonTransport;
+use Yandex\Direct\Transport\Json\Transport;
 
-$client = new Client(new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_')));
+$client = Client::build(getenv('_LOGIN_'), getenv('_TOKEN_'));
 
 // For example, change the logger
 $resp = $client->campaigns([
-    'transport' => new JsonTransport([
+    'transport' => new Transport([
         'logger' => new EchoLog
     ])
 ])->get(['Ids' => [123456, 654321]], ['Funds']);

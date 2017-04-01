@@ -7,10 +7,13 @@
 namespace Yandex\Direct\Test;
 
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\Client;
 use Yandex\Direct\CredentialsInterface;
+use Yandex\Direct\Transport\RequestInterface;
+use Yandex\Direct\Transport\TransportInterface;
 
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ApiTest extends TestCase
 {
     /**
      * @var Client
@@ -19,7 +22,15 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = new Client(new DummyCredentials);
+        $this->client = new Client(new ClientMockCredentials, new ClientMockTransport);
+    }
+
+    public function testCanBeCreatedByBuilder()
+    {
+        $this->assertInstanceOf(
+            Client::class,
+            Client::build('', '')
+        );
     }
 
     /**
@@ -98,8 +109,16 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 }
 
 
-class DummyCredentials implements CredentialsInterface {
+class ClientMockCredentials implements CredentialsInterface {
     public function getMasterToken() { return '';}
     public function getToken() { return '';}
     public function getLogin() { return '';}
+}
+
+class ClientMockTransport implements TransportInterface {
+    public function setOptions(array $options){}
+    public function getServiceUrl($serviceName){}
+    public function request(RequestInterface $request){}
+    public function getRequestClass() { return ''; }
+    public function getResponseClass() { return ''; }
 }

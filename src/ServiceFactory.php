@@ -6,7 +6,7 @@
 
 namespace Yandex\Direct;
 
-use Yandex\Direct\Exception\InvalidArgumentException;
+use Yandex\Direct\Exception\ServiceNotFoundException;
 use Yandex\Direct\Transport\TransportInterface;
 
 /**
@@ -16,96 +16,42 @@ use Yandex\Direct\Transport\TransportInterface;
  */
 class ServiceFactory implements ServiceFactoryInterface
 {
-    const E_INVALID_NAME = 1;
-    const E_INVALID_OPTION = 2;
-
     /**
-     * Default Service options
-     *
-     * @var array
+     * @inheritdoc
      */
-    protected $defaultOptions = [
-        'transport' => 'Yandex\\Direct\\Transport\\JsonTransport',
-        'transportOptions' => [],
-        'credentials' => null
-    ];
-
-    /**
-     * Set default service options
-     *
-     * @param array $options
-     */
-    public function setDefaultOptions(array $options)
-    {
-        $this->defaultOptions = array_merge($this->defaultOptions, $options);
-    }
-
-    /**
-     * @param string $serviceName
-     * @param array $options
-     * @return mixed
-     * @throws InvalidArgumentException
-     */
-    public function createService($serviceName, array $options = [])
+    public function createService(
+        $serviceName,
+        CredentialsInterface $credentials,
+        TransportInterface $transport,
+        array $serviceOptions = []
+    )
     {
         $className = $this->getServiceNamespace() . '\\' . ucfirst($serviceName);
-
-        // Override service base options
-        $options = array_merge($this->defaultOptions, [
-            'name' => $serviceName
-        ], $options);
-
-        // Create transport instance if got classname
-        if (is_string($options['transport'])) {
-            $options['transport'] = $this->buildTransport(
-                $options['transport'],
-                $options['transportOptions']
-            );
-        }
-
-        unset($options['transportOptions']);
-
         if (class_exists($className)) {
             $instance = new $className($serviceName);
             if (!$instance instanceof Service) {
-                throw new InvalidArgumentException(
-                    "Service class `{$className}` is not instance of `Yandex\\Direct\\Service`.",
-                    self::E_INVALID_NAME
+                throw new ServiceNotFoundException(
+                    "Service class `{$className}` is not instance of `" . Service::class . "`."
                 );
             }
-            $instance->setOptions($options);
+            $serviceOptions['name'] = $serviceName;
+
+            if (empty($serviceOptions['transport'])) {
+                $serviceOptions['transport'] = $transport;
+            }
+
+            if (empty($serviceOptions['credentials'])) {
+                $serviceOptions['credentials'] = $credentials;
+            }
+
+            $instance->setOptions($serviceOptions);
+
             return $instance;
         }
 
-        throw new InvalidArgumentException("Service class `{$className}` is not found.", self::E_INVALID_NAME);
+        throw new ServiceNotFoundException("Service class `{$className}` is not found.");
     }
 
-    /**
-     * @param string $transportClass
-     * @param array $transportOptions
-     * @return TransportInterface
-     * @throws InvalidArgumentException
-     */
-    protected function buildTransport($transportClass, array $transportOptions = [])
-    {
-        if (!class_exists($transportClass)) {
-            throw new InvalidArgumentException("Transport class `{$transportClass}` is not found.", self::E_INVALID_OPTION);
-        }
-
-        $transport = new $transportClass;
-
-        if (!$transport instanceof TransportInterface) {
-            throw new InvalidArgumentException(
-                "Transport class `{$transportClass}` is not instance of 
-                `Yandex\\Direct\\Transport\\TransportInterface`",
-                self::E_INVALID_OPTION
-            );
-        }
-
-        $transport->setOptions($transportOptions);
-
-        return $transport;
-    }
 
     /**
      * @return string

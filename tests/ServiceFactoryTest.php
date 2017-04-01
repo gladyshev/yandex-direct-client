@@ -6,12 +6,13 @@
 
 namespace Yandex\Direct\Test;
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\ServiceFactory;
 use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\RequestInterface;
 
-class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class ServiceFactoryTest extends TestCase
 {
     /**
      * @var ServiceFactory
@@ -21,10 +22,6 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->factory = new ServiceFactory();
-        $this->factory->setDefaultOptions([
-            'transport' => new SfMockTransport,
-            'credentials' => new SfMockCredentials
-        ]);
     }
 
     /**
@@ -32,7 +29,11 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testMustThrowInvalidArgumentExceptionOnCallWithIncorrectService()
     {
-        $this->factory->createService('notexistingservice');
+        $this->factory->createService(
+            'notexistingservice',
+            new MockCredentials,
+            new MockTransport
+        );
     }
 
     /**
@@ -41,7 +42,11 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreationService($serviceName)
     {
-        $service = $this->factory->createService($serviceName);
+        $service = $this->factory->createService(
+            $serviceName,
+            new MockCredentials,
+            new MockTransport
+        );
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
         $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
     }
@@ -70,13 +75,13 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 }
 
 
-class SfMockCredentials implements CredentialsInterface {
+class ServiceFactoryMockCredentials implements CredentialsInterface {
     public function getMasterToken(){}
     public function getToken(){}
     public function getLogin(){}
 }
 
-class SfMockTransport implements TransportInterface {
+class ServiceFactoryMockTransport implements TransportInterface {
     public function setOptions(array $options){}
     public function getServiceUrl($serviceName){}
     public function request(RequestInterface $request){}

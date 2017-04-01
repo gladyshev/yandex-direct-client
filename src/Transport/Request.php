@@ -14,7 +14,7 @@ use Yandex\Direct\Exception\InvalidArgumentException;
  * Class TransportRequest
  * @package Yandex\Direct
  */
-class JsonTransportRequest implements RequestInterface
+class Request implements RequestInterface
 {
     use ConfigurableTrait;
 
@@ -57,15 +57,20 @@ class JsonTransportRequest implements RequestInterface
     /**
      * @inheritdoc
      */
-    public static function fromArray(array $request)
+    public static function fromArray(array $requestAttributes)
     {
-        return new self($request);
+        $instance = new static;
+        $instance->setOptions($requestAttributes);
+        return $instance;
     }
 
-
-    public function __construct(array $options = [])
+    /**
+     * Request constructor.
+     * @param array $requestAttributes
+     */
+    public function __construct(array $requestAttributes = [])
     {
-        $this->setOptions($options);
+        $this->setOptions($requestAttributes);
     }
 
     /**

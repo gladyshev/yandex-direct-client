@@ -1,7 +1,7 @@
 {
   "name": "gladyshev/yandex-direct-client",
   "keywords": ["yandex", "direct", "yandex.direct", "client", "api"],
-  "description": "Lightweight Yandex.Direct API wrapper.",
+  "description": "Useful Yandex.Direct API client.",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -18,7 +18,7 @@
     "guzzlehttp/guzzle": "~6.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.8||~5.5",
+    "phpunit/phpunit": "~6.0",
     "squizlabs/php_codesniffer": "^2.3"
   },
   "autoload": {
@@ -33,7 +33,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0-dev"
+      "dev-master": "1.1-dev"
     }
   },
   "scripts": {

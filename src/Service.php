@@ -8,6 +8,7 @@ namespace Yandex\Direct;
 
 use Yandex\Direct\Exception\ErrorResponseException;
 use Yandex\Direct\Exception\RuntimeException;
+use Yandex\Direct\Transport\Request;
 use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\ResponseInterface;
 
@@ -81,13 +82,7 @@ abstract class Service implements ConfigurableInterface
      */
     public function request(array $params, $headers = [])
     {
-        $requestClass = $this->transport->getRequestClass();
-
-        if (!method_exists($requestClass, 'fromArray')) {
-            throw new RuntimeException('');
-        }
-
-        $response = $this->transport->request($requestClass::fromArray([
+        $response = $this->transport->request(new Request([
             'service' => $this->name,
             'credentials' => $this->credentials,
             'params' => $params,
