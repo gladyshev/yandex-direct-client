@@ -1,7 +1,7 @@
 Yandex Direct API v5 PHP client
 ===============================
 
-PHP-клиент [Yandex.Direct API](https://tech.yandex.ru/direct/doc/dg/concepts/about-docpage/) с поддержкой PSR-7 и PSR-3.
+Удобный и легкий PHP-клиент [Yandex.Direct API](https://tech.yandex.ru/direct/doc/dg/concepts/about-docpage/) с поддержкой PSR-7 и PSR-3.
 
 [![Build Status](https://travis-ci.org/gladyshev/yandex-direct-client.svg?branch=master)](https://travis-ci.org/gladyshev/yandex-direct-client)
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
