@@ -49,7 +49,3 @@ print_r($response);
 //     'result' => [...]
 // ]
 ```
-
-## Contribute
-Если вы нашли баг или придумали как что-то улучшить смело делайте fork и pull request с вашими изменениями или создайте issue. 
-И не забудте проверить свой код используя [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) на соответствие стандарту [PSR2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) вот таким образом: `$ composer cs-check`.
