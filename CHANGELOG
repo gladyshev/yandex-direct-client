@@ -1,3 +1,7 @@
+2.0.0 - Transport and ServiceFactory refactoring
+      - Improve Client class constructor
+      - Add transport and credentials setters to Client class
+
 1.1.0 - Add changelog
       - Prepare transport for AgencyClients service
       - AgencyClient service

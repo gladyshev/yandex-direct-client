@@ -7,11 +7,12 @@
 namespace Yandex\Direct\Test;
 
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\Credentials;
 use Yandex\Direct\CredentialsInterface;
 
 
-class CredentialsTest extends \PHPUnit_Framework_TestCase
+class CredentialsTest extends TestCase
 {
     public function testMustImplementCredentialsInterface()
     {

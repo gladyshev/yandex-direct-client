@@ -7,9 +7,8 @@
 namespace Yandex\Direct;
 
 use Yandex\Direct\Exception\ErrorResponseException;
-use Yandex\Direct\Exception\RuntimeException;
+use Yandex\Direct\Transport\Request;
 use Yandex\Direct\Transport\TransportInterface;
-use Yandex\Direct\Transport\ResponseInterface;
 
 /**
  * Class Service
@@ -77,56 +76,46 @@ abstract class Service implements ConfigurableInterface
      * @param array $params
      * @param array $headers
      * @return array
-     * @throws RuntimeException
+     * @throws ErrorResponseException
      */
     public function request(array $params, $headers = [])
     {
-        $requestClass = $this->transport->getRequestClass();
+        /* Request API */
 
-        if (!method_exists($requestClass, 'fromArray')) {
-            throw new RuntimeException('');
-        }
-
-        $response = $this->transport->request($requestClass::fromArray([
+        $request = new Request([
             'service' => $this->name,
             'credentials' => $this->credentials,
             'params' => $params,
             'headers' => $headers,
             'useOperatorUnits' => $this->useOperatorUnits
-        ]));
-
-        self::handleErrorResponse($response);
-
+        ]);
+        $response = $this->transport->request($request);
         $result = json_decode($response->getBody(), true);
+
+
+        /* Handle error response */
+
+        if (isset($result['error'])
+            && $result['error']
+        ) {
+            throw new ErrorResponseException(
+                $result['error']['error_string'],
+                $result['error']['error_detail'],
+                $result['error']['error_code'],
+                $result['error']['request_id']
+            );
+        }
+
+
+        /* Prepare results */
 
         $result['units'] = [
             'debit' => $response->getUnitsDebit(),
             'limit' => $response->getUnitsLimit(),
             'rest' => $response->getUnitsRest()
         ];
-
         $result['request_id'] = $response->getRequestId();
 
         return $result;
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @throws ErrorResponseException
-     */
-    protected static function handleErrorResponse(ResponseInterface $response)
-    {
-        $json = json_decode($response->getBody(), true);
-
-        if (isset($json['error'])
-            && $json['error']
-        ) {
-            throw new ErrorResponseException(
-                $json['error']['error_string'],
-                $json['error']['error_detail'],
-                $json['error']['error_code'],
-                $json['error']['request_id']
-            );
-        }
     }
 }

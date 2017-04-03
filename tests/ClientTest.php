@@ -7,10 +7,14 @@
 namespace Yandex\Direct\Test;
 
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\Client;
 use Yandex\Direct\CredentialsInterface;
+use Yandex\Direct\Service;
+use Yandex\Direct\Transport\RequestInterface;
+use Yandex\Direct\Transport\TransportInterface;
 
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ApiTest extends TestCase
 {
     /**
      * @var Client
@@ -19,7 +23,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = new Client(new DummyCredentials);
+        $this->client = new Client('***', '***');
     }
 
     /**
@@ -47,13 +51,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     {
         $service = $this->client->{lcfirst($serviceName)};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
     }
 
     /**
@@ -64,15 +68,14 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     {
         $service = $this->client->{lcfirst($serviceName)}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
     }
-
 
     public function providerYandexServices()
     {
@@ -98,8 +101,16 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 }
 
 
-class DummyCredentials implements CredentialsInterface {
+class ClientMockCredentials implements CredentialsInterface {
     public function getMasterToken() { return '';}
     public function getToken() { return '';}
     public function getLogin() { return '';}
+}
+
+class ClientMockTransport implements TransportInterface {
+    public function setOptions(array $options){}
+    public function getServiceUrl($serviceName){}
+    public function request(RequestInterface $request){}
+    public function getRequestClass() { return ''; }
+    public function getResponseClass() { return ''; }
 }

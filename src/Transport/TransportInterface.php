@@ -6,36 +6,12 @@
 
 namespace Yandex\Direct\Transport;
 
-use Yandex\Direct\ConfigurableInterface;
-
 /**
  * Interface TransportInterface
  * @package Yandex\Direct\Transport
  */
-interface TransportInterface extends ConfigurableInterface
+interface TransportInterface
 {
-    /**
-     * Return classname using as TransportRequestInterface.
-     *
-     * @return string
-     */
-    public function getRequestClass();
-
-    /**
-     * Return classname using as TransportResponseInterface.
-     *
-     * @return string
-     */
-    public function getResponseClass();
-
-    /**
-     * Resolve API url by service name.
-     *
-     * @param string $serviceName
-     * @return string
-     */
-    public function getServiceUrl($serviceName);
-
     /**
      * Request API.
      *

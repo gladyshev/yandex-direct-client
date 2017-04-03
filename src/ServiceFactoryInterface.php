@@ -6,6 +6,8 @@
 
 namespace Yandex\Direct;
 
+use Yandex\Direct\Transport\TransportInterface;
+
 /**
  * Interface ServiceFactoryInterface
  *
@@ -13,18 +15,14 @@ namespace Yandex\Direct;
  */
 interface ServiceFactoryInterface
 {
-    /**
-     * Create a Service instance by name
-     * @param string $name
-     * @param array $options
-     * @return Service
-     */
-    public function createService($name, array $options = []);
+    const OPTION_CREDENTIALS = 'credentials';
+    const OPTION_TRANSPORT = 'transport';
 
     /**
-     * Update default new service options
-     * @param array $options
-     * @return void
+     * Create a Service instance by name
+     * @param $serviceName
+     * @param array $serviceOptions
+     * @return Service
      */
-    public function setDefaultOptions(array $options);
+    public function createService($serviceName, array $serviceOptions = []);
 }

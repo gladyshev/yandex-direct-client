@@ -23,6 +23,7 @@ use Yandex\Direct\Service\Keywords;
 use Yandex\Direct\Service\RetargetingLists;
 use Yandex\Direct\Service\Sitelinks;
 use Yandex\Direct\Service\VCards;
+use Yandex\Direct\Transport\TransportInterface;
 
 /**
  * Yandex.Direct v5 API client implementation
@@ -70,64 +71,136 @@ use Yandex\Direct\Service\VCards;
 class Client
 {
     /**
-     * @var ServiceFactory
+     * @var ServiceFactoryInterface
      */
     protected $serviceFactory;
 
     /**
-     * @var CredentialsInterface
+     * Service options.
+     * @var array
      */
-    protected $credentials;
+    protected $options = [];
 
     /**
-     * @param CredentialsInterface $credentials
-     * @param array $options
+     * Client constructor with overloading.
+     *
+     * @param array ...$args    # The order of the arguments doesn't matter.
+     *                            Credentials is required, it can be CredentialsInterface instance or
+     *                            login and token strings in order.
+     *      Example:
+     *      $client = new Client('login', 'token');
+     *      $client = new Client(new Credentials('login', 'token'));
+     *      $client = new Client(new Credentials('login', 'token'), ['useOperatorUnits' => true]);
+     *      $client = new Client('login', 'token', ['useOperatorUnits' => true]);
+     *      $client = new Client('login', 'token', new Transport(['logger' => new Log]), ['useOperatorUnits' => true]);
+     *      // etc
      */
-    public function __construct(CredentialsInterface $credentials, array $options = [])
+    public function __construct(...$args)
     {
-        $this->setCredentials($credentials);
-        $this->serviceFactory = new ServiceFactory;
-        $this->serviceFactory->setDefaultOptions(array_merge([
-            'credentials' => $this->credentials
-        ], $options));
+        if (empty($args)) {
+            return;
+        }
+
+        $strArgs = [];
+
+        foreach ($args as $key => $val) {
+            if ($val instanceof CredentialsInterface) {
+                $this->setCredentials($val);
+            } elseif ($val instanceof TransportInterface) {
+                $this->setTransport($val);
+            } elseif (is_array($val)) {
+                $this->setOptions($val);
+            } elseif (is_string($val)) {
+                $strArgs[] = $val;
+            }
+        }
+
+        list($login, $token, $masterToken) = array_pad($strArgs, 3, '');
+
+        if ($login && $token) {
+            $this->setCredentials(new Credentials($login, $token, $masterToken));
+        }
     }
 
     /**
-     * @param string $name
-     * @param array $options
+     * Returns specific Service instance.
+     *
+     * @param string $serviceName # The Name of Yandex service
+     * @param array $args # The First argument is the service options override.
      * @return Service
      */
-    public function __call($name, array $options = [])
+    public function __call($serviceName, array $args = [])
     {
-        return $this->serviceFactory->createService($name, current($options) ?: []);
+        $userOptions = isset($args[0]) && is_array($args[0]) ? $args[0] : [];
+        $options = array_merge($this->options, $userOptions);
+
+        return $this
+            ->getServiceFactory()
+            ->createService($serviceName, $options);
     }
 
     /**
+     * Alias of __call()
+     *
      * @param string $name
      * @return Service
+     * @see Client::__call()
      */
     public function __get($name)
     {
         return $this->__call($name);
     }
 
+    /* Setters & Getters */
+
     /**
-     * @param array $options
-     * @return self
+     * @param CredentialsInterface $credentials
+     * @return $this
      */
-    public function setOptions(array $options)
+    public function setCredentials($credentials)
     {
-        $this->serviceFactory->setDefaultOptions($options);
+        $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = $credentials;
         return $this;
     }
 
     /**
-     * @param CredentialsInterface $credentials
-     * @return self
+     * @param TransportInterface $transport
+     * @return $this
      */
-    public function setCredentials(CredentialsInterface $credentials)
+    public function setTransport($transport)
     {
-        $this->credentials = $credentials;
+        $this->options[ServiceFactoryInterface::OPTION_TRANSPORT] = $transport;
         return $this;
+    }
+
+    /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    /**
+     * @param ServiceFactoryInterface $serviceFactory
+     * @return $this
+     */
+    public function setServiceFactory($serviceFactory)
+    {
+        $this->serviceFactory = $serviceFactory;
+        return $this;
+    }
+
+    /**
+     * @return ServiceFactoryInterface
+     */
+    protected function getServiceFactory()
+    {
+        if ($this->serviceFactory === null) {
+            $this->serviceFactory = new ServiceFactory;
+        }
+        return $this->serviceFactory;
     }
 }

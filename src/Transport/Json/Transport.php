@@ -4,7 +4,7 @@
  * @date 16/08/2016 18:06
  */
 
-namespace Yandex\Direct\Transport;
+namespace Yandex\Direct\Transport\Json;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
@@ -18,12 +18,15 @@ use Psr\Log\NullLogger;
 use Yandex\Direct\ConfigurableTrait;
 use Yandex\Direct\Exception\RuntimeException;
 use Yandex\Direct\Exception\TransportRequestException;
+use Yandex\Direct\Transport\RequestInterface;
+use Yandex\Direct\Transport\Response;
+use Yandex\Direct\Transport\TransportInterface;
 
 /**
  * Class JsonTransport
  * @package Yandex\Direct\Transport
  */
-class JsonTransport implements TransportInterface, LoggerAwareInterface
+class Transport implements TransportInterface, LoggerAwareInterface
 {
     use ConfigurableTrait;
 
@@ -73,22 +76,6 @@ class JsonTransport implements TransportInterface, LoggerAwareInterface
     /**
      * @inheritdoc
      */
-    public function getRequestClass()
-    {
-        return JsonTransportRequest::class;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getResponseClass()
-    {
-        return JsonTransportResponse::class;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getServiceUrl($serviceName)
     {
         if (isset($this->serviceUrls[$serviceName])) {
@@ -120,7 +107,7 @@ class JsonTransport implements TransportInterface, LoggerAwareInterface
 
     /**
      * @param RequestInterface $request
-     * @return JsonTransportResponse
+     * @return Response
      * @throws RuntimeException
      * @throws TransportRequestException
      */
@@ -136,7 +123,7 @@ class JsonTransport implements TransportInterface, LoggerAwareInterface
 
             $httpResponseHeaders = $httpResponse->getHeaders();
 
-            return new JsonTransportResponse([
+            return new Response([
                 'headers' => $httpResponse->getHeaders(),
                 'body' => $httpResponse->getBody()->__toString(),
                 'requestId' => isset($httpResponseHeaders['RequestId']) ? current($httpResponseHeaders['RequestId']) : null,
@@ -210,7 +197,7 @@ class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param JsonTransportRequest | RequestInterface $request
+     * @param Request | RequestInterface $request
      * @return array
      */
     private function prepareHeaders(RequestInterface $request)
@@ -233,7 +220,7 @@ class JsonTransport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param JsonTransportRequest | RequestInterface $request
+     * @param Request | RequestInterface $request
      * @return string
      */
     private function prepareBody(RequestInterface $request)

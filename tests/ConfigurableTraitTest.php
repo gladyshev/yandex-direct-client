@@ -7,10 +7,11 @@
 namespace Yandex\Direct\Test;
 
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\ConfigurableTrait;
 
 
-class ConfigurableTraitTest extends \PHPUnit_Framework_TestCase
+class ConfigurableTraitTest extends TestCase
 {
     /**
      * @expectedException \Yandex\Direct\Exception\InvalidArgumentException

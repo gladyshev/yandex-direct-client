@@ -22,10 +22,10 @@ interface RequestInterface
     /**
      * Build instance of request by array.
      *
-     * @param array $request
+     * @param array $requestAttributes
      * @return RequestInterface
      */
-    public static function fromArray(array $request);
+    public static function fromArray(array $requestAttributes);
 
     /**
      * API service name.

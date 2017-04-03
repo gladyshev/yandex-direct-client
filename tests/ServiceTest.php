@@ -7,14 +7,15 @@
 namespace Yandex\Direct\Test;
 
 
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\CredentialsInterface;
 use Yandex\Direct\Service;
 use Yandex\Direct\Transport\TransportInterface;
-use Yandex\Direct\Transport\JsonTransportRequest;
+use Yandex\Direct\Transport\Request;
 use Yandex\Direct\Transport\RequestInterface;
 
 
-class ServiceTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends TestCase
 {
     public function testNameSetter()
     {
@@ -51,8 +52,6 @@ class MockTransport implements TransportInterface {
     public function setOptions(array $options){}
     public function getServiceUrl($serviceName){}
     public function request(RequestInterface $request){}
-    public function getRequestClass() { return ''; }
-    public function getResponseClass() { return ''; }
 }
 
 class MockCredentials implements CredentialsInterface {

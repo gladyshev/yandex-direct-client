@@ -10,19 +10,20 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\Transport\JsonTransport;
-use Yandex\Direct\Transport\JsonTransportRequest;
+use Yandex\Direct\Transport\Json\Transport;
+use Yandex\Direct\Transport\Request;
 
 /**
  * Class JsonTransport
  * @package Yandex\Direct\Test\Transport
  */
-class JsonTransportTest extends \PHPUnit_Framework_TestCase
+class JsonTransportTest extends TestCase
 {
     public function testResolvingServiceUrls()
     {
-        $transport = new JsonTransport;
+        $transport = new Transport;
         $transport->setOptions([
             'baseUrl' => 'https://api-sandbox.yandex.direct',
             'serviceUrls' => [
@@ -45,7 +46,7 @@ class JsonTransportTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoingRequests($body, $headers, $code)
     {
-        $transport = new JsonTransport;
+        $transport = new Transport;
         $transport->setOptions([
             'httpClient' => self::buildMockHttpClient($body, $headers, $code)
         ]);
@@ -67,7 +68,7 @@ class JsonTransportTest extends \PHPUnit_Framework_TestCase
 
     private static function buildMockTransportRequest()
     {
-        return new JsonTransportRequest([
+        return new Request([
             'credentials' => new MockCredentials,
             'service' => 'service',
             'method' => 'method'
