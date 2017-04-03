@@ -40,7 +40,7 @@ class ServiceFactory implements ServiceFactoryInterface
         $className = $this->getServiceNamespace() . '\\' . ucfirst($serviceName);
 
         if (class_exists($className)) {
-            $instance = new $className($serviceName);
+            $instance = new $className;
             if (!$instance instanceof Service) {
                 throw new ServiceNotFoundException(
                     "Service class `{$className}` is not instance of `" . Service::class . "`."
