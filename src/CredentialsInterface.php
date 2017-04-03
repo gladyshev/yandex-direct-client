@@ -15,17 +15,15 @@ interface CredentialsInterface
     /**
      * @return string
      */
-    public function getMasterToken();
-
+    public function getLogin();
 
     /**
      * @return string
      */
     public function getToken();
 
-
     /**
      * @return string
      */
-    public function getLogin();
+    public function getMasterToken();
 }

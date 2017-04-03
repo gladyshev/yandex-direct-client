@@ -13,18 +13,27 @@ use Yandex\Direct\Transport\Json\Transport;
 
 $client = new Client(getenv('_LOGIN_'), getenv('_TOKEN_'));
 
-// For example, change the logger
-$resp = $client->campaigns([
-    'transport' => new Transport([
-        'logger' => new EchoLog
+// For example, change the logger...
+$resp = $client
+    ->setTransport(new Transport(['logger' => new EchoLog]))
+    ->campaigns()
+    ->get(['Ids' => [123456, 654321]], ['Funds']);
+
+print_r($resp);
+
+// ...credentials also able to change...
+$resp = $client
+    ->setCredentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
+    ->campaigns()
+    // ...ErrorResponseException because Credentials is wrong...
+    ->get(['Ids' => [123456, 654321]], ['Funds']);
+
+// You can change service options with another way...
+$resp = $client
+    ->campaigns([
+        'credentials' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f'),
+        'transport' => new Transport(['logger' => new EchoLog])
     ])
-])->get(['Ids' => [123456, 654321]], ['Funds']);
+    ->get(['Ids' => [123456, 654321]], ['Funds']); // ...same got ErrorResponseException.
 
-print_r($resp);
-
-// Credentials also able to change.
-$resp = $client->campaigns([
-    'credentials' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
-])->get(['Ids' => [123456, 654321]], ['Funds']); // Got ErrorResponseException
-
-print_r($resp);
+// Have a nice code =)

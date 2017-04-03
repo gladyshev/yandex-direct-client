@@ -84,7 +84,7 @@ class Client
     /**
      * Client constructor with overloading.
      *
-     * @param array ...$args    # The order of the arguments doesn't matter.
+     * @param mixed[] ...$args    # The order of the arguments doesn't matter.
      *                            Credentials is required, it can be CredentialsInterface instance or
      *                            login and token strings in order.
      *      Example:
@@ -154,12 +154,17 @@ class Client
     /* Setters & Getters */
 
     /**
-     * @param CredentialsInterface $credentials
+     * @param mixed[] $credentials
      * @return $this
      */
-    public function setCredentials($credentials)
+    public function setCredentials(...$credentials)
     {
-        $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = $credentials;
+        if ($credentials[0] instanceof CredentialsInterface) {
+            $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = $credentials[0];
+        } else {
+            list($login, $token, $masterToken) = array_pad($credentials, 3, '');
+            $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = new Credentials($login, $token, $masterToken);
+        }
         return $this;
     }
 
@@ -167,7 +172,7 @@ class Client
      * @param TransportInterface $transport
      * @return $this
      */
-    public function setTransport($transport)
+    public function setTransport(TransportInterface $transport)
     {
         $this->options[ServiceFactoryInterface::OPTION_TRANSPORT] = $transport;
         return $this;
@@ -177,7 +182,7 @@ class Client
      * @param array $options
      * @return $this
      */
-    public function setOptions($options)
+    public function setOptions(array $options)
     {
         $this->options = $options;
         return $this;
@@ -187,7 +192,7 @@ class Client
      * @param ServiceFactoryInterface $serviceFactory
      * @return $this
      */
-    public function setServiceFactory($serviceFactory)
+    public function setServiceFactory(ServiceFactoryInterface $serviceFactory)
     {
         $this->serviceFactory = $serviceFactory;
         return $this;

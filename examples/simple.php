@@ -7,7 +7,6 @@
 require '../vendor/autoload.php';
 
 use Yandex\Direct\Client;
-use Yandex\Direct\Credentials;
 
 $client = new Client(getenv('_LOGIN_'), getenv('_TOKEN_'));
 

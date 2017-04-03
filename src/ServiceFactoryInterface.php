@@ -6,8 +6,6 @@
 
 namespace Yandex\Direct;
 
-use Yandex\Direct\Transport\TransportInterface;
-
 /**
  * Interface ServiceFactoryInterface
  *
