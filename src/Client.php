@@ -84,7 +84,7 @@ class Client
     /**
      * Client constructor with overloading.
      *
-     * @param mixed[] ...$args    # The order of the arguments doesn't matter.
+     * @param mixed[] ...$args    The order of the arguments doesn't matter.
      *                            Credentials is required, it can be CredentialsInterface instance or
      *                            login and token strings in order.
      *      Example:
