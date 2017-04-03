@@ -27,10 +27,8 @@ Yandex Direct API v5 PHP client
 
 ```php
 use Yandex\Direct\Client;
-use Yandex\Direct\Credentials;
 
-$credentials = new Credentials(YOUR_API_LOGIN, YOUR_API_TOKEN);
-$api = new Client($credentials);
+$api = new Client('***login***', '***token***');
 
 $response = $api->campaigns->get(
     ['Ids' => [123545345, 23423234]],  // SelectionCriteria

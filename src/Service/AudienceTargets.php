@@ -12,7 +12,7 @@ use Yandex\Direct\Service;
  * Class AudienceTargets
  * @package Yandex\Direct\Service
  */
-class AudienceTargets extends Service
+final class AudienceTargets extends Service
 {
     /**
      * Создает условия нацеливания на аудиторию, назначает ставки и приоритеты для создаваемых ретаргетингов.

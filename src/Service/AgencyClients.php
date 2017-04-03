@@ -8,7 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Service;
 
-class AgencyClients extends Service
+final class AgencyClients extends Service
 {
     /**
      * Возвращает список рекламодателей — клиентов агентства,

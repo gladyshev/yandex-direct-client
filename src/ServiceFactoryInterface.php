@@ -15,18 +15,14 @@ use Yandex\Direct\Transport\TransportInterface;
  */
 interface ServiceFactoryInterface
 {
+    const OPTION_CREDENTIALS = 'credentials';
+    const OPTION_TRANSPORT = 'transport';
+
     /**
      * Create a Service instance by name
      * @param $serviceName
-     * @param CredentialsInterface $credentials
-     * @param TransportInterface $transport
      * @param array $serviceOptions
      * @return Service
      */
-    public function createService(
-        $serviceName,
-        CredentialsInterface $credentials,
-        TransportInterface $transport,
-        array $serviceOptions = []
-    );
+    public function createService($serviceName, array $serviceOptions = []);
 }

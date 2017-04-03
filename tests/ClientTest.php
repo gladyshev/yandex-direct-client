@@ -10,6 +10,7 @@ namespace Yandex\Direct\Test;
 use PHPUnit\Framework\TestCase;
 use Yandex\Direct\Client;
 use Yandex\Direct\CredentialsInterface;
+use Yandex\Direct\Service;
 use Yandex\Direct\Transport\RequestInterface;
 use Yandex\Direct\Transport\TransportInterface;
 
@@ -22,15 +23,7 @@ class ApiTest extends TestCase
 
     public function setUp()
     {
-        $this->client = new Client(new ClientMockCredentials, new ClientMockTransport);
-    }
-
-    public function testCanBeCreatedByBuilder()
-    {
-        $this->assertInstanceOf(
-            Client::class,
-            Client::build('', '')
-        );
+        $this->client = new Client('***', '***');
     }
 
     /**
@@ -58,13 +51,13 @@ class ApiTest extends TestCase
     {
         $service = $this->client->{lcfirst($serviceName)};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
     }
 
     /**
@@ -75,15 +68,14 @@ class ApiTest extends TestCase
     {
         $service = $this->client->{lcfirst($serviceName)}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
     }
-
 
     public function providerYandexServices()
     {

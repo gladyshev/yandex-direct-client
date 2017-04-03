@@ -11,7 +11,7 @@ use Yandex\Direct\Credentials;
 use Yandex\Direct\Logger\EchoLog;
 use Yandex\Direct\Transport\Json\Transport;
 
-$client = Client::build(getenv('_LOGIN_'), getenv('_TOKEN_'));
+$client = new Client(getenv('_LOGIN_'), getenv('_TOKEN_'));
 
 // For example, change the logger
 $resp = $client->campaigns([
@@ -22,9 +22,9 @@ $resp = $client->campaigns([
 
 print_r($resp);
 
-// Credentials also able to change
+// Credentials also able to change.
 $resp = $client->campaigns([
     'credentials' => new Credentials('agrom', '0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f')
-])->get(['Ids' => [123456, 654321]], ['Funds']);
+])->get(['Ids' => [123456, 654321]], ['Funds']); // Got ErrorResponseException
 
 print_r($resp);

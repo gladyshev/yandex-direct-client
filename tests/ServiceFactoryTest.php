@@ -8,6 +8,7 @@ namespace Yandex\Direct\Test;
 
 use PHPUnit\Framework\TestCase;
 use Yandex\Direct\CredentialsInterface;
+use Yandex\Direct\Service;
 use Yandex\Direct\ServiceFactory;
 use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\RequestInterface;
@@ -29,11 +30,10 @@ class ServiceFactoryTest extends TestCase
      */
     public function testMustThrowInvalidArgumentExceptionOnCallWithIncorrectService()
     {
-        $this->factory->createService(
-            'notexistingservice',
-            new MockCredentials,
-            new MockTransport
-        );
+        $this->factory->createService('notexistingservice', [
+            ServiceFactory::OPTION_CREDENTIALS => new MockCredentials,
+            ServiceFactory::OPTION_TRANSPORT => new MockTransport
+        ]);
     }
 
     /**
@@ -42,13 +42,12 @@ class ServiceFactoryTest extends TestCase
      */
     public function testCreationService($serviceName)
     {
-        $service = $this->factory->createService(
-            $serviceName,
-            new MockCredentials,
-            new MockTransport
-        );
+        $service = $this->factory->createService($serviceName, [
+                ServiceFactory::OPTION_CREDENTIALS => new MockCredentials,
+                ServiceFactory::OPTION_TRANSPORT => new MockTransport
+        ]);
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf('Yandex\\Direct\\Service', $service);
+        $this->assertInstanceOf(Service::class, $service);
     }
 
 
@@ -59,6 +58,7 @@ class ServiceFactoryTest extends TestCase
             ['AdGroups'],
             ['AdImages'],
             ['Ads'],
+            ['AgencyClients'],
             ['AudienceTargets'],
             ['BidModifiers'],
             ['Bids'],
@@ -85,6 +85,4 @@ class ServiceFactoryMockTransport implements TransportInterface {
     public function setOptions(array $options){}
     public function getServiceUrl($serviceName){}
     public function request(RequestInterface $request){}
-    public function getRequestClass() { return ''; }
-    public function getResponseClass() { return ''; }
 }

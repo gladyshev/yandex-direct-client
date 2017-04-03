@@ -6,7 +6,9 @@
 
 namespace Yandex\Direct;
 
+use Yandex\Direct\Exception\InvalidArgumentException;
 use Yandex\Direct\Exception\ServiceNotFoundException;
+use Yandex\Direct\Transport\Json\Transport;
 use Yandex\Direct\Transport\TransportInterface;
 
 /**
@@ -17,16 +19,26 @@ use Yandex\Direct\Transport\TransportInterface;
 class ServiceFactory implements ServiceFactoryInterface
 {
     /**
+     * @var string
+     */
+    protected $serviceNamespace = __NAMESPACE__ . '\\' . 'Service';
+
+    /**
      * @inheritdoc
      */
-    public function createService(
-        $serviceName,
-        CredentialsInterface $credentials,
-        TransportInterface $transport,
-        array $serviceOptions = []
-    )
+    public function createService($serviceName, array $serviceOptions = [])
     {
+        if (empty($serviceOptions[self::OPTION_TRANSPORT])) {
+            // Use default transport
+            $serviceOptions[self::OPTION_TRANSPORT] = new Transport;
+        }
+
+        if (empty($serviceOptions[self::OPTION_CREDENTIALS])) {
+            throw new InvalidArgumentException('Credentials is required.');
+        }
+
         $className = $this->getServiceNamespace() . '\\' . ucfirst($serviceName);
+
         if (class_exists($className)) {
             $instance = new $className($serviceName);
             if (!$instance instanceof Service) {
@@ -35,29 +47,21 @@ class ServiceFactory implements ServiceFactoryInterface
                 );
             }
             $serviceOptions['name'] = $serviceName;
-
-            if (empty($serviceOptions['transport'])) {
-                $serviceOptions['transport'] = $transport;
-            }
-
-            if (empty($serviceOptions['credentials'])) {
-                $serviceOptions['credentials'] = $credentials;
-            }
-
             $instance->setOptions($serviceOptions);
-
             return $instance;
         }
 
         throw new ServiceNotFoundException("Service class `{$className}` is not found.");
+
     }
 
+    public function setServiceNamespace($namespace)
+    {
+        $this->serviceNamespace = $namespace;
+    }
 
-    /**
-     * @return string
-     */
     protected function getServiceNamespace()
     {
-        return __NAMESPACE__ . '\\' . 'Service';
+        return $this->serviceNamespace;
     }
 }

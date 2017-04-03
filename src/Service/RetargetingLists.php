@@ -12,7 +12,7 @@ use Yandex\Direct\Service;
  * Class RetargetingLists
  * @package Yandex\Direct\Service
  */
-class RetargetingLists extends Service
+final class RetargetingLists extends Service
 {
     /**
      * Создает условия подбора аудитории.

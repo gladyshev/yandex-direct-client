@@ -10,7 +10,7 @@ use Yandex\Direct\Transport\ReportRequestInterface;
  *
  * @author Dmitry Gladyshev <deel@email.ru>
  */
-class Reports extends Service
+final class Reports extends Service
 {
     protected $processingMode = ReportRequestInterface::PROCESSING_MODE_AUTO;
 
