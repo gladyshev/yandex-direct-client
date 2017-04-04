@@ -4,14 +4,17 @@
  * @date 17/08/2016 12:51
  */
 
-namespace Yandex\Direct\Test\Transport;
+namespace Yandex\Direct\Test\Transport\Json;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\AbstractLogger;
 use Yandex\Direct\CredentialsInterface;
+use Yandex\Direct\Test\Helper;
 use Yandex\Direct\Transport\Json\Transport;
 use Yandex\Direct\Transport\Request;
 
@@ -19,7 +22,7 @@ use Yandex\Direct\Transport\Request;
  * Class JsonTransport
  * @package Yandex\Direct\Test\Transport
  */
-class JsonTransportTest extends TestCase
+class TransportTest extends TestCase
 {
     public function testResolvingServiceUrls()
     {
@@ -59,6 +62,45 @@ class JsonTransportTest extends TestCase
         $this->assertEquals($response->getHeaders(), $headers);
     }
 
+
+    public function testLoggerMiddleware()
+    {
+        $tr = new Transport;
+        $tr->setLogger(new MockPsr3Logger);
+
+        $loggerGetterReflection = Helper::getPrivateMethod($tr, 'getLogger');
+        $this->assertInstanceOf(
+            MockPsr3Logger::class,
+            $loggerGetterReflection->invoke($tr)
+        );
+
+        $messageFormatterGetterReflection = Helper::getPrivateMethod($tr, 'getMessageFormatter');
+        $this->assertInstanceOf(
+            MessageFormatter::class,
+            $messageFormatterGetterReflection->invoke($tr)
+        );
+
+        $httpHandlerStackGetterReflection = Helper::getPrivateMethod($tr, 'getHttpHandlers');
+        $this->assertInstanceOf(
+            HandlerStack::class,
+            $httpHandlerStackGetterReflection->invoke($tr)
+        );
+    }
+
+    public function testHeadersSetter()
+    {
+        $headers = [
+          'a' => 'b',
+          'c' => 'd',
+          'e' => 'f'
+        ];
+
+        $tr = new Transport;
+        $tr->setHeaders($headers);
+        $this->assertArraySubset($headers, Helper::getPrivateProperty(Transport::class, 'headers')->getValue($tr));
+    }
+
+
     public function providerMockYandexDirectResponse()
     {
         return [
@@ -94,4 +136,8 @@ class MockCredentials implements CredentialsInterface {
     public function getMasterToken() { return ''; }
     public function getToken() { return ''; }
     public function getLogin() { return ''; }
+}
+
+class MockPsr3Logger extends AbstractLogger {
+    public function log($level, $message, array $context = array()) {}
 }
