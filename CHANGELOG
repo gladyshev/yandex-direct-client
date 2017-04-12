@@ -1,3 +1,5 @@
+2.0.1 - Update examples
+
 2.0.0 - Transport and ServiceFactory refactoring
       - Improve Client class constructor
       - Add transport and credentials setters to Client class
