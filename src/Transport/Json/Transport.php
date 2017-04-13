@@ -12,10 +12,13 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
+use LSS\Array2XML;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Yandex\Direct\ConfigurableInterface;
 use Yandex\Direct\ConfigurableTrait;
+use Yandex\Direct\Exception\InvalidArgumentException;
 use Yandex\Direct\Exception\RuntimeException;
 use Yandex\Direct\Exception\TransportRequestException;
 use Yandex\Direct\Transport\RequestInterface;
@@ -26,7 +29,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * Class JsonTransport
  * @package Yandex\Direct\Transport
  */
-class Transport implements TransportInterface, LoggerAwareInterface
+class Transport implements TransportInterface, LoggerAwareInterface, ConfigurableInterface
 {
     use ConfigurableTrait;
 
@@ -34,6 +37,16 @@ class Transport implements TransportInterface, LoggerAwareInterface
      * @var string
      */
     private $baseUrl = 'https://api.direct.yandex.com';
+
+    /**
+     * @var string
+     */
+    private $reportsXmlSchema = 'https://api.direct.yandex.com/v5/reports.xsd';
+
+    /**
+     * @var bool
+     */
+    private $enableReportValidation = false;
 
     /**
      * @var ClientInterface
@@ -44,7 +57,9 @@ class Transport implements TransportInterface, LoggerAwareInterface
      * Custom Service urls
      * @var array
      */
-    private $serviceUrls = [];
+    private $serviceUrls = [
+        'Reports' => '/v5/reports'
+    ];
 
     /**
      * @var array
@@ -106,10 +121,7 @@ class Transport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param RequestInterface $request
-     * @return Response
-     * @throws RuntimeException
-     * @throws TransportRequestException
+     * @inheritdoc
      */
     public function request(RequestInterface $request)
     {
@@ -124,8 +136,11 @@ class Transport implements TransportInterface, LoggerAwareInterface
             $httpResponseHeaders = $httpResponse->getHeaders();
 
             return new Response([
+                'service' => $request->getService(),
+                'method' => $request->getMethod(),
                 'headers' => $httpResponse->getHeaders(),
                 'body' => $httpResponse->getBody()->__toString(),
+                'code' => $httpResponse->getStatusCode(),
                 'requestId' => isset($httpResponseHeaders['RequestId']) ? current($httpResponseHeaders['RequestId']) : null,
                 'units' => isset($httpResponseHeaders['Units']) ? current($httpResponseHeaders['Units']) : null
             ]);
@@ -197,7 +212,7 @@ class Transport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param Request | RequestInterface $request
+     * @param RequestInterface $request
      * @return array
      */
     private function prepareHeaders(RequestInterface $request)
@@ -205,14 +220,9 @@ class Transport implements TransportInterface, LoggerAwareInterface
         $headers = array_merge([
             'Authorization' => 'Bearer ' . $request->getCredentials()->getToken(),
             'Client-Login' => $request->getCredentials()->getLogin(),
-            'Accept-Language' => $request->getLanguage(),
-        ], $this->headers);
+        ], $this->headers, $request->getHeaders());
 
-        if ($request->getUseOperatorUnits()) {
-            $headers['Use-Operator-Units'] = 'true';
-        }
-
-        if ($request->getService() == 'AgencyClients') {
+        if ($request->getService() === self::SERVICE_AGENCY_CLIENTS) {
             unset($headers['Client-Login']);
         }
 
@@ -220,14 +230,63 @@ class Transport implements TransportInterface, LoggerAwareInterface
     }
 
     /**
-     * @param Request | RequestInterface $request
+     * @param RequestInterface $request
      * @return string
      */
     private function prepareBody(RequestInterface $request)
+    {
+        switch ($request->getService()) {
+            case self::SERVICE_REPORTS:
+                return $this->prepareXmlBody($request);
+            default:
+                return $this->prepareJsonBody($request);
+        }
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return string
+     */
+    private function prepareJsonBody(RequestInterface $request)
     {
         return json_encode(
             array_merge(['method' => $request->getMethod()], $request->getParams()),
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         );
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return string
+     * @throws InvalidArgumentException
+     */
+    private function prepareXmlBody(RequestInterface $request)
+    {
+        $xml = Array2XML::createXML(
+            'ReportDefinition',
+            ['@attributes' => ['xmlns' => 'http://api.direct.yandex.com/v5/reports']] + $request->getParams()['params']
+        );
+
+        if ($this->enableReportValidation) {
+            $this->validateReportXml($xml);
+        }
+
+//        var_dump(trim($xml->saveXML())); die;
+
+        return str_replace(PHP_EOL, '', $xml->saveXML());
+    }
+
+    /**
+     * @param \DOMDocument $xml
+     * @throws InvalidArgumentException
+     */
+    private function validateReportXml(\DOMDocument $xml)
+    {
+        libxml_use_internal_errors(true);
+        if (!$xml->schemaValidate($this->reportsXmlSchema)) {
+            $error = libxml_get_last_error();
+            libxml_clear_errors();
+            throw new InvalidArgumentException($error->message, $error->code);
+        }
     }
 }

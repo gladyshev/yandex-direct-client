@@ -54,19 +54,6 @@ class ServiceTest extends TestCase
         $this->assertEquals($mockCredentials, $service->getCredentials());
     }
 
-    /**
-     * @covers Service::setUseOperatorUnits()
-     */
-    public function testUseOperatorUnitsSetter()
-    {
-        $service = new DummyService;
-        $service->setUseOperatorUnits(true);
-        $this->assertEquals(true, Helper::getPrivateProperty(Service::class, 'useOperatorUnits')->getValue($service));
-
-        $service->setUseOperatorUnits(false);
-        $this->assertEquals(false, Helper::getPrivateProperty(Service::class, 'useOperatorUnits')->getValue($service));
-    }
-
 
     public function testDoingRequest()
     {

@@ -12,6 +12,9 @@ namespace Yandex\Direct\Transport;
  */
 interface TransportInterface
 {
+    const SERVICE_REPORTS = 'Reports';
+    const SERVICE_AGENCY_CLIENTS = 'AgencyClients';
+
     /**
      * Request API.
      *

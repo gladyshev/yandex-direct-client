@@ -32,6 +32,16 @@ class Response implements ResponseInterface
     }
 
     /**
+     * @var string
+     */
+    protected $service;
+
+    /**
+     * @var string
+     */
+    protected $method;
+
+    /**
      * @var array
      */
     protected $units = [null, null, null];
@@ -45,6 +55,11 @@ class Response implements ResponseInterface
      * @var string
      */
     protected $body;
+
+    /**
+     * @var int
+     */
+    protected $code;
 
     /**
      * @var array
@@ -119,5 +134,26 @@ class Response implements ResponseInterface
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMethod()
+    {
+        return $this->headers;
+    }
+
+    public function getCode()
+    {
+        return $this->code;
     }
 }

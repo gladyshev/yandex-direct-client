@@ -14,8 +14,10 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^5.6||^7.0",
+    "ext-libxml": "*",
     "psr/log": "~1.0",
-    "guzzlehttp/guzzle": "~6.2"
+    "guzzlehttp/guzzle": "~6.2",
+    "openlss/lib-array2xml": "~0.5"
   },
   "require-dev": {
     "phpunit/phpunit": "~5.7|~6.0",
@@ -33,7 +35,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0-dev"
+      "dev-master": "2.1-dev"
     }
   },
   "scripts": {

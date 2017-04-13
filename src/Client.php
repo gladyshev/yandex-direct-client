@@ -20,6 +20,7 @@ use Yandex\Direct\Service\Clients;
 use Yandex\Direct\Service\Dictionaries;
 use Yandex\Direct\Service\DynamicTextAdTargets;
 use Yandex\Direct\Service\Keywords;
+use Yandex\Direct\Service\Reports;
 use Yandex\Direct\Service\RetargetingLists;
 use Yandex\Direct\Service\Sitelinks;
 use Yandex\Direct\Service\VCards;
@@ -45,6 +46,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @method Dictionaries dictionaries(array $options = [])
  * @method DynamicTextAdTargets dynamicTextAdsTargets(array $options = [])
  * @method Keywords keywords(array $options = [])
+ * @method Reports reports(array $options = [])
  * @method RetargetingLists retargetingLists(array $options = [])
  * @method Sitelinks sitelinks(array $options = [])
  * @method VCards vCards(array $options = [])
@@ -64,6 +66,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @property Dictionaries $dictionaries
  * @property DynamicTextAdTargets $dynamicTextAdsTargets
  * @property Keywords $keywords
+ * @property Reports $reports
  * @property RetargetingLists $retargetingLists
  * @property Sitelinks $sitelinks
  * @property VCards $vCards

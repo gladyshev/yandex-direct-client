@@ -46,7 +46,7 @@ class ServiceFactory implements ServiceFactoryInterface
                     "Service class `{$className}` is not instance of `" . Service::class . "`."
                 );
             }
-            $serviceOptions['name'] = $serviceName;
+            $serviceOptions['name'] = ucfirst($serviceName);
             $instance->setOptions($serviceOptions);
             return $instance;
         }

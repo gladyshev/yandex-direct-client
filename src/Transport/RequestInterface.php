@@ -19,13 +19,9 @@ interface RequestInterface
     const LANGUAGE_TR = 'tr';
     const LANGUAGE_UK = 'uk';
 
-    /**
-     * Build instance of request by array.
-     *
-     * @param array $requestAttributes
-     * @return RequestInterface
-     */
-    public static function fromArray(array $requestAttributes);
+    const PROCESSING_MODE_AUTO = 'auto';
+    const PROCESSING_MODE_OFFLINE = 'offline';
+    const PROCESSING_MODE_ONLINE = 'online';
 
     /**
      * API service name.
@@ -42,24 +38,23 @@ interface RequestInterface
     public function getMethod();
 
     /**
+     * Request payload.
+     *
      * @return array
      */
     public function getParams();
 
     /**
-     * @return bool
-     */
-    public function getUseOperatorUnits();
-
-    /**
+     * Credentials for transport authorization.
+     *
      * @return CredentialsInterface
      */
     public function getCredentials();
 
     /**
-     * Language of response messages.
+     * Yandex additional headers.
      *
-     * @return string
+     * @return array
      */
-    public function getLanguage();
+    public function getHeaders();
 }

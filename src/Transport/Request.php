@@ -8,7 +8,6 @@ namespace Yandex\Direct\Transport;
 
 use Yandex\Direct\ConfigurableTrait;
 use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\Exception\InvalidArgumentException;
 
 /**
  * Class TransportRequest
@@ -17,11 +16,6 @@ use Yandex\Direct\Exception\InvalidArgumentException;
 class Request implements RequestInterface
 {
     use ConfigurableTrait;
-
-    /**
-     * @var bool
-     */
-    protected $useOperatorUnits = true;
 
     /**
      * @var string
@@ -34,17 +28,11 @@ class Request implements RequestInterface
     protected $service;
 
     /**
-     * @var string
-     */
-    protected $language = self::LANGUAGE_RU;
-
-    /**
      * @var array
      */
     protected $params = [];
 
     /**
-     * Custom headers
      * @var array
      */
     protected $headers = [];
@@ -53,16 +41,6 @@ class Request implements RequestInterface
      * @var CredentialsInterface
      */
     protected $credentials;
-
-    /**
-     * @inheritdoc
-     */
-    public static function fromArray(array $requestAttributes)
-    {
-        $instance = new static;
-        $instance->setOptions($requestAttributes);
-        return $instance;
-    }
 
     /**
      * Request constructor.
@@ -98,23 +76,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return string
-     */
-    public function getUseOperatorUnits()
-    {
-        return $this->useOperatorUnits;
-    }
-
-    /**
-     * @param bool $useOperatorUnits
-     * @throws InvalidArgumentException
-     */
-    public function setUseOperatorUnits($useOperatorUnits)
-    {
-        $this->useOperatorUnits = $useOperatorUnits;
-    }
-
-    /**
      * @inheritdoc
      */
     public function getCredentials()
@@ -125,8 +86,8 @@ class Request implements RequestInterface
     /**
      * @inheritdoc
      */
-    public function getLanguage()
+    public function getHeaders()
     {
-        return $this->language;
+        return $this->headers;
     }
 }

@@ -9,6 +9,20 @@ namespace Yandex\Direct\Transport;
 interface ResponseInterface
 {
     /**
+     * API service name.
+     *
+     * @return string
+     */
+    public function getService();
+
+    /**
+     * Method name of service.
+     *
+     * @return string
+     */
+    public function getMethod();
+
+    /**
      * Returns API internal request ID.
      *
      * @return string
@@ -55,4 +69,9 @@ interface ResponseInterface
      * @return array
      */
     public function getHeaders();
+
+    /**
+     * @return int
+     */
+    public function getCode();
 }

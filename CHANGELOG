@@ -1,3 +1,7 @@
+2.1.0 - Reports service
+      - Unify with Report request and response interfaces
+      - Add service name and method name metadata into Response
+
 2.0.1 - Update examples
 
 2.0.0 - Transport and ServiceFactory refactoring
