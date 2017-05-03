@@ -14,7 +14,7 @@ use Yandex\Direct\Service;
 use Yandex\Direct\Transport\RequestInterface;
 use Yandex\Direct\Transport\TransportInterface;
 
-class ApiTest extends TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var Client
@@ -93,6 +93,7 @@ class ApiTest extends TestCase
             ['Dictionaries'],
             ['DynamicTextAdTargets'],
             ['Keywords'],
+            ['KeywordsResearch'],
             ['RetargetingLists'],
             ['Sitelinks'],
             ['VCards'],

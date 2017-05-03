@@ -67,6 +67,7 @@ class ServiceFactoryTest extends TestCase
             ['Dictionaries'],
             ['DynamicTextAdTargets'],
             ['Keywords'],
+            ['KeywordsResearch'],
             ['RetargetingLists'],
             ['Sitelinks'],
             ['VCards'],
