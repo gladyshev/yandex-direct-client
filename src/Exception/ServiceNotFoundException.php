@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct\Exception;
 
-
 class ServiceNotFoundException extends InvalidArgumentException
 {
 }

@@ -52,7 +52,6 @@ class ServiceFactory implements ServiceFactoryInterface
         }
 
         throw new ServiceNotFoundException("Service class `{$className}` is not found.");
-
     }
 
     public function setServiceNamespace($namespace)

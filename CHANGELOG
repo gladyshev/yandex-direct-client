@@ -1,3 +1,9 @@
+2.1.1 - KeywordBids added
+      - Leads added
+      - Codestyle fixes
+      - Test improvements
+      - Update dependencies
+
 2.1.0 - Reports service
       - Unify with Report request and response interfaces
       - Add service name and method name metadata into Response

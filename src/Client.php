@@ -19,6 +19,7 @@ use Yandex\Direct\Service\Changes;
 use Yandex\Direct\Service\Clients;
 use Yandex\Direct\Service\Dictionaries;
 use Yandex\Direct\Service\DynamicTextAdTargets;
+use Yandex\Direct\Service\KeywordBids;
 use Yandex\Direct\Service\Keywords;
 use Yandex\Direct\Service\KeywordsResearch;
 use Yandex\Direct\Service\Reports;
@@ -46,6 +47,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @method Changes changes(array $options = [])
  * @method Dictionaries dictionaries(array $options = [])
  * @method DynamicTextAdTargets dynamicTextAdsTargets(array $options = [])
+ * @method KeywordBids keywordBids(array $options = [])
  * @method Keywords keywords(array $options = [])
  * @method KeywordsResearch keywordsResearch(array $options = [])
  * @method Reports reports(array $options = [])
@@ -67,6 +69,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @property Changes $changes
  * @property Dictionaries $dictionaries
  * @property DynamicTextAdTargets $dynamicTextAdsTargets
+ * @property KeywordBids $keywordBids
  * @property Keywords $keywords
  * @property KeywordsResearch $keywordsResearch
  * @property Reports $reports

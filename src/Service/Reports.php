@@ -27,10 +27,19 @@ final class Reports extends Service
      * @return string
      * @see https://tech.yandex.ru/direct/doc/reports/spec-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $ReportName, $ReportType, $DateRangeType,
-                        $Page = null, $OrderBy = null,
-                        $IncludeVAT = 'YES', $IncludeDiscount = 'YES', $Format = 'TSV')
-    {
+    public function get(
+        $SelectionCriteria,
+        $FieldNames,
+        $ReportName,
+        $ReportType,
+        $DateRangeType,
+        $Page = null,
+        $OrderBy = null,
+        $IncludeVAT = 'YES',
+        $IncludeDiscount = 'YES',
+        $Format = 'TSV'
+    ) {
+    
         $params = [
             'SelectionCriteria' => $SelectionCriteria,
             'FieldNames' => $FieldNames,

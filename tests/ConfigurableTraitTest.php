@@ -22,10 +22,15 @@ class ConfigurableTraitTest extends TestCase
         $mock->setOptions(['incorrectName' => 100], false);
     }
 
+
     public function testSetOptionDoNotThrowsExceptionWithIgnoreFlag()
     {
         $mock = $this->buildConfigurableClass();
-        $mock->setOptions(['incorrectName' => 100], true);
+        try {
+            $this->assertNull($mock->setOptions(['incorrectName' => 100], true));
+        } catch (\Throwable $e) {
+            $this->fail('Exception is thrown, but should not.');
+        }
     }
 
 

@@ -38,6 +38,4 @@ interface ServiceInterface extends ConfigurableInterface
      * @throws Exception
      */
     public function request(array $params, array $headers = []);
-
-
 }
