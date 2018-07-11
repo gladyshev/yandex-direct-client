@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -25,6 +26,8 @@ final class Leads extends Service
      * @param array $FieldNames
      * @param array $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/leads/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)

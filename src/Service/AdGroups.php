@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class AdGroups extends Service
      *
      * @param $AdGroups
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/add-docpage/
      */
     public function add($AdGroups)
@@ -36,6 +39,8 @@ final class AdGroups extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -58,6 +63,8 @@ final class AdGroups extends Service
      * @param $DynamicTextFeedAdGroupFieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
     public function get(
@@ -100,6 +107,8 @@ final class AdGroups extends Service
      *
      * @param $AdGroups
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/update-docpage/
      */
     public function update($AdGroups)

@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -20,6 +21,8 @@ final class Changes extends Service
      *
      * @param $Timestamp
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkDictionaries-docpage/
      */
     public function checkDictionaries($Timestamp)
@@ -37,6 +40,8 @@ final class Changes extends Service
      *
      * @param $Timestamp
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkCampaigns-docpage/
      */
     public function checkCampaigns($Timestamp)
@@ -58,6 +63,8 @@ final class Changes extends Service
      * @param $AdGroupIds
      * @param $AdIds
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/check-docpage/
      */
     public function check($Timestamp, $FieldNames, $CampaignIds = null, $AdGroupIds = null, $AdIds = null)

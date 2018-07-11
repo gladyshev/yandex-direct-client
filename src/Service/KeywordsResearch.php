@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 class KeywordsResearch extends Service
@@ -17,6 +18,8 @@ class KeywordsResearch extends Service
      * @param $SelectionCriteria
      * @param $FieldNames
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordsresearch/hasSearchVolume-docpage/
      */
     public function hasSearchVolume($SelectionCriteria, $FieldNames)

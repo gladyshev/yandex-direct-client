@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class VCards extends Service
      *
      * @param $VCards
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/add-docpage/
      */
     public function add($VCards)
@@ -36,6 +39,8 @@ final class VCards extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -55,6 +60,8 @@ final class VCards extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)

@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class AdExtensions extends Service
      *
      * @param $AdExtensions
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/add-docpage/
      */
     public function add($AdExtensions)
@@ -36,6 +39,8 @@ final class AdExtensions extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -56,6 +61,8 @@ final class AdExtensions extends Service
      * @param $CalloutFieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $CalloutFieldNames = null, $Page = null)

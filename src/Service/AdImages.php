@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class AdImages extends Service
      *
      * @param $AdImages
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/add-docpage/
      */
     public function add($AdImages)
@@ -36,6 +39,8 @@ final class AdImages extends Service
      *
      * @param $SelectionCriteria
      * @return mixed
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -55,6 +60,8 @@ final class AdImages extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)

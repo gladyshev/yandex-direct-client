@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class AudienceTargets extends Service
      *
      * @param $AudienceTargets
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/add-docpage/
      */
     public function add($AudienceTargets)
@@ -36,6 +39,8 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -55,6 +60,8 @@ final class AudienceTargets extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)
@@ -79,6 +86,8 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/resume-docpage/
      */
     public function resume($SelectionCriteria)
@@ -96,6 +105,8 @@ final class AudienceTargets extends Service
      *
      * @param $Bids
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/setBids-docpage/
      */
     public function setBids($Bids)
@@ -113,6 +124,8 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/suspend-docpage/
      */
     public function suspend($SelectionCriteria)

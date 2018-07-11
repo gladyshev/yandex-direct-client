@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -18,6 +19,8 @@ final class Campaigns extends Service
     /**
      * @param array $Campaigns
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-text-campaign-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-dynamic-text-campaign-docpage/
@@ -36,6 +39,8 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/archive-docpage/
      */
     public function archive($SelectionCriteria)
@@ -51,6 +56,8 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -71,6 +78,8 @@ final class Campaigns extends Service
      * @param array $DynamicTextCampaignFieldNames
      * @param array $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/get-docpage/
      */
     public function get(
@@ -111,6 +120,8 @@ final class Campaigns extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/resume-docpage/
      */
     public function resume($SelectionCriteria)
@@ -126,6 +137,8 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
@@ -141,6 +154,8 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/unarchive-docpage/
      */
     public function unarchive($SelectionCriteria)
@@ -156,6 +171,8 @@ final class Campaigns extends Service
     /**
      * @param array $Campaigns
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-text-campaign-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-dynamic-text-campaign-docpage/

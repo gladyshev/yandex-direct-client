@@ -2,6 +2,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -25,6 +26,8 @@ final class Reports extends Service
      * @param $Page
      * @param $OrderBy
      * @return string
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/reports/spec-docpage/
      */
     public function get(

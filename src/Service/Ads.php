@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -17,6 +18,8 @@ final class Ads extends Service
     /**
      * @param $Ads
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/add-docpage/
      */
     public function add($Ads)
@@ -32,6 +35,8 @@ final class Ads extends Service
     /**
      * @param $Ads
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/update-docpage/
      */
     public function update($Ads)
@@ -47,6 +52,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -62,6 +69,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
@@ -77,6 +86,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/resume-docpage/
      */
     public function resume($SelectionCriteria)
@@ -92,6 +103,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/archive-docpage/
      */
     public function archive($SelectionCriteria)
@@ -107,6 +120,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/unarchive-docpage/
      */
     public function unarchive($SelectionCriteria)
@@ -122,6 +137,8 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/moderate-docpage/
      */
     public function moderate($SelectionCriteria)
@@ -147,6 +164,8 @@ final class Ads extends Service
      * @param $MobileAppImageAdFieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/get-docpage/
      */
     public function get(

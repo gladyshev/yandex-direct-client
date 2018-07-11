@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -30,6 +31,8 @@ final class KeywordBids extends Service
      * @param array $NetworkFieldNames
      * @param array $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/get-docpage/
      */
     public function get(
@@ -67,12 +70,34 @@ final class KeywordBids extends Service
      *
      * @param array $KeywordBids
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/set-docpage/
      */
     public function set($KeywordBids)
     {
         return $this->request([
             'method' => 'set',
+            'params' => [
+                'KeywordBids' => $KeywordBids
+            ]
+        ]);
+    }
+
+    /**
+     * Назначает для фраз ставки на поиске в зависимости от желаемого объема трафика или ставки в сетях в зависимости
+     * от желаемой частоты показа (доли аудитории).
+     *
+     * @param array $KeywordBids
+     * @return array
+     * @throws Exception
+     *
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/setAuto-docpage/
+     */
+    public function setAuto($KeywordBids)
+    {
+        return $this->request([
+            'method' => 'setAuto',
             'params' => [
                 'KeywordBids' => $KeywordBids
             ]

@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -17,8 +18,10 @@ final class Sitelinks extends Service
     /**
      * Создает наборы быстрых ссылок.
      *
-     * @param SitelinksSets
+     * @param $SitelinksSets
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/add-docpage/
      */
     public function add($SitelinksSets)
@@ -36,6 +39,8 @@ final class Sitelinks extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -55,6 +60,8 @@ final class Sitelinks extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)

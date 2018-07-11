@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -19,6 +20,8 @@ final class BidModifiers extends Service
      *
      * @param $BidModifiers
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/add-docpage/
      */
     public function add($BidModifiers)
@@ -35,7 +38,9 @@ final class BidModifiers extends Service
      * Удаляет корректировки ставок.
      *
      * @param $SelectionCriteria
-     * @return mixed
+     * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -58,6 +63,8 @@ final class BidModifiers extends Service
      * @param $RetargetingAdjustmentFieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/get-docpage/
      */
     public function get(
@@ -100,6 +107,8 @@ final class BidModifiers extends Service
      *
      * @param $BidModifiers
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/set-docpage/
      */
     public function setAuto($BidModifiers)
@@ -117,6 +126,8 @@ final class BidModifiers extends Service
      *
      * @param $BidModifierToggleItems
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/toggle-docpage/
      */
     public function toggle($BidModifierToggleItems)

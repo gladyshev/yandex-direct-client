@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 final class AgencyClients extends Service
@@ -18,6 +19,8 @@ final class AgencyClients extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/get-docpage
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)

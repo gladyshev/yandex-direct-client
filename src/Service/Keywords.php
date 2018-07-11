@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
 /**
@@ -17,8 +18,10 @@ final class Keywords extends Service
     /**
      * Создает ключевые фразы.
      *
-     * @param $Keywords
+     * @param array $Keywords
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/add-docpage/
      */
     public function add($Keywords)
@@ -34,8 +37,10 @@ final class Keywords extends Service
     /**
      * Удаляет ключевые фразы.
      *
-     * @param $SelectionCriteria
-     * @return mixed
+     * @param array $SelectionCriteria
+     * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/delete-docpage/
      */
     public function delete($SelectionCriteria)
@@ -52,10 +57,12 @@ final class Keywords extends Service
      * Возвращает параметры ключевых фраз, отвечающих заданным критериям: значения подстановочных переменных,
      * статус и состояние, продуктивность, статистику показов и кликов, ставки и приоритеты.
      *
-     * @param $SelectionCriteria
-     * @param $FieldNames
-     * @param $Page
+     * @param array $SelectionCriteria
+     * @param array $FieldNames
+     * @param array $Page
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)
@@ -78,8 +85,9 @@ final class Keywords extends Service
     /**
      * Возобновляет показы по ранее остановленным ключевым фразам.
      *
-     * @param $SelectionCriteria
+     * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/resume-docpage/
      */
     public function resume($SelectionCriteria)
@@ -95,8 +103,10 @@ final class Keywords extends Service
     /**
      * Останавливает показы по ключевым фразам.
      *
-     * @param $SelectionCriteria
+     * @param array $SelectionCriteria
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
@@ -112,8 +122,10 @@ final class Keywords extends Service
     /**
      * Изменяет параметры фраз.
      *
-     * @param $Keywords
+     * @param array $Keywords
      * @return array
+     * @throws Exception
+     *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/update-docpage/
      */
     public function update($Keywords)
