@@ -1,4 +1,9 @@
-2.1.1 - KeywordBids added
+2.2.3 - KeywordBids setAuto method
+      - Update phpdoc codestyle
+
+2.2.2 - Remove lockfile
+
+2.2.1 - KeywordBids added
       - Leads added
       - Codestyle fixes
       - Test improvements
