@@ -25,6 +25,7 @@ class ServiceFactory implements ServiceFactoryInterface
 
     /**
      * @inheritdoc
+     * @throws InvalidArgumentException
      */
     public function createService($serviceName, array $serviceOptions = [])
     {
@@ -39,26 +40,35 @@ class ServiceFactory implements ServiceFactoryInterface
 
         $className = $this->getServiceNamespace() . '\\' . ucfirst($serviceName);
 
-        if (class_exists($className)) {
-            $instance = new $className;
-            if (!$instance instanceof Service) {
-                throw new ServiceNotFoundException(
-                    "Service class `{$className}` is not instance of `" . Service::class . "`."
-                );
-            }
-            $serviceOptions['name'] = ucfirst($serviceName);
-            $instance->setOptions($serviceOptions);
-            return $instance;
+        if (!class_exists($className)) {
+            throw new ServiceNotFoundException("Service class `{$className}` is not found.");
         }
 
-        throw new ServiceNotFoundException("Service class `{$className}` is not found.");
+        $instance = new $className;
+
+        if (!$instance instanceof Service) {
+            throw new ServiceNotFoundException(
+                "Service class `{$className}` is not instance of `" . Service::class . "`."
+            );
+        }
+
+        $serviceOptions['name'] = ucfirst($serviceName);
+        $instance->setOptions($serviceOptions);
+
+        return $instance;
     }
 
+    /**
+     * @param string $namespace
+     */
     public function setServiceNamespace($namespace)
     {
         $this->serviceNamespace = $namespace;
     }
 
+    /**
+     * @return string
+     */
     protected function getServiceNamespace()
     {
         return $this->serviceNamespace;

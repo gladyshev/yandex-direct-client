@@ -82,6 +82,7 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
      * JsonTransport constructor.
      *
      * @param array $options
+     * @throws InvalidArgumentException
      */
     public function __construct(array $options = [])
     {

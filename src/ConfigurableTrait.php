@@ -15,6 +15,11 @@ use Yandex\Direct\Exception\InvalidArgumentException;
 
 trait ConfigurableTrait
 {
+    /**
+     * @param array $options
+     * @param bool $ignoreMissingOptions
+     * @throws InvalidArgumentException
+     */
     public function setOptions(array $options, $ignoreMissingOptions = false)
     {
         foreach ($options as $option => $value) {

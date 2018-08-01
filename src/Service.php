@@ -47,6 +47,8 @@ abstract class Service implements ServiceInterface
 
     /**
      * @inheritdoc
+     * @throws ErrorResponseException
+     * @throws \Throwable
      */
     public function request(array $params, array $headers = [])
     {
@@ -157,6 +159,11 @@ abstract class Service implements ServiceInterface
         return $this;
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     * @throws ErrorResponseException
+     */
     protected function handleResponse(ResponseInterface $response)
     {
         $result = json_decode($response->getBody(), true);
@@ -186,6 +193,12 @@ abstract class Service implements ServiceInterface
         return $result;
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return array|\DOMDocument
+     * @throws ErrorResponseException
+     * @throws \Throwable
+     */
     protected function handleReportsResponse(ResponseInterface $response)
     {
         if ($response->getCode() >= 500) {

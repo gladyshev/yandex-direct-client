@@ -15,6 +15,8 @@
   "require": {
     "php": "^5.6||^7.0",
     "ext-libxml": "*",
+    "ext-json":"*",
+    "ext-dom":"*",
     "psr/log": "~1.0",
     "guzzlehttp/guzzle": "~6.2",
     "openlss/lib-array2xml": "~0.5"
