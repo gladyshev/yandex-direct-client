@@ -16,6 +16,7 @@ final class Reports extends Service
      * Спецификация отчета.
      *
      * @param $SelectionCriteria
+     * @param $Goals
      * @param $FieldNames
      * @param $ReportName
      * @param $ReportType
@@ -32,6 +33,7 @@ final class Reports extends Service
      */
     public function get(
         $SelectionCriteria,
+        $Goals,
         $FieldNames,
         $ReportName,
         $ReportType,
@@ -45,6 +47,7 @@ final class Reports extends Service
     
         $params = [
             'SelectionCriteria' => $SelectionCriteria,
+            'Goals' => $Goals,
             'FieldNames' => $FieldNames,
             'Page' => $Page,
             'OrderBy' => $OrderBy,
