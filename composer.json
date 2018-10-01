@@ -1,5 +1,5 @@
 {
-  "name": "isypov-andrey/yandex-direct-client",
+  "name": "gladyshev/yandex-direct-client",
   "keywords": ["yandex", "direct", "yandex.direct", "client", "api"],
   "description": "Useful Yandex.Direct API client.",
   "type": "library",
