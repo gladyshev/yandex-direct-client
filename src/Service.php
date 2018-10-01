@@ -216,7 +216,7 @@ abstract class Service implements ServiceInterface
             'request_id' => $response->getRequestId()
         ];
 
-        if ($response->getCode() == 201) {
+        if ($response->getCode() == 201 || $response->getCode() == 202) {
             $result['retryIn'] = $response->getHeaders()['retryIn'];
             return $result;
         }
