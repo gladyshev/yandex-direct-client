@@ -94,7 +94,7 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
      */
     public function getServiceUrl($serviceName)
     {
-        if (isset($this->serviceUrls[$serviceName])) {
+        if (array_key_exists($serviceName, $this->serviceUrls)) {
             // If service url is absolute
             if (preg_match('#http[s]*://#u', $this->serviceUrls[$serviceName])) {
                 return $this->serviceUrls[$serviceName];
@@ -142,8 +142,8 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
                 'headers' => $httpResponse->getHeaders(),
                 'body' => $httpResponse->getBody()->__toString(),
                 'code' => $httpResponse->getStatusCode(),
-                'requestId' => isset($httpResponseHeaders['RequestId']) ? current($httpResponseHeaders['RequestId']) : null,
-                'units' => isset($httpResponseHeaders['Units']) ? current($httpResponseHeaders['Units']) : null
+                'requestId' => array_key_exists('RequestId', $httpResponseHeaders) ? current($httpResponseHeaders['RequestId']) : null,
+                'units' => array_key_exists('Units', $httpResponseHeaders) ? current($httpResponseHeaders['Units']) : null
             ]);
         } catch (RequestException $e) {
             $this->getLogger()->error("Transport error: {$e->getMessage()} [CODE: {$e->getCode()}]");
@@ -233,6 +233,7 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
     /**
      * @param RequestInterface $request
      * @return string
+     * @throws InvalidArgumentException
      */
     private function prepareBody(RequestInterface $request)
     {
@@ -271,8 +272,6 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
         if ($this->enableReportValidation) {
             $this->validateReportXml($xml);
         }
-
-//        var_dump(trim($xml->saveXML())); die;
 
         return str_replace(PHP_EOL, '', $xml->saveXML());
     }
