@@ -18,6 +18,9 @@ $report = $client->reports->get(
         ]
     ],
 
+    /* Goals */
+    ['20002', '20003'],
+
     /* Field names */
     ['Date', 'Clicks', 'Cost', 'AdNetworkType'],
 
