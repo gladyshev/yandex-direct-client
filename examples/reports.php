@@ -18,9 +18,6 @@ $report = $client->reports->get(
         ]
     ],
 
-    /* Goals */
-    ['20002', '20003'],
-
     /* Field names */
     ['Date', 'Clicks', 'Cost', 'AdNetworkType'],
 
@@ -41,6 +38,9 @@ $report = $client->reports->get(
 
     /* Include VAT, Include discount, Format */
     'NO', 'NO', 'TSV'
+
+    /* Goals */
+    ['20002', '20003'],
 );
 
 
