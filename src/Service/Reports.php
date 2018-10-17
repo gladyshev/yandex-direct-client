@@ -42,7 +42,7 @@ final class Reports extends Service
         $IncludeVAT = 'YES',
         $IncludeDiscount = 'YES',
         $Format = 'TSV',
-        $Goals = [],
+        $Goals = []
     ) {
     
         $params = [
