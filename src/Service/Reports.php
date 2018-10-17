@@ -33,7 +33,6 @@ final class Reports extends Service
      */
     public function get(
         $SelectionCriteria,
-        $Goals,
         $FieldNames,
         $ReportName,
         $ReportType,
@@ -42,12 +41,12 @@ final class Reports extends Service
         $OrderBy = null,
         $IncludeVAT = 'YES',
         $IncludeDiscount = 'YES',
-        $Format = 'TSV'
+        $Format = 'TSV',
+        $Goals = [],
     ) {
     
         $params = [
             'SelectionCriteria' => $SelectionCriteria,
-            'Goals' => $Goals,
             'FieldNames' => $FieldNames,
             'Page' => $Page,
             'OrderBy' => $OrderBy,
@@ -58,6 +57,10 @@ final class Reports extends Service
             'IncludeVAT' => $IncludeVAT, 
             'IncludeDiscount' => $IncludeDiscount,
         ];
+
+        if (!empty($Goals)) {
+            $params['Goals'] = $Goals;
+        }
 
         if ($Page) {
             $params['Page'] = $Page;
