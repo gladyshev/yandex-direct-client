@@ -37,10 +37,10 @@ $report = $client->reports->get(
     ['Field' => 'Date'],
 
     /* Include VAT, Include discount, Format */
-    'NO', 'NO', 'TSV'
+    'NO', 'NO', 'TSV',
 
     /* Goals */
-    ['20002', '20003'],
+    ['20002', '20003']
 );
 
 
