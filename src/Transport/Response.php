@@ -149,7 +149,7 @@ class Response implements ResponseInterface
      */
     public function getMethod()
     {
-        return $this->headers;
+        return $this->method;
     }
 
     public function getCode()
