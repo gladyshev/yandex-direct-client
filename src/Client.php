@@ -25,6 +25,7 @@ use Yandex\Direct\Service\KeywordsResearch;
 use Yandex\Direct\Service\Reports;
 use Yandex\Direct\Service\RetargetingLists;
 use Yandex\Direct\Service\Sitelinks;
+use Yandex\Direct\Service\TurboPages;
 use Yandex\Direct\Service\VCards;
 use Yandex\Direct\Transport\TransportInterface;
 
@@ -53,6 +54,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @method Reports reports(array $options = [])
  * @method RetargetingLists retargetingLists(array $options = [])
  * @method Sitelinks sitelinks(array $options = [])
+ * @method TurboPages turboPages(array $options = [])
  * @method VCards vCards(array $options = [])
  *
  * Aliases (sugar)
@@ -75,6 +77,7 @@ use Yandex\Direct\Transport\TransportInterface;
  * @property Reports $reports
  * @property RetargetingLists $retargetingLists
  * @property Sitelinks $sitelinks
+ * @property TurboPages $turboPages
  * @property VCards $vCards
  */
 class Client

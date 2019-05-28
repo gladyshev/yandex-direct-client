@@ -53,29 +53,7 @@ class ServiceFactoryTest extends TestCase
 
     public function providerYandexServices()
     {
-        return [
-            ['AdExtensions'],
-            ['AdGroups'],
-            ['AdImages'],
-            ['Ads'],
-            ['AgencyClients'],
-            ['AudienceTargets'],
-            ['BidModifiers'],
-            ['Bids'],
-            ['Campaigns'],
-            ['Changes'],
-            ['Clients'],
-            ['Dictionaries'],
-            ['DynamicTextAdTargets'],
-            ['KeywordBids'],
-            ['Keywords'],
-            ['KeywordsResearch'],
-            ['Leads'],
-            ['Reports'],
-            ['RetargetingLists'],
-            ['Sitelinks'],
-            ['VCards'],
-        ];
+        return Helper::getServicesDataset();
     }
 }
 

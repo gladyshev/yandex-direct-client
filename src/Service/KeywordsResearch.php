@@ -9,7 +9,7 @@ namespace Yandex\Direct\Service;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 
-class KeywordsResearch extends Service
+final class KeywordsResearch extends Service
 {
     /**
      * Для заданных ключевых фраз и регионов формирует предварительный прогноз наличия показов по этим фразам в

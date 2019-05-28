@@ -79,25 +79,7 @@ class ClientTest extends TestCase
 
     public function providerYandexServices()
     {
-        return [
-            ['AdExtensions'],
-            ['AdGroups'],
-            ['AdImages'],
-            ['Ads'],
-            ['AgencyClients'],
-            ['AudienceTargets'],
-            ['BidModifiers'],
-            ['Bids'],
-            ['Campaigns'],
-            ['Changes'],
-            ['Dictionaries'],
-            ['DynamicTextAdTargets'],
-            ['Keywords'],
-            ['KeywordsResearch'],
-            ['RetargetingLists'],
-            ['Sitelinks'],
-            ['VCards'],
-        ];
+        return Helper::getServicesDataset();
     }
 }
 
