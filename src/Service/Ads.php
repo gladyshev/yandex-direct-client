@@ -187,8 +187,7 @@ final class Ads extends Service
         $CpmBannerAdBuilderAdFieldNames = null,
         $CpmVideoAdBuilderAdFieldNames = null,
         $Page = null
-    )
-    {
+    ) {
         $params = [
             'SelectionCriteria' => $SelectionCriteria,
             'FieldNames' => $FieldNames
