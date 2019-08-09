@@ -76,6 +76,7 @@ final class Campaigns extends Service
      * @param array $TextCampaignFieldNames
      * @param array $MobileAppCampaignFieldNames
      * @param array $DynamicTextCampaignFieldNames
+     * @param array $CpmBannerCampaignFieldNames
      * @param array $Page
      * @return array
      * @throws Exception
@@ -88,6 +89,7 @@ final class Campaigns extends Service
         $TextCampaignFieldNames = null,
         $MobileAppCampaignFieldNames = null,
         $DynamicTextCampaignFieldNames = null,
+        $CpmBannerCampaignFieldNames = null,
         $Page = null
     ) {
         $params = [
@@ -105,6 +107,10 @@ final class Campaigns extends Service
 
         if ($DynamicTextCampaignFieldNames) {
             $params['DynamicTextCampaignFieldNames'] = $DynamicTextCampaignFieldNames;
+        }
+
+        if ($CpmBannerCampaignFieldNames) {
+            $params['CpmBannerCampaignFieldNames'] = $CpmBannerCampaignFieldNames;
         }
 
         if ($Page) {
