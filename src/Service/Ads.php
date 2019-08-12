@@ -162,6 +162,11 @@ final class Ads extends Service
      * @param $DynamicTextAdFieldNames
      * @param $TextImageAdFieldNames
      * @param $MobileAppImageAdFieldNames
+     * @param $TextAdBuilderAdFieldNames
+     * @param $MobileAppAdBuilderAdFieldNames
+     * @param $CpcVideoAdBuilderAdFieldNames
+     * @param $CpmBannerAdBuilderAdFieldNames
+     * @param $CpmVideoAdBuilderAdFieldNames
      * @param $Page
      * @return array
      * @throws Exception
@@ -176,6 +181,11 @@ final class Ads extends Service
         $DynamicTextAdFieldNames = null,
         $TextImageAdFieldNames = null,
         $MobileAppImageAdFieldNames = null,
+        $TextAdBuilderAdFieldNames = null,
+        $MobileAppAdBuilderAdFieldNames = null,
+        $CpcVideoAdBuilderAdFieldNames = null,
+        $CpmBannerAdBuilderAdFieldNames = null,
+        $CpmVideoAdBuilderAdFieldNames = null,
         $Page = null
     ) {
         $params = [
@@ -201,6 +211,26 @@ final class Ads extends Service
 
         if ($MobileAppImageAdFieldNames) {
             $params['MobileAppImageAdFieldNames'] = $MobileAppImageAdFieldNames;
+        }
+
+        if ($TextAdBuilderAdFieldNames) {
+            $params['TextAdBuilderAdFieldNames'] = $TextAdBuilderAdFieldNames;
+        }
+
+        if ($MobileAppAdBuilderAdFieldNames) {
+            $params['MobileAppAdBuilderAdFieldNames'] = $MobileAppAdBuilderAdFieldNames;
+        }
+
+        if ($CpcVideoAdBuilderAdFieldNames) {
+            $params['CpcVideoAdBuilderAdFieldNames'] = $CpcVideoAdBuilderAdFieldNames;
+        }
+
+        if ($CpmBannerAdBuilderAdFieldNames) {
+            $params['CpmBannerAdBuilderAdFieldNames'] = $CpmBannerAdBuilderAdFieldNames;
+        }
+
+        if ($CpmVideoAdBuilderAdFieldNames) {
+            $params['CpmVideoAdBuilderAdFieldNames'] = $CpmVideoAdBuilderAdFieldNames;
         }
 
         if ($Page) {
