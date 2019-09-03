@@ -39,4 +39,22 @@ final class AgencyClients extends Service
             'params' => $params
         ]);
     }
+
+    /**
+     * Регистрирует новых рекламодателей — клиентов агентства,
+     * а также пользователей — главных представителей рекламодателя.
+     *
+     * @param $AgencyClient
+     * @return array
+     * @throws Exception
+     *
+     * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/add-docpage/
+     */
+    public function add($AgencyClient)
+    {
+        return $this->request([
+            'method' => 'add',
+            'params' => $AgencyClient
+        ]);
+    }
 }
