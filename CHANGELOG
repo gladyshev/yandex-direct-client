@@ -1,3 +1,8 @@
+3.0.1 - AgencyClients add and update methods
+      - Codestyle fixes
+
+3.0.0 - New parameters to Ads and Campaign services
+
 2.5.0 - Add TurboPages service mapping
 
 2.4.0 - Fix bc for report service
