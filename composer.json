@@ -28,7 +28,10 @@
   "autoload": {
     "psr-4": {
       "Yandex\\Direct\\": "src/"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

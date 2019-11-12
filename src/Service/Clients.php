@@ -33,4 +33,25 @@ final class Clients extends Service
             ]
         ]);
     }
+
+    /**
+     * Изменяет параметры рекламодателя и настройки пользователя — представителя рекламодателя.
+     *
+     * @param $Clients
+     * @return array
+     *
+     * @throws Exception
+     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     *
+     * @see https://yandex.ru/dev/direct/doc/ref-v5/clients/update-docpage/
+     */
+    public function update($Clients)
+    {
+        return $this->request([
+            'method' => 'update',
+            'params' => [
+                'Clients' => $Clients
+            ]
+        ]);
+    }
 }

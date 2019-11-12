@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class DynamicTextAdTargets
@@ -61,20 +62,15 @@ final class DynamicTextAdTargets extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     *
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)
     {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames,
-        ];
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

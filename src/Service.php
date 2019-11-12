@@ -48,7 +48,7 @@ abstract class Service implements ServiceInterface
     /**
      * @inheritdoc
      * @throws ErrorResponseException
-     * @throws \Throwable
+     * @throws \Exception
      */
     public function request(array $params, array $headers = [])
     {
@@ -57,7 +57,7 @@ abstract class Service implements ServiceInterface
         $response = $this->getTransport()->request(new Request([
             'service' => $this->getName(),
             'credentials' => $this->getCredentials(),
-            'params' => $params,
+            'params' => filter_params($params),
             'headers' => array_merge($this->headers, $headers),
         ]));
 
@@ -197,7 +197,7 @@ abstract class Service implements ServiceInterface
      * @param ResponseInterface $response
      * @return array|\DOMDocument
      * @throws ErrorResponseException
-     * @throws \Throwable
+     * @throws \Exception
      */
     protected function handleReportsResponse(ResponseInterface $response)
     {
@@ -216,7 +216,9 @@ abstract class Service implements ServiceInterface
             'request_id' => $response->getRequestId()
         ];
 
-        if ($response->getCode() == 201 || $response->getCode() == 202) {
+        if ($response->getCode() == 201
+            || $response->getCode() == 202
+        ) {
             $result['retryIn'] = $response->getHeaders()['retryIn'];
             return $result;
         }

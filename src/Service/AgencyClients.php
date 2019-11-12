@@ -9,6 +9,8 @@ namespace Yandex\Direct\Service;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 use Throwable;
+use function Yandex\Direct\filter_params;
+use function Yandex\Direct\get_param_names;
 
 final class AgencyClients extends Service
 {
@@ -28,11 +30,7 @@ final class AgencyClients extends Service
     {
         return $this->request([
             'method' => 'get',
-            'params' => array_filter([
-                'SelectionCriteria' => $SelectionCriteria,
-                'FieldNames' => $FieldNames,
-                'Page' => $Page
-            ])
+            'params' => array_filter(compact(get_param_names(__METHOD__)))
         ]);
     }
 
@@ -55,17 +53,11 @@ final class AgencyClients extends Service
      */
     public function add($Login, $FirstName, $LastName, $Currency, $Notification, $Grants = null, $Settings = null)
     {
+        $params = compact(get_param_names(__METHOD__));
+
         return $this->request([
             'method' => 'add',
-            'params' => array_filter([
-                'Login' => $Login,
-                'FirstName' => $FirstName,
-                'LastName' => $LastName,
-                'Currency' => $Currency,
-                'Grants' => $Grants,
-                'Notification' => $Notification,
-                'Setting' => $Settings
-            ])
+            'params' => $params
         ]);
     }
 

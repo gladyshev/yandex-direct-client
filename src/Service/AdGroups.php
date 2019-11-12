@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class AdGroups
@@ -63,7 +64,9 @@ final class AdGroups extends Service
      * @param $DynamicTextFeedAdGroupFieldNames
      * @param $Page
      * @return array
+     *
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
@@ -75,26 +78,7 @@ final class AdGroups extends Service
         $DynamicTextFeedAdGroupFieldNames = null,
         $Page = null
     ) {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames
-        ];
-
-        if ($MobileAppAdGroupFieldNames) {
-            $params['MobileAppAdGroupFieldNames'] = $MobileAppAdGroupFieldNames;
-        }
-
-        if ($DynamicTextAdGroupFieldNames) {
-            $params['DynamicTextAdGroupFieldNames'] = $DynamicTextAdGroupFieldNames;
-        }
-
-        if ($DynamicTextFeedAdGroupFieldNames) {
-            $params['DynamicTextFeedAdGroupFieldNames'] = $DynamicTextFeedAdGroupFieldNames;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

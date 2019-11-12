@@ -4,6 +4,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class Reports
@@ -27,7 +28,9 @@ final class Reports extends Service
      * @param $Page
      * @param $OrderBy
      * @return string
+     *
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/reports/spec-docpage/
      */
@@ -44,35 +47,7 @@ final class Reports extends Service
         $Format = 'TSV',
         $Goals = []
     ) {
-    
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames,
-            'Page' => $Page,
-            'OrderBy' => $OrderBy,
-            'ReportName' => $ReportName, 
-            'ReportType' => $ReportType, 
-            'DateRangeType' => $DateRangeType,
-            'Format' => $Format,
-            'IncludeVAT' => $IncludeVAT, 
-            'IncludeDiscount' => $IncludeDiscount,
-        ];
-
-        if (!empty($Goals)) {
-            $params['Goals'] = $Goals;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        } else {
-            unset($params['Page']);
-        }
-
-        if ($OrderBy) {
-            $params['OrderBy'] = $OrderBy;
-        } else {
-            unset($params['OrderBy']);
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'params' => $params

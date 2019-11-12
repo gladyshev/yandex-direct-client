@@ -32,4 +32,27 @@ final class KeywordsResearch extends Service
             ]
         ]);
     }
+
+    /**
+     * Выполняет предварительную обработку массива ключевых фраз.
+     *
+     * @param $Keywords
+     * @param null $Operation
+     * @return array|\DOMDocument
+     *
+     * @throws Exception
+     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     *
+     * @see https://yandex.ru/dev/direct/doc/ref-v5/keywordsresearch/deduplicate-docpage/
+     */
+    public function deduplicate($Keywords, $Operation = null)
+    {
+        return $this->request([
+            'method' => 'hasSearchVolume',
+            'params' => [
+                'Keywords' => $Keywords,
+                'Operation' => $Operation
+            ]
+        ]);
+    }
 }

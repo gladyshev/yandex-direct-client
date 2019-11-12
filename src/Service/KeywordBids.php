@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class KeywordBids
@@ -32,6 +33,7 @@ final class KeywordBids extends Service
      * @param array $Page
      * @return array
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/get-docpage/
      */
@@ -42,22 +44,7 @@ final class KeywordBids extends Service
         $NetworkFieldNames = null,
         $Page = null
     ) {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames,
-        ];
-
-        if ($SearchFieldNames) {
-            $params['SearchFieldNames'] = $SearchFieldNames;
-        }
-
-        if ($NetworkFieldNames) {
-            $params['NetworkFieldNames'] = $NetworkFieldNames;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

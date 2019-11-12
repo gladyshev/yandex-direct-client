@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class Ads
@@ -170,6 +171,7 @@ final class Ads extends Service
      * @param $Page
      * @return array
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/get-docpage/
      */
@@ -188,54 +190,7 @@ final class Ads extends Service
         $CpmVideoAdBuilderAdFieldNames = null,
         $Page = null
     ) {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames
-        ];
-
-        if ($TextAdFieldNames) {
-            $params['TextAdFieldNames'] = $TextAdFieldNames;
-        }
-
-        if ($MobileAppAdFieldNames) {
-            $params['MobileAppAdFieldNames'] = $MobileAppAdFieldNames;
-        }
-
-        if ($DynamicTextAdFieldNames) {
-            $params['DynamicTextAdFieldNames'] = $DynamicTextAdFieldNames;
-        }
-
-        if ($TextImageAdFieldNames) {
-            $params['TextImageAdFieldNames'] = $TextImageAdFieldNames;
-        }
-
-        if ($MobileAppImageAdFieldNames) {
-            $params['MobileAppImageAdFieldNames'] = $MobileAppImageAdFieldNames;
-        }
-
-        if ($TextAdBuilderAdFieldNames) {
-            $params['TextAdBuilderAdFieldNames'] = $TextAdBuilderAdFieldNames;
-        }
-
-        if ($MobileAppAdBuilderAdFieldNames) {
-            $params['MobileAppAdBuilderAdFieldNames'] = $MobileAppAdBuilderAdFieldNames;
-        }
-
-        if ($CpcVideoAdBuilderAdFieldNames) {
-            $params['CpcVideoAdBuilderAdFieldNames'] = $CpcVideoAdBuilderAdFieldNames;
-        }
-
-        if ($CpmBannerAdBuilderAdFieldNames) {
-            $params['CpmBannerAdBuilderAdFieldNames'] = $CpmBannerAdBuilderAdFieldNames;
-        }
-
-        if ($CpmVideoAdBuilderAdFieldNames) {
-            $params['CpmVideoAdBuilderAdFieldNames'] = $CpmVideoAdBuilderAdFieldNames;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

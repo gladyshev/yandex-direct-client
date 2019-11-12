@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class Changes
@@ -64,27 +65,13 @@ final class Changes extends Service
      * @param $AdIds
      * @return array
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/check-docpage/
      */
     public function check($Timestamp, $FieldNames, $CampaignIds = null, $AdGroupIds = null, $AdIds = null)
     {
-        $params = [
-            'Timestamp' => $Timestamp,
-            'FieldNames' => $FieldNames
-        ];
-
-        if ($CampaignIds) {
-            $params['CampaignIds'] = $CampaignIds;
-        }
-
-        if ($AdGroupIds) {
-            $params['AdGroupIds'] = $AdGroupIds;
-        }
-
-        if ($AdIds) {
-            $params['AdIds'] = $AdIds;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'check',

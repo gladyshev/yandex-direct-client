@@ -6,8 +6,10 @@
 
 namespace Yandex\Direct\Service;
 
+use Throwable;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class VCards
@@ -20,7 +22,9 @@ final class VCards extends Service
      *
      * @param $VCards
      * @return array
+     *
      * @throws Exception
+     * @throws \Exception
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/add-docpage/
      */
@@ -39,7 +43,9 @@ final class VCards extends Service
      *
      * @param $SelectionCriteria
      * @return array
+     *
      * @throws Exception
+     * @throws \Yandex\Direct\Exception\ErrorResponseException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/delete-docpage/
      */
@@ -60,20 +66,16 @@ final class VCards extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
+     *
      * @throws Exception
+     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/get-docpage/
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)
     {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames,
-        ];
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class Campaigns
@@ -15,7 +16,6 @@ use Yandex\Direct\Service;
  */
 final class Campaigns extends Service
 {
-
     /**
      * @param array $Campaigns
      * @return array
@@ -80,6 +80,7 @@ final class Campaigns extends Service
      * @param array $Page
      * @return array
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/get-docpage/
      */
@@ -92,30 +93,7 @@ final class Campaigns extends Service
         $CpmBannerCampaignFieldNames = null,
         $Page = null
     ) {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames,
-        ];
-
-        if ($TextCampaignFieldNames) {
-            $params['TextCampaignFieldNames'] = $TextCampaignFieldNames;
-        }
-
-        if ($MobileAppCampaignFieldNames) {
-            $params['MobileAppCampaignFieldNames'] = $MobileAppCampaignFieldNames;
-        }
-
-        if ($DynamicTextCampaignFieldNames) {
-            $params['DynamicTextCampaignFieldNames'] = $DynamicTextCampaignFieldNames;
-        }
-
-        if ($CpmBannerCampaignFieldNames) {
-            $params['CpmBannerCampaignFieldNames'] = $CpmBannerCampaignFieldNames;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',

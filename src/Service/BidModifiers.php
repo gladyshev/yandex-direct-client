@@ -8,6 +8,7 @@ namespace Yandex\Direct\Service;
 
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
+use function Yandex\Direct\get_param_names;
 
 /**
  * Class BidModifiers
@@ -64,6 +65,7 @@ final class BidModifiers extends Service
      * @param $Page
      * @return array
      * @throws Exception
+     * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/get-docpage/
      */
@@ -75,26 +77,7 @@ final class BidModifiers extends Service
         $RetargetingAdjustmentFieldNames = null,
         $Page = null
     ) {
-        $params = [
-            'SelectionCriteria' => $SelectionCriteria,
-            'FieldNames' => $FieldNames
-        ];
-
-        if ($MobileAdjustmentFieldNames) {
-            $params['MobileAdjustmentFieldNames'] = $MobileAdjustmentFieldNames;
-        }
-
-        if ($DemographicsAdjustmentFieldNames) {
-            $params['DemographicsAdjustmentFieldNames'] = $DemographicsAdjustmentFieldNames;
-        }
-
-        if ($RetargetingAdjustmentFieldNames) {
-            $params['RetargetingAdjustmentFieldNames'] = $RetargetingAdjustmentFieldNames;
-        }
-
-        if ($Page) {
-            $params['Page'] = $Page;
-        }
+        $params = compact(get_param_names(__METHOD__));
 
         return $this->request([
             'method' => 'get',
