@@ -19,7 +19,7 @@ function get_param_names($method)
     $paramNames = [];
 
     foreach ($refParams as $parameter) {
-        $paramNames[] = $parameter->getName();
+        $paramNames[] = $parameter->name;
     }
 
     return $paramNames;
