@@ -26,13 +26,18 @@ final class Changes extends Service
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkDictionaries-docpage/
      */
-    public function checkDictionaries($Timestamp)
+    public function checkDictionaries($Timestamp = null)
     {
-        return $this->request([
-            'method' => 'checkDictionaries',
-            'params' => [
+        $params = [];
+        if (!is_null($Timestamp)) {
+            $params = [
                 'Timestamp' => $Timestamp
             ]
+        }
+        
+        return $this->request([
+            'method' => 'checkDictionaries',
+            'params' => $params
         ]);
     }
 
