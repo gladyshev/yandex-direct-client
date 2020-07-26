@@ -60,6 +60,7 @@ class Helper
             ['AudienceTargets'],
             ['BidModifiers'],
             ['Bids'],
+            ['Businesses'],
             ['Campaigns'],
             ['Changes'],
             ['Clients'],
