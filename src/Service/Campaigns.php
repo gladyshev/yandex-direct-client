@@ -77,6 +77,7 @@ final class Campaigns extends Service
      * @param array $MobileAppCampaignFieldNames
      * @param array $DynamicTextCampaignFieldNames
      * @param array $CpmBannerCampaignFieldNames
+     * @param array $SmartCampaignFieldNames
      * @param array $Page
      * @return array
      * @throws Exception
@@ -91,6 +92,7 @@ final class Campaigns extends Service
         $MobileAppCampaignFieldNames = null,
         $DynamicTextCampaignFieldNames = null,
         $CpmBannerCampaignFieldNames = null,
+        $SmartCampaignFieldNames = null,
         $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));

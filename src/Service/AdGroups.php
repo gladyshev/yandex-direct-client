@@ -6,6 +6,8 @@
 
 namespace Yandex\Direct\Service;
 
+use ReflectionException;
+use Yandex\Direct\Exception\ErrorResponseException;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 use function Yandex\Direct\get_param_names;
@@ -57,16 +59,19 @@ final class AdGroups extends Service
     /**
      * Возвращает параметры групп, отвечающих заданным критериям.
      *
-     * @param $SelectionCriteria
-     * @param $FieldNames
-     * @param $MobileAppAdGroupFieldNames
-     * @param $DynamicTextAdGroupFieldNames
-     * @param $DynamicTextFeedAdGroupFieldNames
-     * @param $Page
+     * @param array $SelectionCriteria
+     * @param array $FieldNames
+     * @param array $MobileAppAdGroupFieldNames
+     * @param array $DynamicTextAdGroupFieldNames
+     * @param array $DynamicTextFeedAdGroupFieldNames
+     * @param array $SmartAdGroupFieldNames
+     * @param array $Page
+     *
      * @return array
      *
      * @throws Exception
-     * @throws \ReflectionException
+     * @throws ReflectionException
+     * @throws ErrorResponseException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
@@ -76,6 +81,7 @@ final class AdGroups extends Service
         $MobileAppAdGroupFieldNames = null,
         $DynamicTextAdGroupFieldNames = null,
         $DynamicTextFeedAdGroupFieldNames = null,
+        $SmartAdGroupFieldNames = null,
         $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));

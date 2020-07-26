@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use ReflectionException;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 use function Yandex\Direct\get_param_names;
@@ -23,16 +24,17 @@ final class Changes extends Service
      * @param $Timestamp
      * @return array
      * @throws Exception
+     * @throws ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkDictionaries-docpage/
      */
-    public function checkDictionaries($Timestamp)
+    public function checkDictionaries($Timestamp = null)
     {
+        $params = compact(get_param_names(__METHOD__));
+
         return $this->request([
             'method' => 'checkDictionaries',
-            'params' => [
-                'Timestamp' => $Timestamp
-            ]
+            'params' => $params
         ]);
     }
 

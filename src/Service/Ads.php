@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use ReflectionException;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 use function Yandex\Direct\get_param_names;
@@ -156,22 +157,23 @@ final class Ads extends Service
     /**
      * Возвращает параметры объявлений, отвечающих заданным критериям.
      *
-     * @param $SelectionCriteria
-     * @param $FieldNames
-     * @param $TextAdFieldNames
-     * @param $MobileAppAdFieldNames
-     * @param $DynamicTextAdFieldNames
-     * @param $TextImageAdFieldNames
-     * @param $MobileAppImageAdFieldNames
-     * @param $TextAdBuilderAdFieldNames
-     * @param $MobileAppAdBuilderAdFieldNames
-     * @param $CpcVideoAdBuilderAdFieldNames
-     * @param $CpmBannerAdBuilderAdFieldNames
-     * @param $CpmVideoAdBuilderAdFieldNames
-     * @param $Page
+     * @param array $SelectionCriteria
+     * @param array $FieldNames
+     * @param array $TextAdFieldNames
+     * @param array $MobileAppAdFieldNames
+     * @param array $DynamicTextAdFieldNames
+     * @param array $TextImageAdFieldNames
+     * @param array $MobileAppImageAdFieldNames
+     * @param array $TextAdBuilderAdFieldNames
+     * @param array $MobileAppAdBuilderAdFieldNames
+     * @param array $CpcVideoAdBuilderAdFieldNames
+     * @param array $CpmBannerAdBuilderAdFieldNames
+     * @param array $CpmVideoAdBuilderAdFieldNames
+     * @param array $SmartAdBuilderAdFieldNames
+     * @param array $Page
      * @return array
      * @throws Exception
-     * @throws \ReflectionException
+     * @throws ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/get-docpage/
      */
@@ -188,6 +190,7 @@ final class Ads extends Service
         $CpcVideoAdBuilderAdFieldNames = null,
         $CpmBannerAdBuilderAdFieldNames = null,
         $CpmVideoAdBuilderAdFieldNames = null,
+        $SmartAdBuilderAdFieldNames = null,
         $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));

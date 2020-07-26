@@ -6,6 +6,7 @@
 
 namespace Yandex\Direct\Service;
 
+use Yandex\Direct\Exception\ErrorResponseException;
 use Yandex\Direct\Exception\Exception;
 use Yandex\Direct\Service;
 use function Yandex\Direct\get_param_names;
@@ -57,15 +58,21 @@ final class BidModifiers extends Service
     /**
      * Возвращает параметры корректировок, отвечающих заданным критериям.
      *
-     * @param $SelectionCriteria
-     * @param $FieldNames
-     * @param $MobileAdjustmentFieldNames
-     * @param $DemographicsAdjustmentFieldNames
-     * @param $RetargetingAdjustmentFieldNames
-     * @param $Page
+     * @param array $SelectionCriteria
+     * @param array $FieldNames
+     * @param array $MobileAdjustmentFieldNames
+     * @param array $DemographicsAdjustmentFieldNames
+     * @param array $RetargetingAdjustmentFieldNames
+     * @param array $RegionalAdjustmentFieldNames
+     * @param array $VideoAdjustmentFieldNames
+     * @param array $SmartAdAdjustmentFieldNames
+     * @param array $Page
+     *
      * @return array
+     *
      * @throws Exception
      * @throws \ReflectionException
+     * @throws ErrorResponseException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/get-docpage/
      */
@@ -75,6 +82,9 @@ final class BidModifiers extends Service
         $MobileAdjustmentFieldNames = null,
         $DemographicsAdjustmentFieldNames = null,
         $RetargetingAdjustmentFieldNames = null,
+        $RegionalAdjustmentFieldNames = null,
+        $VideoAdjustmentFieldNames = null,
+        $SmartAdAdjustmentFieldNames = null,
         $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
