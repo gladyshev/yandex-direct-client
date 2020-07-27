@@ -30,8 +30,12 @@ final class Changes extends Service
      */
     public function checkDictionaries($Timestamp = null)
     {
-        $params = compact(get_param_names(__METHOD__));
-
+        if (!is_null($Timestamp)) {
+            $params = ['Timestamp' => $Timestamp];
+        } else {
+            $params = new \stdClass();
+        }
+        
         return $this->request([
             'method' => 'checkDictionaries',
             'params' => $params
