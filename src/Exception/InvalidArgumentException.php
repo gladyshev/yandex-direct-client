@@ -1,10 +1,8 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Exception;
+namespace Gladyshev\Yandex\Direct\Exception;
 
-class InvalidArgumentException extends Exception
+class InvalidArgumentException extends \InvalidArgumentException
 {
 }

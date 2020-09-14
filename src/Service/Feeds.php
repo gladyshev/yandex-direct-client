@@ -4,13 +4,13 @@
  * @date 26/08/20120 21:34
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
-use Yandex\Direct\Exception\ErrorResponseException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Feeds
@@ -19,7 +19,7 @@ use function Yandex\Direct\get_param_names;
  *
  * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/feeds-docpage/
  */
-final class Feeds extends Service
+final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает фиды.
@@ -30,7 +30,7 @@ final class Feeds extends Service
      *
      * @throws ReflectionException
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/add-docpage/
      */
@@ -38,7 +38,7 @@ final class Feeds extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => $params
         ]);
@@ -53,7 +53,7 @@ final class Feeds extends Service
      *
      * @throws ReflectionException
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/delete-docpage/
      */
@@ -61,7 +61,7 @@ final class Feeds extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => $params
         ]);
@@ -79,7 +79,7 @@ final class Feeds extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/get-docpage/
@@ -93,7 +93,7 @@ final class Feeds extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -107,7 +107,7 @@ final class Feeds extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/update-docpage/
@@ -116,7 +116,7 @@ final class Feeds extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => $params
         ]);

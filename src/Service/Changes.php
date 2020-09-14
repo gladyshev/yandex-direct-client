@@ -4,18 +4,18 @@
  * @date 29/08/2016 12:33
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Changes
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Changes extends Service
+final class Changes extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Сообщает о наличии изменений в справочниках часовых поясов и регионов начиная с указанной даты.
@@ -23,7 +23,7 @@ final class Changes extends Service
      *
      * @param $Timestamp
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkDictionaries-docpage/
@@ -32,7 +32,7 @@ final class Changes extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'checkDictionaries',
             'params' => $params
         ]);
@@ -43,13 +43,13 @@ final class Changes extends Service
      *
      * @param $Timestamp
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkCampaigns-docpage/
      */
     public function checkCampaigns($Timestamp)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'checkCampaigns',
             'params' => [
                 'Timestamp' => $Timestamp
@@ -66,7 +66,7 @@ final class Changes extends Service
      * @param $AdGroupIds
      * @param $AdIds
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/check-docpage/
@@ -75,7 +75,7 @@ final class Changes extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'check',
             'params' => $params
         ]);

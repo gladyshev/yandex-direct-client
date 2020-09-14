@@ -1,3 +1,8 @@
+4.0.0-beta
+      - DI ready
+      - Improve PSRs support
+
+
 3.1.2 - Businesses service added
       - SmartCampaigns support added
       - SmartBanners support added

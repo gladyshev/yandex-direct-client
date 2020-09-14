@@ -1,34 +1,30 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 29/08/2016 12:33
- */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\ErrorResponseException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class BidModifiers
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class BidModifiers extends Service
+final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает корректировки ставок.
      *
      * @param $BidModifiers
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/add-docpage/
      */
     public function add($BidModifiers)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'BidModifiers' => $BidModifiers
@@ -41,13 +37,13 @@ final class BidModifiers extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -70,7 +66,7 @@ final class BidModifiers extends Service
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      * @throws ErrorResponseException
      *
@@ -89,7 +85,7 @@ final class BidModifiers extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -100,13 +96,13 @@ final class BidModifiers extends Service
      *
      * @param $BidModifiers
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/set-docpage/
      */
     public function setAuto($BidModifiers)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'setAuto',
             'params' => [
                 'BidModifiers' => $BidModifiers
@@ -119,13 +115,13 @@ final class BidModifiers extends Service
      *
      * @param $BidModifierToggleItems
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/toggle-docpage/
      */
     public function toggle($BidModifierToggleItems)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'toggle',
             'params' => [
                 'BidModifierToggleItems' => $BidModifierToggleItems

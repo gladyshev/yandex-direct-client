@@ -10,7 +10,7 @@ namespace Yandex\Direct\Test;
 use PHPUnit\Framework\TestCase;
 use Yandex\Direct\Client;
 use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\Service;
+use Yandex\Direct\AbstractService;
 use Yandex\Direct\Transport\RequestInterface;
 use Yandex\Direct\Transport\TransportInterface;
 
@@ -51,13 +51,13 @@ class ClientTest extends TestCase
     {
         $service = $this->client->{lcfirst($serviceName)};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName};
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
     }
 
     /**
@@ -68,13 +68,13 @@ class ClientTest extends TestCase
     {
         $service = $this->client->{lcfirst($serviceName)}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
 
         unset($service);
 
         $service = $this->client->{$serviceName}();
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
     }
 
     public function providerYandexServices()

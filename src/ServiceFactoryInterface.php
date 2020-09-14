@@ -1,26 +1,20 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 12/01/2017 13:13
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct;
+namespace Gladyshev\Yandex\Direct;
 
 /**
  * Interface ServiceFactoryInterface
  *
- * @package Yandex\Direct
+ * @author Dmitry Gladyshev <gladyshevd@icloud.com>
  */
 interface ServiceFactoryInterface
 {
-    const OPTION_CREDENTIALS = 'credentials';
-    const OPTION_TRANSPORT = 'transport';
-
     /**
      * Create a Service instance by name
+     *
      * @param $serviceName
-     * @param array $serviceOptions
-     * @return Service
+     * @return AbstractService
      */
-    public function createService($serviceName, array $serviceOptions = []);
+    public function createService(string $serviceName): ServiceInterface;
 }

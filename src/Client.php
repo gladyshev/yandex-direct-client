@@ -1,223 +1,86 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 17/08/2016 10:37
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct;
-
-use Yandex\Direct\Service\AdExtensions;
-use Yandex\Direct\Service\AdGroups;
-use Yandex\Direct\Service\AdImages;
-use Yandex\Direct\Service\Ads;
-use Yandex\Direct\Service\AgencyClients;
-use Yandex\Direct\Service\AudienceTargets;
-use Yandex\Direct\Service\BidModifiers;
-use Yandex\Direct\Service\Bids;
-use Yandex\Direct\Service\Campaigns;
-use Yandex\Direct\Service\Changes;
-use Yandex\Direct\Service\Clients;
-use Yandex\Direct\Service\Dictionaries;
-use Yandex\Direct\Service\DynamicTextAdTargets;
-use Yandex\Direct\Service\KeywordBids;
-use Yandex\Direct\Service\Keywords;
-use Yandex\Direct\Service\KeywordsResearch;
-use Yandex\Direct\Service\Reports;
-use Yandex\Direct\Service\RetargetingLists;
-use Yandex\Direct\Service\Sitelinks;
-use Yandex\Direct\Service\TurboPages;
-use Yandex\Direct\Service\VCards;
-use Yandex\Direct\Transport\TransportInterface;
+namespace Gladyshev\Yandex\Direct;
 
 /**
  * Yandex.Direct v5 API client implementation
  *
- * @package Yandex\Direct
- *
- * Yandex Services
- * @method AdExtensions adExtensions(array $options = [])
- * @method AdGroups adGroups(array $options = [])
- * @method AdImages adImages(array $options = [])
- * @method Ads ads(array $options = [])
- * @method AgencyClients agencyClients(array $options)
- * @method AudienceTargets audienceTargets(array $options = [])
- * @method BidModifiers bidModifiers(array $options = [])
- * @method Bids bids(array $options = [])
- * @method Campaigns campaigns(array $options = [])
- * @method Clients clients(array $options = [])
- * @method Changes changes(array $options = [])
- * @method Dictionaries dictionaries(array $options = [])
- * @method DynamicTextAdTargets dynamicTextAdsTargets(array $options = [])
- * @method KeywordBids keywordBids(array $options = [])
- * @method Keywords keywords(array $options = [])
- * @method KeywordsResearch keywordsResearch(array $options = [])
- * @method Reports reports(array $options = [])
- * @method RetargetingLists retargetingLists(array $options = [])
- * @method Sitelinks sitelinks(array $options = [])
- * @method TurboPages turboPages(array $options = [])
- * @method VCards vCards(array $options = [])
- *
- * Aliases (sugar)
- * @property AdExtensions $adExtensions
- * @property AdGroups $adGroups
- * @property AdImages $adImages
- * @property Ads $ads
- * @property AgencyClients $agencyClients
- * @property AudienceTargets $audienceTargets
- * @property BidModifiers $bidModifiers
- * @property Bids $bids
- * @property Campaigns $campaigns
- * @property Clients $clients
- * @property Changes $changes
- * @property Dictionaries $dictionaries
- * @property DynamicTextAdTargets $dynamicTextAdsTargets
- * @property KeywordBids $keywordBids
- * @property Keywords $keywords
- * @property KeywordsResearch $keywordsResearch
- * @property Reports $reports
- * @property RetargetingLists $retargetingLists
- * @property Sitelinks $sitelinks
- * @property TurboPages $turboPages
- * @property VCards $vCards
+ * @property \Gladyshev\Yandex\Direct\Service\AdExtensions $adExtensions
+ * @property \Gladyshev\Yandex\Direct\Service\AdGroups $adGroups
+ * @property \Gladyshev\Yandex\Direct\Service\AdImages $adImages
+ * @property \Gladyshev\Yandex\Direct\Service\Ads $ads
+ * @property \Gladyshev\Yandex\Direct\Service\AgencyClients $agencyClients
+ * @property \Gladyshev\Yandex\Direct\Service\AudienceTargets $audienceTargets
+ * @property \Gladyshev\Yandex\Direct\Service\BidModifiers $bidModifiers
+ * @property \Gladyshev\Yandex\Direct\Service\Bids $bids
+ * @property \Gladyshev\Yandex\Direct\Service\Campaigns $campaigns
+ * @property \Gladyshev\Yandex\Direct\Service\Changes $changes
+ * @property \Gladyshev\Yandex\Direct\Service\Clients $clients
+ * @property \Gladyshev\Yandex\Direct\Service\Dictionaries $dictionaries
+ * @property \Gladyshev\Yandex\Direct\Service\DynamicTextAdTargets $dynamicTextAdTargets
+ * @property \Gladyshev\Yandex\Direct\Service\KeywordBids $keywordBids
+ * @property \Gladyshev\Yandex\Direct\Service\Keywords $keywords
+ * @property \Gladyshev\Yandex\Direct\Service\KeywordsResearch $keywordsResearch
+ * @property \Gladyshev\Yandex\Direct\Service\Reports $reports
+ * @property \Gladyshev\Yandex\Direct\Service\RetargetingLists $retargetingLists
+ * @property \Gladyshev\Yandex\Direct\Service\Sitelinks $sitelinks
+ * @property \Gladyshev\Yandex\Direct\Service\TurboPages $turboPages
+ * @property \Gladyshev\Yandex\Direct\Service\VCards $vCards
  */
-class Client
+class Client implements \Gladyshev\Yandex\Direct\ServiceFactoryInterface
 {
     /**
-     * @var ServiceFactoryInterface
+     * @var \Gladyshev\Yandex\Direct\CredentialsInterface
      */
-    protected $serviceFactory;
+    private $credentials;
 
     /**
-     * Service options.
-     * @var array
+     * @var \Psr\Http\Client\ClientInterface
      */
-    protected $options = [];
+    private $httpClient;
 
-    /**
-     * Client constructor with overloading.
-     *
-     * @param mixed[] ...$args    The order of the arguments doesn't matter.
-     *                            Credentials is required, it can be CredentialsInterface instance or
-     *                            login and token strings in order.
-     *      Example:
-     *      $client = new Client('login', 'token');
-     *      $client = new Client(new Credentials('login', 'token'));
-     *      $client = new Client(new Credentials('login', 'token'), ['useOperatorUnits' => true]);
-     *      $client = new Client('login', 'token', ['useOperatorUnits' => true]);
-     *      $client = new Client('login', 'token', new Transport(['logger' => new Log]), ['useOperatorUnits' => true]);
-     *      // etc
-     */
-    public function __construct(...$args)
-    {
-        if (empty($args)) {
-            return;
-        }
-
-        $strArgs = [];
-
-        foreach ($args as $key => $val) {
-            if ($val instanceof CredentialsInterface) {
-                $this->setCredentials($val);
-            } elseif ($val instanceof TransportInterface) {
-                $this->setTransport($val);
-            } elseif (is_array($val)) {
-                $this->setOptions($val);
-            } elseif (is_string($val)) {
-                $strArgs[] = $val;
-            }
-        }
-
-        list($login, $token, $masterToken) = array_pad($strArgs, 3, '');
-
-        if ($login && $token) {
-            $this->setCredentials(new Credentials($login, $token, $masterToken));
-        }
+    public function __construct(
+        \Gladyshev\Yandex\Direct\CredentialsInterface $credentials,
+        \Psr\Http\Client\ClientInterface $httpClient
+    ) {
+        $this->credentials = $credentials;
+        $this->httpClient = $httpClient;
     }
 
     /**
-     * Returns specific Service instance.
-     *
-     * @param string $serviceName # The Name of Yandex service
-     * @param array $args # The First argument is the service options override.
-     * @return Service
-     */
-    public function __call($serviceName, array $args = [])
-    {
-        $userOptions = isset($args[0]) && is_array($args[0]) ? $args[0] : [];
-        $options = array_merge($this->options, $userOptions);
-
-        return $this
-            ->getServiceFactory()
-            ->createService($serviceName, $options);
-    }
-
-    /**
-     * Alias of __call()
-     *
      * @param string $name
-     * @return Service
-     * @see Client::__call()
+     * @return ServiceInterface
+     * @throws \Throwable
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-        return $this->__call($name);
+        return $this->createService($name);
     }
 
-    /* Setters & Getters */
-
-    /**
-     * @param mixed[] $credentials
-     * @return $this
-     */
-    public function setCredentials(...$credentials)
+    public function createService(string $serviceName): \Gladyshev\Yandex\Direct\ServiceInterface
     {
-        if ($credentials[0] instanceof CredentialsInterface) {
-            $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = $credentials[0];
-        } else {
-            list($login, $token, $masterToken) = array_pad($credentials, 3, '');
-            $this->options[ServiceFactoryInterface::OPTION_CREDENTIALS] = new Credentials($login, $token, $masterToken);
+        $className = __NAMESPACE__ . '\\Service\\' . ucfirst($serviceName);
+
+        if (!class_exists($className)) {
+            throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+                "Service class `{$className}` is not found."
+            );
         }
-        return $this;
-    }
 
-    /**
-     * @param TransportInterface $transport
-     * @return $this
-     */
-    public function setTransport(TransportInterface $transport)
-    {
-        $this->options[ServiceFactoryInterface::OPTION_TRANSPORT] = $transport;
-        return $this;
-    }
+        $isService = (new \ReflectionClass($className))->implementsInterface(
+            \Gladyshev\Yandex\Direct\ServiceInterface::class
+        );
 
-    /**
-     * @param array $options
-     * @return $this
-     */
-    public function setOptions(array $options)
-    {
-        $this->options = $options;
-        return $this;
-    }
-
-    /**
-     * @param ServiceFactoryInterface $serviceFactory
-     * @return $this
-     */
-    public function setServiceFactory(ServiceFactoryInterface $serviceFactory)
-    {
-        $this->serviceFactory = $serviceFactory;
-        return $this;
-    }
-
-    /**
-     * @return ServiceFactoryInterface
-     */
-    protected function getServiceFactory()
-    {
-        if ($this->serviceFactory === null) {
-            $this->serviceFactory = new ServiceFactory;
+        if (!$isService) {
+            throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+                "Service class `{$className}` must implements " . \Gladyshev\Yandex\Direct\ServiceInterface::class
+            );
         }
-        return $this->serviceFactory;
+
+        return new $className(
+            $this->credentials,
+            $this->httpClient
+        );
     }
 }

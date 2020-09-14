@@ -2,9 +2,15 @@
 
 require '../vendor/autoload.php';
 
-use Yandex\Direct\Client;
+$credentials = \Gladyshev\Yandex\Direct\Credentials::buildForSandbox(
+    getenv('_LOGIN_'),
+    getenv('_TOKEN_'),
+    getenv('_MASTER_TOKEN_')
+);
 
-$client = new Client(getenv('_LOGIN_'), getenv('_TOKEN_'));
+$httpClient = new \GuzzleHttp\Client;
+
+$client = new \Gladyshev\Yandex\Direct\Client($credentials, $httpClient);
 
 $report = $client->reports->get(
     /* Selection criteria */

@@ -1,21 +1,16 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 29/08/2016 12:35
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Throwable;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class VCards
- * @package Yandex\Direct\Service
+ *
+ * @author Dmitry Gladyshev <gladyshevd@icloud.com>
  */
-final class VCards extends Service
+final class VCards extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает виртуальные визитки.
@@ -23,14 +18,14 @@ final class VCards extends Service
      * @param $VCards
      * @return array
      *
-     * @throws Exception
+     * @throws \Throwable
      * @throws \Exception
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/add-docpage/
      */
     public function add($VCards)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'VCards' => $VCards
@@ -44,14 +39,13 @@ final class VCards extends Service
      * @param $SelectionCriteria
      * @return array
      *
-     * @throws Exception
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -67,9 +61,7 @@ final class VCards extends Service
      * @param $Page
      * @return array
      *
-     * @throws Exception
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \ReflectionException
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/vcards/get-docpage/
      */
@@ -77,7 +69,7 @@ final class VCards extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

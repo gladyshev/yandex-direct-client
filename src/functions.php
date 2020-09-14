@@ -1,9 +1,6 @@
 <?php
-/**
- * @project yandex-direct-client
- */
 
-namespace Yandex\Direct;
+namespace Gladyshev\Yandex\Direct;
 
 /**
  * @param string $method

@@ -4,29 +4,29 @@
  * @created 29.11.16 14:09
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
+
+
 
 /**
  * Class Clients
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Clients extends Service
+final class Clients extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Возвращает параметры рекламодателя и представителя.
      *
      * @param array $FieldNames
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/clients/get-docpage/
      */
     public function get($FieldNames)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => [
                 'FieldNames' => $FieldNames
@@ -40,14 +40,14 @@ final class Clients extends Service
      * @param $Clients
      * @return array
      *
-     * @throws Exception
+     * @throws \Throwable
      * @throws \Yandex\Direct\Exception\ErrorResponseException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/clients/update-docpage/
      */
     public function update($Clients)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'Clients' => $Clients

@@ -1,25 +1,20 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 26/08/2016 14:03
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Campaigns
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Campaigns extends Service
+final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * @param array $Campaigns
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-text-campaign-docpage/
@@ -28,7 +23,7 @@ final class Campaigns extends Service
      */
     public function add($Campaigns)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'Campaigns' => $Campaigns
@@ -39,13 +34,13 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/archive-docpage/
      */
     public function archive($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'archive',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -56,13 +51,13 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -80,8 +75,7 @@ final class Campaigns extends Service
      * @param array $SmartCampaignFieldNames
      * @param array $Page
      * @return array
-     * @throws Exception
-     * @throws \ReflectionException
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/get-docpage/
      */
@@ -97,7 +91,7 @@ final class Campaigns extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -106,13 +100,13 @@ final class Campaigns extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/resume-docpage/
      */
     public function resume($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -123,13 +117,13 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -140,13 +134,13 @@ final class Campaigns extends Service
     /**
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/unarchive-docpage/
      */
     public function unarchive($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'unarchive',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -157,7 +151,7 @@ final class Campaigns extends Service
     /**
      * @param array $Campaigns
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-text-campaign-docpage/
@@ -166,7 +160,7 @@ final class Campaigns extends Service
      */
     public function update($Campaigns)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'Campaigns' => $Campaigns

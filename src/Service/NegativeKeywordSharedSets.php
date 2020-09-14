@@ -3,17 +3,17 @@
  * @project yandex-direct-client
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Сервис предназначен для выполнения операций с наборами минус-фраз.
  *
  * @author Dmitry Gladyshev <deel@email.ru>
  */
-final class NegativeKeywordSharedSets extends Service
+final class NegativeKeywordSharedSets extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает наборы минус-фраз.
@@ -28,7 +28,7 @@ final class NegativeKeywordSharedSets extends Service
      */
     public function add($NegativeKeywordSharedSets)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'NegativeKeywordSharedSets' => $NegativeKeywordSharedSets
@@ -49,7 +49,7 @@ final class NegativeKeywordSharedSets extends Service
      */
     public function update($NegativeKeywordSharedSets)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'NegativeKeywordSharedSets' => $NegativeKeywordSharedSets
@@ -75,7 +75,7 @@ final class NegativeKeywordSharedSets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -94,7 +94,7 @@ final class NegativeKeywordSharedSets extends Service
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria

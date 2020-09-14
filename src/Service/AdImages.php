@@ -1,33 +1,29 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 26/08/2016 13:44
- */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class AdImages
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class AdImages extends Service
+final class AdImages extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Выполняет синхронную загрузку изображений в виде бинарных данных.
      *
      * @param $AdImages
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/add-docpage/
      */
     public function add($AdImages)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'AdImages' => $AdImages
@@ -40,13 +36,13 @@ final class AdImages extends Service
      *
      * @param $SelectionCriteria
      * @return mixed
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -61,7 +57,7 @@ final class AdImages extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/get-docpage/
@@ -70,7 +66,7 @@ final class AdImages extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

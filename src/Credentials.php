@@ -1,67 +1,77 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 16/08/2016 19:48
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct;
+namespace Gladyshev\Yandex\Direct;
 
-/**
- * Class Credentials
- * @package Yandex\Direct\Credentials
- */
 final class Credentials implements CredentialsInterface
 {
-    /**
-     * @var string
-     */
-    protected $token;
+    private $token;
+    private $masterToken;
+    private $login;
+    private $baseUrl;
+    private $language;
+    private $useOperatorUnits;
 
-    /**
-     * @var string
-     */
-    protected $masterToken;
-
-    /**
-     * @var string
-     */
-    protected $login;
-
-    /**
-     * Credentials constructor.
-     *
-     * @param string $login
-     * @param string $token
-     * @param string $masterToken
-     */
-    public function __construct($login = '', $token = '', $masterToken = '')
-    {
+    public function __construct(
+        string $login,
+        string $token,
+        string $masterToken = '',
+        bool $useOperatorUnits = true,
+        string $language = self::LANGUAGE_RU,
+        string $baseUrl = self::DEFAULT_BASE_URL
+    ) {
         $this->login = $login;
         $this->token = $token;
         $this->masterToken = $masterToken;
+        $this->baseUrl = $baseUrl;
+        $this->language = $language;
+        $this->useOperatorUnits = $useOperatorUnits;
     }
 
-    /**
-     * @return string
-     */
-    public function getMasterToken()
+    public static function buildForSandbox(
+        string $login,
+        string $token,
+        string $masterToken = '',
+        bool $useOperatorUnits = true,
+        string $language = self::LANGUAGE_RU
+    ): self {
+        return new self(
+            $login,
+            $token,
+            $masterToken,
+            $useOperatorUnits,
+            $language,
+            self::DEFAULT_SANDBOX_BASE_URL
+        );
+    }
+
+    public function getMasterToken(): string
     {
         return $this->masterToken;
     }
 
-    /**
-     * @return string
-     */
-    public function getToken()
+    public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return string
-     */
-    public function getLogin()
+    public function getLogin(): string
     {
         return $this->login;
+    }
+
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function getUseOperatorUnits(): bool
+    {
+        return $this->useOperatorUnits;
     }
 }

@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionProperty;
 use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\Service;
-use Yandex\Direct\ServiceFactoryInterface;
-use Yandex\Direct\Transport\Response;
+use Yandex\Direct\AbstractService;
+use Gladyshev\Yandex\Direct\ServiceFactoryInterface;
+use Yandex\Direct\Transport\ApiResponse;
 use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\Request;
 use Yandex\Direct\Transport\RequestInterface;
@@ -22,33 +22,33 @@ use Yandex\Direct\Transport\RequestInterface;
 class ServiceTest extends TestCase
 {
     /**
-     * @covers Service::setName()
+     * @covers AbstractService::setName()
      */
     public function testNameSetter()
     {
-        $service = new DummyService;
+        $service = new DummyAbstractService;
         $name = "BlahBlahBlah";
         $service->setName($name);
         $this->assertEquals($name, $service->getName());
     }
 
     /**
-     * @covers Service::setTransport()
+     * @covers AbstractService::setTransport()
      */
     public function testTransportSetter()
     {
-        $service = new DummyService;
+        $service = new DummyAbstractService;
         $transport = new MockTransport;
         $service->setTransport($transport);
         $this->assertEquals($transport, $service->getTransport());
     }
 
     /**
-     * @covers Service::setCredentials()
+     * @covers AbstractService::setCredentials()
      */
     public function testCredentialsSetter()
     {
-        $service = new DummyService;
+        $service = new DummyAbstractService;
         $mockCredentials = new MockCredentials;
         $service->setCredentials($mockCredentials);
         $this->assertEquals($mockCredentials, $service->getCredentials());
@@ -57,13 +57,13 @@ class ServiceTest extends TestCase
 
     public function testDoingRequest()
     {
-        $service = new DummyService;
+        $service = new DummyAbstractService;
         $service->setOptions([
             'transport' => new MockTransport(),
             'credentials' => new MockCredentials()
         ]);
 
-        $response = $service->request([]);
+        $response = $service->call([]);
 
         $this->assertArrayHasKey('results', $response);
         $this->assertArrayHasKey('units', $response);
@@ -72,7 +72,7 @@ class ServiceTest extends TestCase
     }
 }
 
-class DummyService extends Service {
+class DummyAbstractService extends AbstractService {
     public function getName() { return $this->name;}
     public function getTransport() { return $this->transport;}
     public function getCredentials() {return $this->credentials;}
@@ -81,7 +81,7 @@ class DummyService extends Service {
 class MockTransport implements TransportInterface {
     public function setOptions(array $options){}
     public function getServiceUrl($serviceName){}
-    public function request(RequestInterface $request) { return new Response([
+    public function request(RequestInterface $request) { return new ApiResponse([
         'headers' => [],
         'body' => '{"results":{}}',
         'requestId' => '1234567890',

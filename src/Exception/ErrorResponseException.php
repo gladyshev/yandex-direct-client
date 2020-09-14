@@ -1,48 +1,80 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 26/08/2016 14:24
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Exception;
+namespace Gladyshev\Yandex\Direct\Exception;
 
-/**
- * Class ErrorResponseException
- * @package Yandex\Direct\Exception
- */
-class ErrorResponseException extends Exception
+class ErrorResponseException extends \RuntimeException
 {
-    /**
-     * @var int
-     */
-    protected $requestId;
-
     /**
      * @var string
      */
-    protected $details;
+    protected $detail;
 
     /**
-     * @param string $message
-     * @param string $details
-     * @param int $code
-     * @param int $requestId
-     * @param \Exception $previous
+     * @var \Psr\Http\Message\RequestInterface
      */
-    public function __construct($message, $details = '', $code = 0, $requestId = 0, \Exception $previous = null)
+    protected $request;
+
+    /**
+     * @var \Psr\Http\Message\ResponseInterface
+     */
+    protected $response;
+
+    /**
+     * @var array
+     */
+    protected $error = [];
+
+    public function __construct(
+        $message,
+        $detail,
+        $code,
+        \Psr\Http\Message\RequestInterface $request,
+        \Psr\Http\Message\ResponseInterface $response,
+        \Throwable $previous = null
+    ) {
+        $this->detail = $detail;
+        $this->request = $request;
+        $this->response = $response;
+
+        parent::__construct(
+            $message,
+            $code,
+            $previous
+        );
+    }
+
+    /**
+     * @return \Psr\Http\Message\RequestInterface
+     */
+    public function getRequest(): \Psr\Http\Message\RequestInterface
     {
-        $this->details = $details;
-        $this->requestId = $requestId;
-        parent::__construct($message, $code, $previous);
+        return $this->request;
+    }
+
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getResponse(): \Psr\Http\Message\ResponseInterface
+    {
+        return $this->response;
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function getDetail(): string
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         $str = 'Exception ' . __CLASS__ . " code {$this->code} with message '{$this->message}' in `{$this->file}`" . PHP_EOL;
-        $str .= 'Details: ' . $this->details . PHP_EOL;
+        $str .= 'Details: ' . $this->detail . PHP_EOL;
         $str .= 'Stack trace:' . PHP_EOL . $this->getTraceAsString();
         return $str;
     }

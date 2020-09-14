@@ -4,13 +4,13 @@
  * @date 26/08/20120 21:34
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
-use Yandex\Direct\Exception\ErrorResponseException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class SmartAdTargets
@@ -19,7 +19,7 @@ use function Yandex\Direct\get_param_names;
  *
  * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/smartadtargets-docpage/
  */
-final class SmartAdTargets extends Service
+final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает фильтры — условия нацеливания для смарт-баннеров, назначает CPC,
@@ -31,7 +31,7 @@ final class SmartAdTargets extends Service
      *
      * @throws ReflectionException
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/add-docpage/
      */
@@ -39,7 +39,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => $params
         ]);
@@ -53,7 +53,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/delete-docpage/
@@ -62,7 +62,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => $params
         ]);
@@ -78,7 +78,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/get-docpage/
@@ -90,7 +90,7 @@ final class SmartAdTargets extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -104,7 +104,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/resume-docpage/
@@ -113,7 +113,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => $params
         ]);
@@ -127,7 +127,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/setBids-docpage/
@@ -136,7 +136,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'setBids',
             'params' => $params
         ]);
@@ -150,7 +150,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/suspend-docpage/
@@ -159,7 +159,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => $params
         ]);
@@ -173,7 +173,7 @@ final class SmartAdTargets extends Service
      * @return array
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/update-docpage/
@@ -182,7 +182,7 @@ final class SmartAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => $params
         ]);

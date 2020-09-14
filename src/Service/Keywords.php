@@ -4,30 +4,30 @@
  * @date 29/08/2016 12:34
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Keywords
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Keywords extends Service
+final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает ключевые фразы.
      *
      * @param array $Keywords
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/add-docpage/
      */
     public function add($Keywords)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'Keywords' => $Keywords
@@ -40,13 +40,13 @@ final class Keywords extends Service
      *
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -62,7 +62,7 @@ final class Keywords extends Service
      * @param array $FieldNames
      * @param array $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/get-docpage/
@@ -71,7 +71,7 @@ final class Keywords extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -82,12 +82,12 @@ final class Keywords extends Service
      *
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/resume-docpage/
      */
     public function resume($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -100,13 +100,13 @@ final class Keywords extends Service
      *
      * @param array $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -119,13 +119,13 @@ final class Keywords extends Service
      *
      * @param array $Keywords
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/update-docpage/
      */
     public function update($Keywords)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'Keywords' => $Keywords

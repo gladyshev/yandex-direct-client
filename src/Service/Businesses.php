@@ -4,10 +4,10 @@
  * @date 26/08/20120 21:16
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Businesses
@@ -16,7 +16,7 @@ use function Yandex\Direct\get_param_names;
  *
  * @see https://yandex.ru/dev/direct/doc/ref-v5/businesses/businesses-docpage/
  */
-final class Businesses extends Service
+final class Businesses extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * @param array $SelectionCriteria
@@ -38,7 +38,7 @@ final class Businesses extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

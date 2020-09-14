@@ -4,29 +4,29 @@
  * @date 26/08/2016 13:51
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Ads
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Ads extends Service
+final class Ads extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * @param $Ads
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/add-docpage/
      */
     public function add($Ads)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'Ads' => $Ads
@@ -37,13 +37,13 @@ final class Ads extends Service
     /**
      * @param $Ads
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/update-docpage/
      */
     public function update($Ads)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'Ads' => $Ads
@@ -54,13 +54,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -71,13 +71,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -88,13 +88,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/resume-docpage/
      */
     public function resume($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -105,13 +105,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/archive-docpage/
      */
     public function archive($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'archive',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -122,13 +122,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/unarchive-docpage/
      */
     public function unarchive($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'unarchive',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -139,13 +139,13 @@ final class Ads extends Service
     /**
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * https://tech.yandex.ru/direct/doc/ref-v5/ads/moderate-docpage/
      */
     public function moderate($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'moderate',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -172,7 +172,7 @@ final class Ads extends Service
      * @param array $SmartAdBuilderAdFieldNames
      * @param array $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/ads/get-docpage/
@@ -195,7 +195,7 @@ final class Ads extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

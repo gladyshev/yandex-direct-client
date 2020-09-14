@@ -1,10 +1,7 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 01.04.17 23:52
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Exception;
+namespace Gladyshev\Yandex\Direct\Exception;
 
 class ServiceNotFoundException extends InvalidArgumentException
 {

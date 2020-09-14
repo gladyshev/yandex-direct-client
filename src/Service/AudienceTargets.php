@@ -4,30 +4,30 @@
  * @created 08.12.16 16:07
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class AudienceTargets
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class AudienceTargets extends Service
+final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает условия нацеливания на аудиторию, назначает ставки и приоритеты для создаваемых ретаргетингов.
      *
      * @param $AudienceTargets
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/add-docpage/
      */
     public function add($AudienceTargets)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'AudienceTargets' => $AudienceTargets
@@ -40,13 +40,13 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -61,7 +61,7 @@ final class AudienceTargets extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/get-docpage/
@@ -70,7 +70,7 @@ final class AudienceTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -81,13 +81,13 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/resume-docpage/
      */
     public function resume($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -100,13 +100,13 @@ final class AudienceTargets extends Service
      *
      * @param $Bids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/setBids-docpage/
      */
     public function setBids($Bids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'setBids',
             'params' => [
                 'Bids' => $Bids
@@ -119,13 +119,13 @@ final class AudienceTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria

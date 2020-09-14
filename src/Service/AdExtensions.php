@@ -1,33 +1,27 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 23/08/2016 15:16
- */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class AdExtensions
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class AdExtensions extends Service
+final class AdExtensions extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает расширения.
      *
      * @param $AdExtensions
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/add-docpage/
      */
     public function add($AdExtensions)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'AdExtensions' => $AdExtensions
@@ -40,13 +34,13 @@ final class AdExtensions extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -61,9 +55,10 @@ final class AdExtensions extends Service
      * @param $FieldNames
      * @param $CalloutFieldNames
      * @param $Page
+     *
      * @return array
-     * @throws Exception
-     * @throws \ReflectionException
+
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adextensions/get-docpage/
      */
@@ -71,7 +66,7 @@ final class AdExtensions extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

@@ -4,17 +4,17 @@
  * @date 29/08/2016 12:34
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class DynamicTextAdTargets
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class DynamicTextAdTargets extends Service
+final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает условия нацеливания для динамических объявлений,
@@ -22,13 +22,13 @@ final class DynamicTextAdTargets extends Service
      *
      * @param $Webpages
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/add-docpage/
      */
     public function add($Webpages)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'Webpages' => $Webpages
@@ -41,13 +41,13 @@ final class DynamicTextAdTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -63,7 +63,7 @@ final class DynamicTextAdTargets extends Service
      * @param $Page
      * @return array
      *
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/get-docpage/
@@ -72,7 +72,7 @@ final class DynamicTextAdTargets extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -83,13 +83,13 @@ final class DynamicTextAdTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/resume-docpage/
      */
     public function resume($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'resume',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -102,13 +102,13 @@ final class DynamicTextAdTargets extends Service
      *
      * @param $Bids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/setBids-docpage/
      */
     public function setBids($Bids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'setBids',
             'params' => [
                 'Bids' => $Bids
@@ -121,13 +121,13 @@ final class DynamicTextAdTargets extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/suspend-docpage/
      */
     public function suspend($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'suspend',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria

@@ -1,41 +1,24 @@
 <?php
+declare(strict_types=1);
+
+namespace Gladyshev\Yandex\Direct;
+
 /**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 12.04.17 20:06
+ * Interface ServiceInterface
+ *
+ * @author Dmitry Gladyshev <gladyshevd@icloud.com>
  */
-
-namespace Yandex\Direct;
-
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Transport\TransportInterface;
-
-interface ServiceInterface extends ConfigurableInterface
-{
+interface ServiceInterface {
     /**
-     * Returns Yandex Direct service name.
-     *
-     * @return string
-     * @see https://tech.yandex.ru/direct/doc/dg/objects/objects-docpage/
-     */
-    public function getName();
-
-    /**
-     * @return CredentialsInterface
-     */
-    public function getCredentials();
-
-    /**
-     * @return TransportInterface
-     */
-    public function getTransport();
-
-    /**
-     * Request Yandex Direct API by Params and Headers.
+     * Create Yandex Direct API Request by Params.
      *
      * @param array $params
-     * @param array $headers
+     *
      * @return array
-     * @throws Exception
+     *
+     * @throws \Throwable
      */
-    public function request(array $params, array $headers = []);
+    public function call(array $params = []);
+
+    public function getName(): string;
 }

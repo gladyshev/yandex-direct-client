@@ -3,21 +3,21 @@
  * @project yandex-direct-client
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
 use DOMDocument;
 use ReflectionException;
-use Yandex\Direct\Exception\ErrorResponseException;
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Возвращает параметры креативов, отвечающих заданным критериям.
  *
  * @see https://yandex.ru/dev/direct/doc/ref-v5/creatives/creatives-docpage/
  */
-final class Creatives extends Service
+final class Creatives extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Возвращает параметры креативов, отвечающих заданным критериям.
@@ -32,7 +32,7 @@ final class Creatives extends Service
      * @return array|DOMDocument
      *
      * @throws ErrorResponseException
-     * @throws Exception
+     * @throws \Throwable
      * @throws ReflectionException
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/creatives/get-docpage/
@@ -48,7 +48,7 @@ final class Creatives extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

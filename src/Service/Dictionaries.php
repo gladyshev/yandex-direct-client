@@ -4,16 +4,16 @@
  * @date 29/08/2016 12:33
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
+
+
 
 /**
  * Class Dictionaries
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Dictionaries extends Service
+final class Dictionaries extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Возвращает справочные данные: регионы, часовые пояса, курсы валют, список станций метрополитена,
@@ -21,13 +21,13 @@ final class Dictionaries extends Service
      *
      * @param $DictionaryNames
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dictionaries/get-docpage/
      */
     public function get($DictionaryNames)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => [
                 'DictionaryNames' => $DictionaryNames

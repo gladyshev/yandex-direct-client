@@ -4,30 +4,30 @@
  * @date 29/08/2016 12:34
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Sitelinks
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Sitelinks extends Service
+final class Sitelinks extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает наборы быстрых ссылок.
      *
      * @param $SitelinksSets
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/add-docpage/
      */
     public function add($SitelinksSets)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => [
                 'SitelinksSets' => $SitelinksSets
@@ -40,13 +40,13 @@ final class Sitelinks extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -62,7 +62,7 @@ final class Sitelinks extends Service
      * @param $Page
      * @return array
      *
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/get-docpage/
@@ -71,7 +71,7 @@ final class Sitelinks extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

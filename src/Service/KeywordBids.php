@@ -4,11 +4,11 @@
  * @date 23/04/2018 09:50
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class KeywordBids
@@ -16,10 +16,10 @@ use function Yandex\Direct\get_param_names;
  * Сервис предназначен для назначения ставок и приоритетов ключевым фразам и автотаргетингам и для получения данных,
  * полезных при назначении ставок.
  *
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/keywordbids-docpage/
  */
-final class KeywordBids extends Service
+final class KeywordBids extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Возвращает ставки и приоритеты для ключевых фраз и автотаргетингов, отвечающих заданным критериям,
@@ -32,7 +32,7 @@ final class KeywordBids extends Service
      * @param array $NetworkFieldNames
      * @param array $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/get-docpage/
@@ -46,7 +46,7 @@ final class KeywordBids extends Service
     ) {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -57,13 +57,13 @@ final class KeywordBids extends Service
      *
      * @param array $KeywordBids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/set-docpage/
      */
     public function set($KeywordBids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'set',
             'params' => [
                 'KeywordBids' => $KeywordBids
@@ -77,13 +77,13 @@ final class KeywordBids extends Service
      *
      * @param array $KeywordBids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/setAuto-docpage/
      */
     public function setAuto($KeywordBids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'setAuto',
             'params' => [
                 'KeywordBids' => $KeywordBids

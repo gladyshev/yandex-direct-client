@@ -8,8 +8,8 @@ namespace Yandex\Direct\Test;
 
 use PHPUnit\Framework\TestCase;
 use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\Service;
-use Yandex\Direct\ServiceFactory;
+use Yandex\Direct\AbstractService;
+use Gladyshev\Yandex\Direct\ServiceFactory;
 use Yandex\Direct\Transport\TransportInterface;
 use Yandex\Direct\Transport\RequestInterface;
 
@@ -47,7 +47,7 @@ class ServiceFactoryTest extends TestCase
                 ServiceFactory::OPTION_TRANSPORT => new MockTransport
         ]);
         $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(Service::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
     }
 
 

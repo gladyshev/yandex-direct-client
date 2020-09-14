@@ -4,30 +4,30 @@
  * @date 29/08/2016 12:32
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class Bids
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class Bids extends Service
+final class Bids extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Назначает фиксированные ставки и приоритеты для ключевых фраз.
      *
      * @param $Bids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/set-docpage/
      */
     public function set($Bids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'set',
             'params' => [
                 'Bids' => $Bids
@@ -40,13 +40,13 @@ final class Bids extends Service
      *
      * @param $Bids
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/setAuto-docpage/
      */
     public function setAuto($Bids)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'setAuto',
             'params' => [
                 'Bids' => $Bids
@@ -63,7 +63,7 @@ final class Bids extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/get-docpage/
@@ -72,7 +72,7 @@ final class Bids extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);

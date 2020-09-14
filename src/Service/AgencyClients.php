@@ -1,18 +1,11 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 30.03.17 11:39
- */
+declare(strict_types=1);
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use Throwable;
-use function Yandex\Direct\filter_params;
-use function Yandex\Direct\get_param_names;
+use function Gladyshev\Yandex\Direct\get_param_names;
 
-final class AgencyClients extends Service
+final class AgencyClients extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Возвращает список рекламодателей — клиентов агентства,
@@ -22,13 +15,13 @@ final class AgencyClients extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
-     * @throws Throwable
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/get-docpage
      */
     public function get($SelectionCriteria, $FieldNames, $Page = null)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => array_filter(compact(get_param_names(__METHOD__)))
         ]);
@@ -46,8 +39,7 @@ final class AgencyClients extends Service
      * @param $Notification
      * @param $Settings
      * @return array
-     * @throws Exception
-     * @throws Throwable
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/add-docpage/
      */
@@ -55,7 +47,7 @@ final class AgencyClients extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'add',
             'params' => $params
         ]);
@@ -67,17 +59,26 @@ final class AgencyClients extends Service
      *
      * @inheritDoc
      * @param $Clients
-     * @throws Throwable
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/agencyclients/update-docpage/
      */
     public function update($Clients)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'Clients' => $Clients
             ]
         ]);
+    }
+
+    protected function getHeaders(): array
+    {
+        $headers = parent::getHeaders();
+
+        unset($headers['Client-Login']);
+
+        return $headers;
     }
 }

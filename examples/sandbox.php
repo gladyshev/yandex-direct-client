@@ -1,24 +1,21 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @created 10.12.16 16:10
- */
 
 require '../vendor/autoload.php';
 
-use Yandex\Direct\Client;
-use Yandex\Direct\Credentials;
-use Yandex\Direct\Logger\EchoLog;
-use Yandex\Direct\Transport\Json\Transport;
+use Gladyshev\Yandex\Direct\Client;
+use Gladyshev\Yandex\Direct\Credentials;
 
-$credentials = new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_'));
 
-$transport = new Transport([
-    'baseUrl' => 'https://api-sandbox.direct.yandex.com',
-    'logger' => new EchoLog
-]);
+$credentials = new Credentials(
+    getenv('_LOGIN_'),
+    getenv('_TOKEN_'),
+    '',
+    true,
+    Credentials::LANGUAGE_RU,
+    'https://api-sandbox.direct.yandex.com'
+);
 
-$client = new Client($credentials, $transport);
+$client = new Client($credentials, new \GuzzleHttp\Client);
 
 $resp = $client->campaigns->get(['Ids' => [123456, 654321]], ['Funds']);
 

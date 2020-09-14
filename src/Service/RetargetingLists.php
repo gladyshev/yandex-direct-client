@@ -4,31 +4,31 @@
  * @created 03.12.16 15:26
  */
 
-namespace Yandex\Direct\Service;
+namespace Gladyshev\Yandex\Direct\Service;
 
-use Yandex\Direct\Exception\Exception;
-use Yandex\Direct\Service;
-use function Yandex\Direct\get_param_names;
+
+
+use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**
  * Class RetargetingLists
- * @package Yandex\Direct\Service
+ * @package Gladyshev\Yandex\Direct\Service
  */
-final class RetargetingLists extends Service
+final class RetargetingLists extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает условия подбора аудитории.
      *
      * @param $RetargetingLists
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/add-docpage/
 
      */
     public function add($RetargetingLists)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => [
                 'RetargetingLists' => $RetargetingLists
@@ -41,13 +41,13 @@ final class RetargetingLists extends Service
      *
      * @param $SelectionCriteria
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/delete-docpage/
      */
     public function delete($SelectionCriteria)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'delete',
             'params' => [
                 'SelectionCriteria' => $SelectionCriteria
@@ -62,7 +62,7 @@ final class RetargetingLists extends Service
      * @param $FieldNames
      * @param $Page
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/get-docpage/
@@ -71,7 +71,7 @@ final class RetargetingLists extends Service
     {
         $params = compact(get_param_names(__METHOD__));
 
-        return $this->request([
+        return $this->call([
             'method' => 'get',
             'params' => $params
         ]);
@@ -82,13 +82,13 @@ final class RetargetingLists extends Service
      *
      * @param $RetargetingLists
      * @return array
-     * @throws Exception
+     * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/update-docpage/
      */
     public function update($RetargetingLists)
     {
-        return $this->request([
+        return $this->call([
             'method' => 'update',
             'params' => [
                 'RetargetingLists' => $RetargetingLists
