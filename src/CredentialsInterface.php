@@ -20,17 +20,22 @@ interface CredentialsInterface
     /**
      * @return string
      */
-    public function getLogin(): string;
-
-    /**
-     * @return string
-     */
     public function getToken(): string;
 
     /**
      * @return string
      */
-    public function getMasterToken(): string;
+    public function getClientLogin(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getMasterToken(): ?string;
+
+    /**
+     * @return bool
+     */
+    public function getUseOperatorUnits(): ?bool;
 
     /**
      * @return string
@@ -38,13 +43,13 @@ interface CredentialsInterface
     public function getLanguage(): string;
 
     /**
-     * @return bool
-     */
-    public function getUseOperatorUnits(): bool;
-
-    /**
      * Returns base URL, ex. https://api.direct.yandex.com
      * @return string
      */
     public function getBaseUrl(): string;
+
+    /**
+     * @return bool
+     */
+    public function isAgency(): bool;
 }

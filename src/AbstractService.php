@@ -3,127 +3,137 @@ declare(strict_types=1);
 
 namespace Gladyshev\Yandex\Direct;
 
-abstract class AbstractService implements \Gladyshev\Yandex\Direct\ServiceInterface
+abstract class AbstractService implements ServiceInterface
 {
+    /**
+     * @var string
+     */
+    private $serviceName;
+
     /**
      * @var \Gladyshev\Yandex\Direct\CredentialsInterface
      */
-    protected $credentials;
+    private $credentials;
 
     /**
      * @var \Psr\Http\Client\ClientInterface
      */
-    protected $httpClient;
-
-    /**
-     * @var bool
-     */
-    protected $throwExceptionOnError = true;
+    private $httpClient;
 
     public function __construct(
+        string $serviceName,
         \Gladyshev\Yandex\Direct\CredentialsInterface $credentials,
         \Psr\Http\Client\ClientInterface $httpClient
     ) {
+        $this->serviceName = $serviceName;
         $this->credentials = $credentials;
         $this->httpClient = $httpClient;
     }
 
     public function getName(): string
     {
-        return (new \ReflectionClass(static::class))->getShortName();
+        return $this->serviceName;
     }
 
-    /**
-     * @param array|null $params
-     * @return array
-     * @throws \Throwable
-     */
-    public function call(array $params = [])
+    public function getCredentials(): \Gladyshev\Yandex\Direct\CredentialsInterface
     {
-        if (empty($params)) {
-            $params = new \StdClass;
-        }
+        return $this->credentials;
+    }
 
+    public function call(array $params = []): array
+    {
         $request = new \GuzzleHttp\Psr7\Request(
             'POST',
             $this->getUri(),
             $this->getHeaders(),
-            $this->prepareBody($params)
+            $this->getBody($params)
         );
 
         $response = $this->httpClient->sendRequest($request);
 
-        return $this->handleResponse($response, $request);
+        return $this->handleResponse($request, $response);
     }
 
     /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @return array
-     * @throws \Throwable
+     * @return string
      */
-    protected function handleResponse(
-        \Psr\Http\Message\ResponseInterface $response,
-        \Psr\Http\Message\RequestInterface $request
-    ): array {
-        if ($response->getStatusCode() != 200) {
-            throw new \Gladyshev\Yandex\Direct\Exception\InvalidResponseException(
-                $request,
-                $response,
-                'Unexpected response.'
-            );
+    protected function getUri() : string
+    {
+        return $this->getCredentials()->getBaseUrl() . '/json/v5/' . mb_strtolower($this->getName());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getHeaders(): array
+    {
+        $headers = [
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $this->getCredentials()->getToken(),
+            'Accept-Language' => $this->getCredentials()->getLanguage()
+        ];
+
+        if ($this->getCredentials()->isAgency()) {
+            $headers['Use-Operator-Units'] = $this->getCredentials()->getUseOperatorUnits() ? 'true' : 'false';
+            if ($this->getCredentials()->getClientLogin()) {
+                $headers['Client-Login'] = $this->getCredentials()->getClientLogin();
+            }
         }
 
+        return $headers;
+    }
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    protected function getBody(array $params): string
+    {
+        if (empty($params['params'])) {
+            $params = new \StdClass;
+        } else {
+            $params['params'] = array_filter($params['params']);
+        }
+
+        return json_encode($params);
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @return array
+     */
+    protected function handleResponse(
+        \Psr\Http\Message\RequestInterface $request,
+        \Psr\Http\Message\ResponseInterface $response
+    ): array {
         $result = json_decode($response->getBody()->getContents(), true);
+
+        /* Handle error response */
 
         if (isset($result['error']) && $result['error']) {
             throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
                 $result['error']['error_string'],
                 $result['error']['error_detail'],
-                $result['error']['error_code'],
+                (int) $result['error']['error_code'],
                 $request,
                 $response
             );
         }
 
-        $result['request_id'] = current($response->getHeader('RequestId'));
+        $requestId = current($response->getHeader('RequestId'));
 
-        if ($response->getHeader('Units')) {
-            [$debit, $rest, $limit] = explode('/', current($response->getHeader('Units')));
-            $result['units'] = [
-                'debit' => $debit ?? null,
-                'limit' => $limit ?? null,
-                'rest'  => $rest?? null
-            ];
+        [$debit, $rest, $limit] = explode('/', current($response->getHeader('Units')));
 
-            $request['unitsUsedLogin'] = current($response->getHeader('Units-Used-Login'));
-        }
-
-        return $result;
-    }
-
-    protected function getHeaders(): array
-    {
         return [
-            'Content-Type' => 'application/json; charset=utf-8',
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->credentials->getToken(),
-            'Client-Login' => $this->credentials->getLogin(),
-            'Accept-Language' => $this->credentials->getLanguage(),
-            'Use-Operator-Units' => $this->credentials->getUseOperatorUnits() ? 'true' : 'false'
+            'request_id' => $requestId,
+            'units' => [
+                'debit' => $debit,
+                'rest' => $rest,
+                'limit' => $limit
+            ],
+            'result' => $result
         ];
-    }
-
-    protected function prepareBody(array $params): string
-    {
-        return json_encode(
-            $params,
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        );
-    }
-
-    public function getUri(): string
-    {
-        return $this->credentials->getBaseUrl() . '/json/v5/' . mb_strtolower($this->getName());
     }
 }

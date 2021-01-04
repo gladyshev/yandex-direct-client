@@ -2,7 +2,7 @@
 
 require '../vendor/autoload.php';
 
-$credentials = \Gladyshev\Yandex\Direct\ClientCredentials::buildForSandbox(
+$credentials = \Gladyshev\Yandex\Direct\AgencyCredentials::buildForSandbox(
     getenv('_TOKEN_'),
     getenv('_MASTER_TOKEN_')
 );
@@ -12,9 +12,9 @@ $client = new \Gladyshev\Yandex\Direct\Client(
     new GuzzleHttp\Client()
 );
 
-$resp = $client->campaigns->get(
-    ['Types' => ['TEXT_CAMPAIGN']],
-    ['Name', 'Funds', 'ClientInfo']
+$resp = $client->agencyClients->get(
+    ['Archived' => 'YES'],
+    ['Login']
 );
 
 print_r($resp);

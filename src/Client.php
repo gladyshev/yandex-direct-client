@@ -28,8 +28,15 @@ namespace Gladyshev\Yandex\Direct;
  * @property \Gladyshev\Yandex\Direct\Service\TurboPages $turboPages
  * @property \Gladyshev\Yandex\Direct\Service\VCards $vCards
  */
-class Client implements \Gladyshev\Yandex\Direct\ServiceFactoryInterface
+class Client implements ServiceFactoryInterface
 {
+    private const SERVICE_NAMESPACE = __NAMESPACE__ . '\\Service\\';
+
+    /**
+     * @var \Gladyshev\Yandex\Direct\ServiceInterface[]
+     */
+    private $services = [];
+
     /**
      * @var \Gladyshev\Yandex\Direct\CredentialsInterface
      */
@@ -41,46 +48,42 @@ class Client implements \Gladyshev\Yandex\Direct\ServiceFactoryInterface
     private $httpClient;
 
     public function __construct(
-        \Gladyshev\Yandex\Direct\CredentialsInterface $credentials,
+        CredentialsInterface $credentials,
         \Psr\Http\Client\ClientInterface $httpClient
     ) {
         $this->credentials = $credentials;
         $this->httpClient = $httpClient;
     }
 
-    /**
-     * @param string $name
-     * @return ServiceInterface
-     * @throws \Throwable
-     */
-    public function __get(string $name)
-    {
-        return $this->createService($name);
-    }
-
     public function createService(string $serviceName): \Gladyshev\Yandex\Direct\ServiceInterface
     {
-        $className = __NAMESPACE__ . '\\Service\\' . ucfirst($serviceName);
+        if (!isset($this->services[$serviceName])) {
+            $className = self::SERVICE_NAMESPACE . ucfirst($serviceName);
 
-        if (!class_exists($className)) {
-            throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
-                "Service class `{$className}` is not found."
-            );
+            if (!class_exists($className)) {
+                throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+                    $serviceName,
+                    "Class '{$className}' is not found."
+                );
+            }
+
+            $classInstance = new $className($serviceName, $this->credentials, $this->httpClient);
+
+            if (!$classInstance instanceof \Gladyshev\Yandex\Direct\ServiceInterface) {
+                throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+                    $serviceName,
+                    "Class '{$className}' must be an instance of '\Gladyshev\Yandex\Direct\ServiceInterface'."
+                );
+            }
+
+            $this->services[$serviceName] = $classInstance;
         }
 
-        $isService = (new \ReflectionClass($className))->implementsInterface(
-            \Gladyshev\Yandex\Direct\ServiceInterface::class
-        );
+        return $this->services[$serviceName];
+    }
 
-        if (!$isService) {
-            throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
-                "Service class `{$className}` must implements " . \Gladyshev\Yandex\Direct\ServiceInterface::class
-            );
-        }
-
-        return new $className(
-            $this->credentials,
-            $this->httpClient
-        );
+    public function __get(string $serviceName): \Gladyshev\Yandex\Direct\ServiceInterface
+    {
+        return $this->createService($serviceName);
     }
 }

@@ -26,9 +26,9 @@ class ErrorResponseException extends \RuntimeException
     protected $error = [];
 
     public function __construct(
-        $message,
-        $detail,
-        $code,
+        string $message,
+        string $detail,
+        int $code,
         \Psr\Http\Message\RequestInterface $request,
         \Psr\Http\Message\ResponseInterface $response,
         \Throwable $previous = null
@@ -75,7 +75,11 @@ class ErrorResponseException extends \RuntimeException
     {
         $str = 'Exception ' . __CLASS__ . " code {$this->code} with message '{$this->message}' in `{$this->file}`" . PHP_EOL;
         $str .= 'Details: ' . $this->detail . PHP_EOL;
-        $str .= 'Stack trace:' . PHP_EOL . $this->getTraceAsString();
+        $str .= 'Stack trace:' . PHP_EOL . $this->getTraceAsString() . PHP_EOL;
+        $str .= 'Request-Response:' . PHP_EOL;
+        $str .= '>>>' . \GuzzleHttp\Psr7\Message::toString($this->getRequest()) . PHP_EOL;
+        $str .= '<<<' . \GuzzleHttp\Psr7\Message::toString($this->getResponse()) . PHP_EOL;
+
         return $str;
     }
 }

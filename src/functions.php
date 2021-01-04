@@ -7,9 +7,9 @@ namespace Gladyshev\Yandex\Direct;
  * @return array
  * @throws \ReflectionException
  */
-function get_param_names($method)
+function get_param_names(string $method): array
 {
-    list($class, $method) = explode('::', $method);
+    [$class, $method] = explode('::', $method);
 
     $refParams = (new \ReflectionMethod($class, $method))->getParameters();
 
@@ -20,15 +20,4 @@ function get_param_names($method)
     }
 
     return $paramNames;
-}
-
-/**
- * @param array $params
- * @return array
- */
-function filter_params(array $params)
-{
-    return array_filter($params, function ($value) {
-        return !is_null($value);
-    });
 }
