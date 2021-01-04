@@ -3,9 +3,9 @@ Yandex Direct API v5 PHP client
 
 Современный и удобный PHP-клиент [Yandex.Direct API](https://tech.yandex.ru/direct/doc/dg/concepts/about-docpage/). 
 
-[![Build Status](https://travis-ci.org/gladyshev/yandex-direct-client.svg?branch=master)](https://travis-ci.org/gladyshev/yandex-direct-client)
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=master)
+[![Build Status](https://travis-ci.org/gladyshev/yandex-direct-client.svg?branch=v4.x)](https://travis-ci.org/gladyshev/yandex-direct-client)
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/coverage.png?b=v4.x)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=v4.x)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=v4.x)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=v4.x)
 
 ## Требования
  * PHP 7.2 и выше

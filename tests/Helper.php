@@ -4,7 +4,7 @@
  * @date 04.04.17 12:00
  */
 
-namespace Yandex\Direct\Test;
+namespace Gladyshev\Yandex\Direct\Tests;
 
 use ReflectionClass;
 use ReflectionMethod;
@@ -12,7 +12,6 @@ use ReflectionProperty;
 
 /**
  * Class Helper
- * @package Yandex\Direct\Test
  */
 class Helper
 {

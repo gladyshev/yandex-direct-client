@@ -39,7 +39,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Yandex\\Direct\\Test\\": "tests/"
+      "Gladyshev\\Yandex\\Direct\\Tests\\": "tests/"
     }
   },
   "scripts": {
