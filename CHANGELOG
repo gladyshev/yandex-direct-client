@@ -2,7 +2,6 @@
       - Simplify code
       - DI ready
       - Improve PSRs support
-      - Breaks BC!
 
 3.1.2 - Businesses service added
       - SmartCampaigns support added
