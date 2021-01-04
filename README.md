@@ -13,7 +13,7 @@ Yandex Direct API v5 PHP client
 ## Установка  
 В файле `composer.json`:
 ```bash
-$ composer require gladyshev/anticaptcha-client
+$ composer require gladyshev/yandex-direct-client
 ```
 
 ## Использование
