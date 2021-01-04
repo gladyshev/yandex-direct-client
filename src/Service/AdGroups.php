@@ -4,7 +4,7 @@ namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
-
+use Gladyshev\Yandex\Direct\AbstractService;
 
 use function Gladyshev\Yandex\Direct\get_param_names;
 

@@ -1,99 +1,84 @@
 <?php
 /**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 16/08/2016 17:20
+ * @project yandex-direct-client
  */
 
-namespace Yandex\Direct\Test;
+namespace Gladyshev\Yandex\Direct\Tests;
 
-
+use Gladyshev\Yandex\Direct\Client;
+use Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException;
+use Gladyshev\Yandex\Direct\ServiceInterface;
+use Gladyshev\Yandex\Direct\Tests\Mocks\Credentials;
 use PHPUnit\Framework\TestCase;
-use Yandex\Direct\Client;
-use Yandex\Direct\CredentialsInterface;
-use Yandex\Direct\AbstractService;
-use Yandex\Direct\Transport\RequestInterface;
-use Yandex\Direct\Transport\TransportInterface;
 
 class ClientTest extends TestCase
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    protected $client;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->client = new Client('***', '***');
+        $credentials = new Credentials;
+        $httpClient = new \GuzzleHttp\Client();
+
+        $this->client = new Client($credentials, $httpClient);
     }
 
     /**
-     * @expectedException \Yandex\Direct\Exception\InvalidArgumentException
+     * @dataProvider validServicesDataProvider
      */
-    public function testInvalidServiceExceptionGetMagic()
+    public function testCreateService(string $serviceName): void
     {
-        $this->client->hahaImNotExistinService;
+        $instance = $this->client->createService($serviceName);
+
+        $this->assertInstanceOf(ServiceInterface::class, $instance);
     }
 
     /**
-     * @expectedException \Yandex\Direct\Exception\InvalidArgumentException
+     * @dataProvider invalidServicesDataProvider
      */
-    public function testInvalidServiceExceptionCallMagic()
+    public function testExceptionOnInvalidServiceName(string $serviceName): void
     {
-        $this->client->hahaImNotExistinService();
+        $this->expectException(ServiceNotFoundException::class);
+        $this->client->createService($serviceName);
     }
 
-
-    /**
-     * @dataProvider providerYandexServices
-     * @param $serviceName
-     */
-    public function testHasAllServicesWithGetMagic($serviceName)
+    public function invalidServicesDataProvider(): array
     {
-        $service = $this->client->{lcfirst($serviceName)};
-        $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(AbstractService::class, $service);
-
-        unset($service);
-
-        $service = $this->client->{$serviceName};
-        $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(AbstractService::class, $service);
+        return [
+            ['fuck'],
+            ['nop'],
+            ['piu']
+        ];
     }
 
-    /**
-     * @dataProvider providerYandexServices
-     * @param $serviceName
-     */
-    public function testHasAllServicesWithCallMagic($serviceName)
+    public function validServicesDataProvider(): array
     {
-        $service = $this->client->{lcfirst($serviceName)}();
-        $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(AbstractService::class, $service);
-
-        unset($service);
-
-        $service = $this->client->{$serviceName}();
-        $this->assertInstanceOf('Yandex\\Direct\\Service\\' . $serviceName, $service);
-        $this->assertInstanceOf(AbstractService::class, $service);
+        return [
+            ['AdExtensions'],
+            ['AdGroups'],
+            ['AdImages'],
+            ['Ads'],
+            ['AgencyClients'],
+            ['AudienceTargets'],
+            ['BidModifiers'],
+            ['Bids'],
+            ['Businesses'],
+            ['Campaigns'],
+            ['Changes'],
+            ['Clients'],
+            ['Creatives'],
+            ['Dictionaries'],
+            ['DynamicTextAdTargets'],
+            ['KeywordBids'],
+            ['Keywords'],
+            ['KeywordsResearch'],
+            ['Leads'],
+            ['NegativeKeywordSharedSets'],
+            ['Reports'],
+            ['RetargetingLists'],
+            ['Sitelinks'],
+            ['TurboPages'],
+            ['VCards'],
+        ];
     }
-
-    public function providerYandexServices()
-    {
-        return Helper::getServicesDataset();
-    }
-}
-
-
-class ClientMockCredentials implements CredentialsInterface {
-    public function getMasterToken() { return '';}
-    public function getToken() { return '';}
-    public function getLogin() { return '';}
-}
-
-class ClientMockTransport implements TransportInterface {
-    public function setOptions(array $options){}
-    public function getServiceUrl($serviceName){}
-    public function request(RequestInterface $request){}
-    public function getRequestClass() { return ''; }
-    public function getResponseClass() { return ''; }
 }
