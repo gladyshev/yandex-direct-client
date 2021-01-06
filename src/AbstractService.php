@@ -109,15 +109,24 @@ abstract class AbstractService implements ServiceInterface
         \Psr\Http\Message\RequestInterface $request,
         \Psr\Http\Message\ResponseInterface $response
     ): array {
-        $result = json_decode($response->getBody()->getContents(), true);
+        $contents = $response->getBody()->getContents();
+        $parsedBody = json_decode($contents, true);
 
-        /* Handle error response */
-
-        if (isset($result['error']) && $result['error']) {
+        if (!is_array($parsedBody)) {
             throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
-                $result['error']['error_string'],
-                $result['error']['error_detail'],
-                (int) $result['error']['error_code'],
+                'Unexpected API response.',
+                $contents,
+                0,
+                $request,
+                $response
+            );
+        }
+
+        if (!empty($parsedBody['error'])) {
+            throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
+                $parsedBody['error']['error_string'],
+                $parsedBody['error']['error_detail'],
+                (int) $parsedBody['error']['error_code'],
                 $request,
                 $response
             );
@@ -134,7 +143,7 @@ abstract class AbstractService implements ServiceInterface
                 'rest' => $rest,
                 'limit' => $limit
             ],
-            'result' => $result
+            'result' => $parsedBody
         ];
     }
 }

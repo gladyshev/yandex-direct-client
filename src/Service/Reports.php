@@ -129,10 +129,20 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
 
         if ($response->getStatusCode() >= 400) {
             $parsedBody = json_decode($contents, true);
+            if ($parsedBody && !empty($parsedBody['error'])) {
+                throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
+                    $parsedBody['error']['error_string'],
+                    $parsedBody['error']['error_detail'],
+                    (int)$parsedBody['error']['error_code'],
+                    $request,
+                    $response
+                );
+            }
+
             throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
-                $parsedBody['error']['error_string'],
-                $parsedBody['error']['error_detail'],
-                (int) $parsedBody['error']['error_code'],
+                'Unexpected API response.',
+                $contents,
+                0,
                 $request,
                 $response
             );
@@ -142,8 +152,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
             'request_id' => current($response->getHeader('RequestId'))
         ];
 
-        if (
-            $response->getStatusCode() == 201
+        if ($response->getStatusCode() == 201
             || $response->getStatusCode() == 202
         ) {
             $result['retryIn'] = $response->getHeaders()['retryIn'];

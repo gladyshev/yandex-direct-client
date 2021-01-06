@@ -1,10 +1,35 @@
-imports:
-    - php
+checks:
+    php: true
 
-tools:
-    external_code_coverage:
-        timeout: 2100 # Timeout in seconds.
-    # disable copy paste detector and similarity analyzer as they have no real value
-    # and a huge bunch of false-positives
-    php_sim: false
-    php_cpd: false
+filter:
+    paths:
+        - "src/*"
+
+build:
+    nodes:
+        analysis:
+            environment:
+                php: 7.4.12
+
+            tests:
+                override:
+                    - php-scrutinizer-run
+
+        tests-and-coverage:
+            environment:
+                php: 7.4.12
+
+            dependencies:
+                override:
+                    - composer self-update
+                    - composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi
+
+            tests:
+                override:
+                    -
+                        command: |
+                            vendor/bin/phpunit --verbose --coverage-clover=build/coverage.xml
+                        on_node: 1
+                        coverage:
+                            file: build/coverage.xml
+                            format: php-clover
