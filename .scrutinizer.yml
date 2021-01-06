@@ -9,7 +9,7 @@ build:
     nodes:
         analysis:
             environment:
-                php: 7.4.12
+                php: 7.4
 
             tests:
                 override:
@@ -17,7 +17,7 @@ build:
 
         tests-and-coverage:
             environment:
-                php: 7.4.12
+                php: 7.4
 
             dependencies:
                 override:
@@ -28,8 +28,8 @@ build:
                 override:
                     -
                         command: |
-                            vendor/bin/phpunit --verbose --coverage-clover=build/coverage.xml
+                            php -dxdebug.mode=coverage vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
                         on_node: 1
                         coverage:
-                            file: build/coverage.xml
+                            file: coverage.xml
                             format: php-clover
