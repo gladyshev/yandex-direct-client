@@ -1,14 +1,10 @@
 <?php
-/**
- * @project yandex-direct-client
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
 
 use DOMDocument;
 use ReflectionException;
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
-
 
 use function Gladyshev\Yandex\Direct\get_param_names;
 

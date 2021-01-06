@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gladyshev\Yandex\Direct\Service;
@@ -141,7 +142,8 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
             'request_id' => current($response->getHeader('RequestId'))
         ];
 
-        if ($response->getStatusCode() == 201
+        if (
+            $response->getStatusCode() == 201
             || $response->getStatusCode() == 202
         ) {
             $result['retryIn'] = $response->getHeaders()['retryIn'];

@@ -2,8 +2,6 @@
 
 namespace Gladyshev\Yandex\Direct\Service;
 
-
-
 use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**

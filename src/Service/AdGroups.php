@@ -4,7 +4,6 @@ namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
-use Gladyshev\Yandex\Direct\AbstractService;
 
 use function Gladyshev\Yandex\Direct\get_param_names;
 
@@ -12,7 +11,7 @@ use function Gladyshev\Yandex\Direct\get_param_names;
  * Class AdGroups
  * @package Gladyshev\Yandex\Direct\Service
  */
-final class AdGroups extends AbstractService
+final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
 {
     /**
      * Создает группы объявлений.

@@ -1,14 +1,9 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 26/08/20120 21:34
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
 
 use ReflectionException;
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
-
 
 use function Gladyshev\Yandex\Direct\get_param_names;
 

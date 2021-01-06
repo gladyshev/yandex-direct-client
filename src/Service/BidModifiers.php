@@ -4,7 +4,6 @@ namespace Gladyshev\Yandex\Direct\Service;
 
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
 
-
 use function Gladyshev\Yandex\Direct\get_param_names;
 
 /**

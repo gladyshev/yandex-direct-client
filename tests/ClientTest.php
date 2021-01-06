@@ -1,14 +1,10 @@
 <?php
-/**
- * @project yandex-direct-client
- */
+declare(strict_types=1);
 
 namespace Gladyshev\Yandex\Direct\Tests;
 
-use Gladyshev\Yandex\Direct\Client;
 use Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException;
 use Gladyshev\Yandex\Direct\ServiceInterface;
-use Gladyshev\Yandex\Direct\Tests\Mocks\Credentials;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -17,10 +13,10 @@ class ClientTest extends TestCase
 
     public function setUp(): void
     {
-        $credentials = new Credentials;
-        $httpClient = new \GuzzleHttp\Client();
-
-        $this->client = new Client($credentials, $httpClient);
+        $this->client = new \Gladyshev\Yandex\Direct\Client(
+            new \Gladyshev\Yandex\Direct\Tests\Mocks\Credentials,
+            new \GuzzleHttp\Client
+        );
     }
 
     /**
@@ -34,6 +30,16 @@ class ClientTest extends TestCase
     }
 
     /**
+     * @dataProvider validServicesDataProvider
+     */
+    public function testMagicCreateService(string $serviceName): void
+    {
+        $instance = $this->client->{$serviceName};
+
+        $this->assertInstanceOf(ServiceInterface::class, $instance);
+    }
+
+    /**
      * @dataProvider invalidServicesDataProvider
      */
     public function testExceptionOnInvalidServiceName(string $serviceName): void
@@ -42,43 +48,38 @@ class ClientTest extends TestCase
         $this->client->createService($serviceName);
     }
 
+    /**
+     * @dataProvider invalidServicesDataProvider
+     */
+    public function testExceptionOnInvalidServiceNameWithMagicCreate(string $serviceName): void
+    {
+        $this->expectException(ServiceNotFoundException::class);
+        $this->client->{$serviceName};
+    }
+
     public function invalidServicesDataProvider(): array
     {
         return [
-            ['fuck'],
-            ['nop'],
-            ['piu']
+            ['foo'],
+            ['bar'],
+            ['buzz']
         ];
     }
 
     public function validServicesDataProvider(): array
     {
-        return [
-            ['AdExtensions'],
-            ['AdGroups'],
-            ['AdImages'],
-            ['Ads'],
-            ['AgencyClients'],
-            ['AudienceTargets'],
-            ['BidModifiers'],
-            ['Bids'],
-            ['Businesses'],
-            ['Campaigns'],
-            ['Changes'],
-            ['Clients'],
-            ['Creatives'],
-            ['Dictionaries'],
-            ['DynamicTextAdTargets'],
-            ['KeywordBids'],
-            ['Keywords'],
-            ['KeywordsResearch'],
-            ['Leads'],
-            ['NegativeKeywordSharedSets'],
-            ['Reports'],
-            ['RetargetingLists'],
-            ['Sitelinks'],
-            ['TurboPages'],
-            ['VCards'],
-        ];
+        $dir = new \FilesystemIterator(
+            dirname(__DIR__) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Service'
+        );
+
+        $services = [];
+
+        foreach ($dir as $fileInfo) {
+            if ($fileInfo->isFile()) {
+                $services[] = [$fileInfo->getBasename('.php')];
+            }
+        }
+
+        return $services;
     }
 }

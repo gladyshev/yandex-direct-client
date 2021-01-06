@@ -1,12 +1,6 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @created 08.12.16 16:07
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
-
-
 
 use function Gladyshev\Yandex\Direct\get_param_names;
 

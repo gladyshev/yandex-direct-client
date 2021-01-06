@@ -1,13 +1,6 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 29/08/2016 12:33
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
-
-
-
 
 /**
  * Class Dictionaries

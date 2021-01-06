@@ -2,7 +2,7 @@
 
 require '../vendor/autoload.php';
 
-$credentials = \Gladyshev\Yandex\Direct\ClientCredentials::buildForSandbox(
+$credentials = \Gladyshev\Yandex\Direct\Credentials::clientSandbox(
     getenv('_TOKEN_'),
     getenv('_MASTER_TOKEN_')
 );

@@ -2,10 +2,9 @@
 
 require '../vendor/autoload.php';
 
-$credentials = \Gladyshev\Yandex\Direct\AgencyCredentials::buildForSandbox(
+$credentials = \Gladyshev\Yandex\Direct\Credentials::agencySandbox(
     getenv('_TOKEN_'),
-    getenv('_MASTER_TOKEN_'),
-    getenv('_CLIENT_LOGIN_')
+    getenv('_MASTER_TOKEN_')
 );
 
 $client = new \Gladyshev\Yandex\Direct\Client(
@@ -14,7 +13,7 @@ $client = new \Gladyshev\Yandex\Direct\Client(
 );
 
 $resp = $client->agencyClients->get(
-    ['Archived' => 'YES'],
+    ['Archived' => 'NO'],
     ['Login']
 );
 

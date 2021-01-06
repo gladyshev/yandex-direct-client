@@ -1,13 +1,6 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @date 03.05.17 7:46
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
-
-
-
 
 final class KeywordsResearch extends \Gladyshev\Yandex\Direct\AbstractService
 {

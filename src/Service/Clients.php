@@ -1,13 +1,6 @@
 <?php
-/**
- * @author Dmitry Gladyshev <deel@email.ru>
- * @created 29.11.16 14:09
- */
 
 namespace Gladyshev\Yandex\Direct\Service;
-
-
-
 
 /**
  * Class Clients

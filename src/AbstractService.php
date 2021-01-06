@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Gladyshev\Yandex\Direct;
@@ -30,16 +31,6 @@ abstract class AbstractService implements ServiceInterface
         $this->httpClient = $httpClient;
     }
 
-    public function getName(): string
-    {
-        return $this->serviceName;
-    }
-
-    public function getCredentials(): \Gladyshev\Yandex\Direct\CredentialsInterface
-    {
-        return $this->credentials;
-    }
-
     public function call(array $params = []): array
     {
         $request = new \GuzzleHttp\Psr7\Request(
@@ -54,12 +45,22 @@ abstract class AbstractService implements ServiceInterface
         return $this->handleResponse($request, $response);
     }
 
+    protected function getServiceName(): string
+    {
+        return $this->serviceName;
+    }
+
+    protected function getCredentials(): \Gladyshev\Yandex\Direct\CredentialsInterface
+    {
+        return $this->credentials;
+    }
+
     /**
      * @return string
      */
-    protected function getUri() : string
+    protected function getUri(): string
     {
-        return $this->getCredentials()->getBaseUrl() . '/json/v5/' . mb_strtolower($this->getName());
+        return $this->getCredentials()->getBaseUrl() . '/json/v5/' . mb_strtolower($this->getServiceName());
     }
 
     /**
@@ -91,7 +92,7 @@ abstract class AbstractService implements ServiceInterface
     protected function getBody(array $params): string
     {
         if (empty($params['params'])) {
-            $params = new \StdClass;
+            $params = new \StdClass();
         } else {
             $params['params'] = array_filter($params['params']);
         }

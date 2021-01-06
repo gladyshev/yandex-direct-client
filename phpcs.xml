@@ -7,7 +7,7 @@
     <arg name="colors"/>
 
     <!-- inherit rules from: PSR-2 -->
-    <rule ref="PSR2">
+    <rule ref="PSR12">
         <exclude name="PSR1.Classes.ClassDeclaration"/>
         <exclude name="PSR1.Files.SideEffects"/>
         <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace"/>
@@ -15,7 +15,7 @@
     </rule>
 
     <!-- Paths to check -->
-    <file>src</file>
+    <file>src/</file>
 
     <!-- Exclude -->
     <exclude-pattern>*/vendor/*</exclude-pattern>
