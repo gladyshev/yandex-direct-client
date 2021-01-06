@@ -36,5 +36,15 @@ $response = $client->campaigns->get(
     ['Status', 'Currency', 'Funds']    // FieldNames
 );
 
-var_dump($response);
+print_r($response);
+  
+// [
+//     'request_id' => 1234567890,
+//     'units' => [
+//         'debit' => 10, 
+//         'limit' => 50,
+//         'rest' => 100500
+//     ],
+//     'result' => [...]
+// ]
 ```
