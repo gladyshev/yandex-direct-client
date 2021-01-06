@@ -19,7 +19,7 @@ $ composer require gladyshev/yandex-direct-client
 ## Использование
 
 ```php
-$credentials = \Gladyshev\Yandex\Direct\ClientCredentials::build(
+$credentials = \Gladyshev\Yandex\Direct\Credentials::client(
     getenv('__LOGIN__'),
     getenv('__TOKEN__')
 ); 
