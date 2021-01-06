@@ -132,6 +132,8 @@ abstract class AbstractService implements ServiceInterface
             );
         }
 
+        $unitsUsedLogin = current($response->getHeader('Units-Used-Login'));
+
         $requestId = current($response->getHeader('RequestId'));
 
         [$debit, $rest, $limit] = explode('/', current($response->getHeader('Units')));
@@ -143,6 +145,7 @@ abstract class AbstractService implements ServiceInterface
                 'rest' => $rest,
                 'limit' => $limit
             ],
+            'units_used_login' => $unitsUsedLogin,
             'result' => $parsedBody
         ];
     }

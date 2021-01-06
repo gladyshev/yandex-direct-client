@@ -8,7 +8,7 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
 {
     private $token;
     private $masterToken;
-    private $login;
+    private $clientLogin;
     private $useOperatorUnits;
     private $isAgency;
     private $language;
@@ -36,7 +36,7 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
     ) {
         $this->token = $token;
         $this->masterToken = $masterToken;
-        $this->login = $clientLogin;
+        $this->clientLogin = $clientLogin;
         $this->useOperatorUnits = $useOperatorUnits;
         $this->language = $language;
         $this->baseUrl = $baseUrl;
@@ -46,14 +46,14 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
     public static function agency(
         string $token,
         ?string $masterToken = null,
-        ?string $login = null,
+        ?string $clientLogin = null,
         bool $useOperatorUnits = true,
         string $language = self::LANGUAGE_RU
     ): self {
         return new self(
             $token,
             $masterToken,
-            $login,
+            $clientLogin,
             $useOperatorUnits,
             true,
             $language,
@@ -132,7 +132,7 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
      */
     public function getClientLogin(): ?string
     {
-        return $this->login;
+        return $this->clientLogin;
     }
 
     /**

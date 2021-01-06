@@ -3,8 +3,7 @@
 require '../vendor/autoload.php';
 
 $credentials = \Gladyshev\Yandex\Direct\Credentials::clientSandbox(
-    getenv('_TOKEN_'),
-    getenv('_MASTER_TOKEN_')
+    getenv('_TOKEN_')
 );
 
 $client = new \Gladyshev\Yandex\Direct\Client(

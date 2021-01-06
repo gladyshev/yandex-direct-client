@@ -20,8 +20,7 @@ $ composer require gladyshev/yandex-direct-client
 
 ```php
 $credentials = \Gladyshev\Yandex\Direct\Credentials::client(
-    getenv('__LOGIN__'),
-    getenv('__TOKEN__')
+    getenv('_TOKEN_')
 ); 
 
 $httpClient = new \GuzzleHttp\Client();
@@ -37,13 +36,14 @@ $response = $client->campaigns->get(
 );
 
 print_r($response);
-  
+
 // [
-//     'request_id' => 1234567890,
+//     'request_id' => 8695244274068608439,
+//     'units_used_login' => 'ttt-agency',
 //     'units' => [
 //         'debit' => 10, 
-//         'limit' => 50,
-//         'rest' => 100500
+//         'rest' => 20828,
+//         'limit' => 64000
 //     ],
 //     'result' => [...]
 // ]
