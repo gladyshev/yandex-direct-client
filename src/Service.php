@@ -6,7 +6,6 @@
 
 namespace Yandex\Direct;
 
-use LSS\XML2Array;
 use Yandex\Direct\Exception\ErrorResponseException;
 use Yandex\Direct\Transport\Request;
 use Yandex\Direct\Transport\RequestInterface;
@@ -40,8 +39,7 @@ abstract class Service implements ServiceInterface
      * @var array
      */
     protected $headers = [
-        'Accept-Language' => RequestInterface::LANGUAGE_RU,
-        'Use-Operator-Units' => 'true'
+        'Accept-Language' => RequestInterface::LANGUAGE_RU
     ];
 
 
@@ -52,22 +50,18 @@ abstract class Service implements ServiceInterface
      */
     public function request(array $params, array $headers = [])
     {
+        $params['params'] = filter_params($params['params']);
+
         /* Request API */
 
         $response = $this->getTransport()->request(new Request([
             'service' => $this->getName(),
             'credentials' => $this->getCredentials(),
-            'params' => filter_params($params),
+            'params' => $params,
             'headers' => array_merge($this->headers, $headers),
         ]));
 
-        switch ($response->getService()) {
-            case TransportInterface::SERVICE_REPORTS:
-                return $this->handleReportsResponse($response);
-
-            default:
-                return $this->handleResponse($response);
-        }
+        return $this->handleResponse($response);
     }
 
     /**
@@ -142,10 +136,10 @@ abstract class Service implements ServiceInterface
      */
     public function setUseOperatorUnits($useOperatorUnits)
     {
-        if (is_numeric($useOperatorUnits) || is_bool($useOperatorUnits)) {
-            $useOperatorUnits = $useOperatorUnits ? 'true' : 'false';
+        if (is_bool($useOperatorUnits)) {
+            $this->headers['Use-Operator-Units'] = $useOperatorUnits ? 'true' : 'false';
         }
-        $this->headers['Use-Operator-Units'] = $useOperatorUnits;
+
         return $this;
     }
 
@@ -189,41 +183,6 @@ abstract class Service implements ServiceInterface
             'rest' => $response->getUnitsRest()
         ];
         $result['request_id'] = $response->getRequestId();
-
-        return $result;
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @return array|\DOMDocument
-     * @throws ErrorResponseException
-     * @throws \Exception
-     */
-    protected function handleReportsResponse(ResponseInterface $response)
-    {
-        if ($response->getCode() >= 500) {
-            $result = XML2Array::createArray($response->getBody());
-            $result = $result['reports:reportDownloadError']['reports:ApiError'];
-            throw new ErrorResponseException(
-                $result['reports:errorMessage'],
-                $result['reports:errorDetail'],
-                $result['reports:errorCode'],
-                $result['reports:requestId']
-            );
-        }
-
-        $result = [
-            'request_id' => $response->getRequestId()
-        ];
-
-        if ($response->getCode() == 201
-            || $response->getCode() == 202
-        ) {
-            $result['retryIn'] = $response->getHeaders()['retryIn'];
-            return $result;
-        }
-
-        $result['report'] = $response->getBody();
 
         return $result;
     }

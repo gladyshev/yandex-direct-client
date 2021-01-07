@@ -11,7 +11,7 @@ use Yandex\Direct\Credentials;
 use Yandex\Direct\Logger\EchoLog;
 use Yandex\Direct\Transport\Json\Transport;
 
-$credentials = new Credentials(getenv('_LOGIN_'), getenv('_TOKEN_'));
+$credentials = new Credentials(getenv('_CLIENT_LOGIN_'), getenv('_TOKEN_'));
 
 $transport = new Transport([
     'baseUrl' => 'https://api-sandbox.direct.yandex.com',

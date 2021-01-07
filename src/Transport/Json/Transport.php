@@ -58,7 +58,7 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
      * @var array
      */
     private $serviceUrls = [
-        'Reports' => '/v5/reports'
+//        'Reports' => '/v5/reports'
     ];
 
     /**
@@ -142,8 +142,12 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
                 'headers' => $httpResponse->getHeaders(),
                 'body' => $httpResponse->getBody()->__toString(),
                 'code' => $httpResponse->getStatusCode(),
-                'requestId' => array_key_exists('RequestId', $httpResponseHeaders) ? current($httpResponseHeaders['RequestId']) : null,
-                'units' => array_key_exists('Units', $httpResponseHeaders) ? current($httpResponseHeaders['Units']) : null
+                'requestId' => array_key_exists('RequestId', $httpResponseHeaders)
+                    ? current($httpResponseHeaders['RequestId'])
+                    : null,
+                'units' => array_key_exists('Units', $httpResponseHeaders)
+                    ? current($httpResponseHeaders['Units'])
+                    : [null, null, null]
             ]);
         } catch (RequestException $e) {
             $this->getLogger()->error("Transport error: {$e->getMessage()} [CODE: {$e->getCode()}]");
@@ -237,12 +241,7 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
      */
     private function prepareBody(RequestInterface $request)
     {
-        switch ($request->getService()) {
-            case self::SERVICE_REPORTS:
-                return $this->prepareXmlBody($request);
-            default:
-                return $this->prepareJsonBody($request);
-        }
+        return $this->prepareJsonBody($request);
     }
 
     /**
@@ -255,38 +254,5 @@ class Transport implements TransportInterface, LoggerAwareInterface, Configurabl
             array_merge(['method' => $request->getMethod()], $request->getParams()),
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         );
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return string
-     * @throws InvalidArgumentException
-     */
-    private function prepareXmlBody(RequestInterface $request)
-    {
-        $xml = Array2XML::createXML(
-            'ReportDefinition',
-            ['@attributes' => ['xmlns' => 'http://api.direct.yandex.com/v5/reports']] + $request->getParams()['params']
-        );
-
-        if ($this->enableReportValidation) {
-            $this->validateReportXml($xml);
-        }
-
-        return str_replace(PHP_EOL, '', $xml->saveXML());
-    }
-
-    /**
-     * @param \DOMDocument $xml
-     * @throws InvalidArgumentException
-     */
-    private function validateReportXml(\DOMDocument $xml)
-    {
-        libxml_use_internal_errors(true);
-        if (!$xml->schemaValidate($this->reportsXmlSchema)) {
-            $error = libxml_get_last_error();
-            libxml_clear_errors();
-            throw new InvalidArgumentException($error->message, $error->code);
-        }
     }
 }

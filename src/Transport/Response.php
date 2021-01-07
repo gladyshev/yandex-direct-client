@@ -44,7 +44,11 @@ class Response implements ResponseInterface
     /**
      * @var array
      */
-    protected $units = [null, null, null];
+    protected $units = [
+        self::UNITS_TYPE_DEBIT => null,
+        self::UNITS_TYPE_LIMIT => null,
+        self::UNITS_TYPE_REST => null
+    ];
 
     /**
      * @var string
@@ -76,15 +80,16 @@ class Response implements ResponseInterface
 
     /**
      * @param string $rawUnits
-     * @throws InvalidArgumentException
      */
     public function setUnits($rawUnits)
     {
-        $units = explode('/', $rawUnits);
-        if (is_array($units)
-            && count($units) > 0
-        ) {
-            $this->units = $units;
+        if (is_array($rawUnits)) {
+            $this->units = $rawUnits;
+        } else {
+            $units = explode('/', $rawUnits);
+            if (is_array($units) && count($units) > 0) {
+                $this->units = $units;
+            }
         }
     }
 

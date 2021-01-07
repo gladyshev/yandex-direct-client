@@ -7,10 +7,19 @@
 require '../vendor/autoload.php';
 
 use Yandex\Direct\Client;
+use Yandex\Direct\Credentials;
+use Yandex\Direct\Logger\EchoLog;
+use Yandex\Direct\Transport\Json\Transport;
 
-$client = new Client(getenv('_LOGIN_'), getenv('_TOKEN_'));
+$credentials = new Credentials(getenv('_CLIENT_LOGIN_'), getenv('_TOKEN_'));
 
-// just...
-$resp = $client->campaigns->get(['Types' => ['TEXT_CAMPAIGN']], ['Funds']);
+$transport = new Transport([
+    'baseUrl' => 'https://api-sandbox.direct.yandex.com',
+    'logger' => new EchoLog,
+]);
+
+$client = new Client($credentials, $transport);
+
+$resp = $client->campaigns()->get(['Types' => ['TEXT_CAMPAIGN']], ['Funds']);
 
 print_r($resp);
