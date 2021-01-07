@@ -11,7 +11,6 @@ Yandex Direct API v5 PHP client
  * PHP 7.2 и выше
 
 ## Установка  
-В файле `composer.json`:
 ```bash
 $ composer require gladyshev/yandex-direct-client
 ```
