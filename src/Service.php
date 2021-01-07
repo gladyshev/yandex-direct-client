@@ -50,9 +50,13 @@ abstract class Service implements ServiceInterface
      */
     public function request(array $params, array $headers = [])
     {
-        $params['params'] = filter_params($params['params']);
+        if (!empty($params['params'])) {
+            $params['params'] = filter_params($params['params']);
+        }
 
-        /* Request API */
+        if (empty($params['params'])) {
+            $params['params'] = new \StdClass;
+        }
 
         $response = $this->getTransport()->request(new Request([
             'service' => $this->getName(),
