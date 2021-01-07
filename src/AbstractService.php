@@ -146,7 +146,7 @@ abstract class AbstractService implements ServiceInterface
                 'limit' => $limit
             ],
             'units_used_login' => $unitsUsedLogin,
-            'result' => $parsedBody
+            'result' => $parsedBody['result'] ?? $parsedBody
         ];
     }
 }
