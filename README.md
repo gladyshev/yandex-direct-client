@@ -22,7 +22,7 @@ $credentials = \Gladyshev\Yandex\Direct\Credentials::client(
     getenv('_TOKEN_')
 ); 
 
-$httpClient = new \GuzzleHttp\Client();
+$httpClient = new \GuzzleHttp\Client(); // Guzzle 7 или любой другой PSR-18 HTTP-клиент
 
 $client = new \Gladyshev\Yandex\Direct\Client(
     $credentials,
