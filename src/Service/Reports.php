@@ -155,7 +155,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
         if ($response->getStatusCode() == 201
             || $response->getStatusCode() == 202
         ) {
-            $result['retryIn'] = $response->getHeaders()['retryIn'];
+            $result['retryIn'] = current($response->getHeader('retryIn'));
 
             return $result;
         }
