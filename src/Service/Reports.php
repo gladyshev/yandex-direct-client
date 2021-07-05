@@ -8,8 +8,6 @@ use function Gladyshev\Yandex\Direct\get_param_names;
 
 final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
 {
-    private $skipReportHeader = false;
-    private $skipReportSummary = false;
     private $headers = [];
 
     /**
@@ -78,46 +76,64 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setReturnMoneyInMicros($returnMoneyInMicros): self
+    public function setReturnMoneyInMicros($returnMoneyInMicros = true): self
     {
         if (is_numeric($returnMoneyInMicros) || is_bool($returnMoneyInMicros)) {
             $returnMoneyInMicros = $returnMoneyInMicros ? 'true' : 'false';
         }
         $this->headers['returnMoneyInMicros'] = $returnMoneyInMicros;
+
         return $this;
     }
 
     /**
      * Не выводить в отчете строку с названием отчета и диапазоном дат.
+     *
+     * @param $skipReportHeader
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipReportHeader(): self
+    public function setSkipReportHeader($skipReportHeader = true): self
     {
-        $this->headers['skipReportHeader'] = 'true';
+        if (is_numeric($skipReportHeader) || is_bool($skipReportHeader)) {
+            $skipReportHeader = $skipReportHeader ? 'true' : 'false';
+        }
+        $this->headers['skipReportHeader'] = $skipReportHeader;
+
         return $this;
     }
 
     /**
      * Не выводить в отчете строку с названиями полей.
      *
+     * @param bool $skipColumnHeader
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipColumnHeader(): self
+    public function setSkipColumnHeader($skipColumnHeader = true): self
     {
-        $this->headers['skipColumnHeader'] = 'true';
+        if (is_numeric($skipColumnHeader) || is_bool($skipColumnHeader)) {
+            $skipColumnHeader = $skipColumnHeader ? 'true' : 'false';
+        }
+        $this->headers['skipColumnHeader'] = $skipColumnHeader;
+
         return $this;
     }
 
     /**
      * Не выводить в отчете строку с количеством строк статистики.
      *
+     * @param bool $skipReportSummary
+     * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipReportSummary(): self
+    public function setSkipReportSummary($skipReportSummary = true): self
     {
-        $this->skipReportSummary = true;
+        if (is_numeric($skipReportSummary) || is_bool($skipReportSummary)) {
+            $skipReportSummary = $skipReportSummary ? 'true' : 'false';
+        }
+        $this->headers['skipReportSummary'] = $skipReportSummary;
+
         return $this;
     }
 
@@ -156,6 +172,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
             || $response->getStatusCode() == 202
         ) {
             $result['retryIn'] = current($response->getHeader('retryIn'));
+            $result['reportsInQueue'] = current($response->getHeader('reportsInQueue'));
 
             return $result;
         }
@@ -167,16 +184,6 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
 
     protected function getHeaders(): array
     {
-        $headers = parent::getHeaders();
-
-        if ($this->skipReportHeader) {
-            $headers['skipReportHeader'] = 'true';
-        }
-
-        if ($this->skipReportSummary) {
-            $headers['skipReportSummary'] = 'true';
-        }
-
-        return $headers;
+        return $this->headers + parent::getHeaders();
     }
 }
