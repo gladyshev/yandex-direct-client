@@ -2,16 +2,17 @@
 
 namespace Gladyshev\Yandex\Direct;
 
+use ReflectionException;
+use ReflectionMethod;
+
 /**
- * @param string $method
- * @return array
- * @throws \ReflectionException
+ * @throws ReflectionException
  */
 function get_param_names(string $method): array
 {
     [$class, $method] = explode('::', $method);
 
-    $refParams = (new \ReflectionMethod($class, $method))->getParameters();
+    $refParams = (new ReflectionMethod($class, $method))->getParameters();
 
     $paramNames = [];
 

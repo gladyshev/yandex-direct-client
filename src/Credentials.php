@@ -6,17 +6,15 @@ namespace Gladyshev\Yandex\Direct;
 
 final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
 {
-    private $token;
-    private $masterToken;
-    private $clientLogin;
-    private $useOperatorUnits;
-    private $isAgency;
-    private $language;
-    private $baseUrl;
+    private string $token;
+    private ?string $masterToken;
+    private ?string $clientLogin;
+    private ?bool $useOperatorUnits;
+    private bool $isAgency;
+    private string $language;
+    private string $baseUrl;
 
     /**
-     * Credentials constructor.
-     *
      * @param string $token                 # OAuth2 токен доступа
      * @param string|null $masterToken      # Токен для финансовых операций (не поддерживается API V5)
      * @param string|null $clientLogin      # Логин клиента Агентства (если isAgency = true, иначе NULL)
@@ -111,57 +109,36 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
         );
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @return string|null
-     */
     public function getMasterToken(): ?string
     {
         return $this->masterToken;
     }
 
-    /**
-     * @return string|null
-     */
     public function getClientLogin(): ?string
     {
         return $this->clientLogin;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getUseOperatorUnits(): ?bool
     {
         return $this->useOperatorUnits;
     }
 
-    /**
-     * @return string
-     */
     public function getLanguage(): string
     {
         return $this->language;
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
 
-    /**
-     * @return bool
-     */
     public function isAgency(): bool
     {
         return $this->isAgency;

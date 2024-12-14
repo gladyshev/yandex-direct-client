@@ -1,30 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Gladyshev\Yandex\Direct;
+
+use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use StdClass;
 
 abstract class AbstractService implements ServiceInterface
 {
-    /**
-     * @var string
-     */
-    private $serviceName;
-
-    /**
-     * @var \Gladyshev\Yandex\Direct\CredentialsInterface
-     */
-    private $credentials;
-
-    /**
-     * @var \Psr\Http\Client\ClientInterface
-     */
-    private $httpClient;
+    private string $serviceName;
+    private CredentialsInterface $credentials;
+    private ClientInterface $httpClient;
 
     public function __construct(
         string $serviceName,
-        \Gladyshev\Yandex\Direct\CredentialsInterface $credentials,
-        \Psr\Http\Client\ClientInterface $httpClient
+        CredentialsInterface $credentials,
+        ClientInterface $httpClient
     ) {
         $this->serviceName = $serviceName;
         $this->credentials = $credentials;
@@ -33,7 +27,7 @@ abstract class AbstractService implements ServiceInterface
 
     public function call(array $params = []): array
     {
-        $request = new \GuzzleHttp\Psr7\Request(
+        $request = new Request(
             'POST',
             $this->getUri(),
             $this->getHeaders(),
@@ -50,22 +44,16 @@ abstract class AbstractService implements ServiceInterface
         return $this->serviceName;
     }
 
-    protected function getCredentials(): \Gladyshev\Yandex\Direct\CredentialsInterface
+    protected function getCredentials(): CredentialsInterface
     {
         return $this->credentials;
     }
 
-    /**
-     * @return string
-     */
     protected function getUri(): string
     {
         return $this->getCredentials()->getBaseUrl() . '/json/v5/' . mb_strtolower($this->getServiceName());
     }
 
-    /**
-     * @return array
-     */
     protected function getHeaders(): array
     {
         $headers = [
@@ -85,14 +73,10 @@ abstract class AbstractService implements ServiceInterface
         return $headers;
     }
 
-    /**
-     * @param array $params
-     * @return string
-     */
     protected function getBody(array $params): string
     {
         if (empty($params['params'])) {
-            $params = new \StdClass();
+            $params = new StdClass();
         } else {
             $params['params'] = array_filter($params['params']);
         }
@@ -100,20 +84,15 @@ abstract class AbstractService implements ServiceInterface
         return json_encode($params);
     }
 
-    /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @return array
-     */
     protected function handleResponse(
-        \Psr\Http\Message\RequestInterface $request,
-        \Psr\Http\Message\ResponseInterface $response
+        RequestInterface $request,
+        ResponseInterface $response
     ): array {
         $contents = $response->getBody()->getContents();
         $parsedBody = json_decode($contents, true);
 
         if (!is_array($parsedBody)) {
-            throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
+            throw new ErrorResponseException(
                 'Unexpected API response.',
                 $contents,
                 0,
@@ -123,7 +102,7 @@ abstract class AbstractService implements ServiceInterface
         }
 
         if (!empty($parsedBody['error'])) {
-            throw new \Gladyshev\Yandex\Direct\Exception\ErrorResponseException(
+            throw new ErrorResponseException(
                 $parsedBody['error']['error_string'],
                 $parsedBody['error']['error_detail'],
                 (int) $parsedBody['error']['error_code'],

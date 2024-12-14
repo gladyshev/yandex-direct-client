@@ -1,68 +1,81 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Gladyshev\Yandex\Direct;
 
+use Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException;
+use Gladyshev\Yandex\Direct\Service\AdExtensions;
+use Gladyshev\Yandex\Direct\Service\AdGroups;
+use Gladyshev\Yandex\Direct\Service\AdImages;
+use Gladyshev\Yandex\Direct\Service\Ads;
+use Gladyshev\Yandex\Direct\Service\AgencyClients;
+use Gladyshev\Yandex\Direct\Service\AudienceTargets;
+use Gladyshev\Yandex\Direct\Service\BidModifiers;
+use Gladyshev\Yandex\Direct\Service\Bids;
+use Gladyshev\Yandex\Direct\Service\Campaigns;
+use Gladyshev\Yandex\Direct\Service\Changes;
+use Gladyshev\Yandex\Direct\Service\Clients;
+use Gladyshev\Yandex\Direct\Service\Dictionaries;
+use Gladyshev\Yandex\Direct\Service\DynamicTextAdTargets;
+use Gladyshev\Yandex\Direct\Service\KeywordBids;
+use Gladyshev\Yandex\Direct\Service\Keywords;
+use Gladyshev\Yandex\Direct\Service\KeywordsResearch;
+use Gladyshev\Yandex\Direct\Service\Reports;
+use Gladyshev\Yandex\Direct\Service\RetargetingLists;
+use Gladyshev\Yandex\Direct\Service\Sitelinks;
+use Gladyshev\Yandex\Direct\Service\TurboPages;
+use Gladyshev\Yandex\Direct\Service\VCards;
+use Psr\Http\Client\ClientInterface;
+
 /**
- * Yandex.Direct v5 API client implementation
- *
- * @property \Gladyshev\Yandex\Direct\Service\AdExtensions $adExtensions
- * @property \Gladyshev\Yandex\Direct\Service\AdGroups $adGroups
- * @property \Gladyshev\Yandex\Direct\Service\AdImages $adImages
- * @property \Gladyshev\Yandex\Direct\Service\Ads $ads
- * @property \Gladyshev\Yandex\Direct\Service\AgencyClients $agencyClients
- * @property \Gladyshev\Yandex\Direct\Service\AudienceTargets $audienceTargets
- * @property \Gladyshev\Yandex\Direct\Service\BidModifiers $bidModifiers
- * @property \Gladyshev\Yandex\Direct\Service\Bids $bids
- * @property \Gladyshev\Yandex\Direct\Service\Campaigns $campaigns
- * @property \Gladyshev\Yandex\Direct\Service\Changes $changes
- * @property \Gladyshev\Yandex\Direct\Service\Clients $clients
- * @property \Gladyshev\Yandex\Direct\Service\Dictionaries $dictionaries
- * @property \Gladyshev\Yandex\Direct\Service\DynamicTextAdTargets $dynamicTextAdTargets
- * @property \Gladyshev\Yandex\Direct\Service\KeywordBids $keywordBids
- * @property \Gladyshev\Yandex\Direct\Service\Keywords $keywords
- * @property \Gladyshev\Yandex\Direct\Service\KeywordsResearch $keywordsResearch
- * @property \Gladyshev\Yandex\Direct\Service\Reports $reports
- * @property \Gladyshev\Yandex\Direct\Service\RetargetingLists $retargetingLists
- * @property \Gladyshev\Yandex\Direct\Service\Sitelinks $sitelinks
- * @property \Gladyshev\Yandex\Direct\Service\TurboPages $turboPages
- * @property \Gladyshev\Yandex\Direct\Service\VCards $vCards
+ * @property AdExtensions $adExtensions
+ * @property AdGroups $adGroups
+ * @property AdImages $adImages
+ * @property Ads $ads
+ * @property AgencyClients $agencyClients
+ * @property AudienceTargets $audienceTargets
+ * @property BidModifiers $bidModifiers
+ * @property Bids $bids
+ * @property Campaigns $campaigns
+ * @property Changes $changes
+ * @property Clients $clients
+ * @property Dictionaries $dictionaries
+ * @property DynamicTextAdTargets $dynamicTextAdTargets
+ * @property KeywordBids $keywordBids
+ * @property Keywords $keywords
+ * @property KeywordsResearch $keywordsResearch
+ * @property Reports $reports
+ * @property RetargetingLists $retargetingLists
+ * @property Sitelinks $sitelinks
+ * @property TurboPages $turboPages
+ * @property VCards $vCards
  */
 class Client implements ServiceFactoryInterface
 {
     private const SERVICE_NAMESPACE = __NAMESPACE__ . '\\Service\\';
 
     /**
-     * @var \Gladyshev\Yandex\Direct\ServiceInterface[]
+     * @var ServiceInterface[]
      */
-    private $services = [];
+    private array $services = [];
 
-    /**
-     * @var \Gladyshev\Yandex\Direct\CredentialsInterface
-     */
-    private $credentials;
-
-    /**
-     * @var \Psr\Http\Client\ClientInterface
-     */
-    private $httpClient;
+    private CredentialsInterface $credentials;
+    private ClientInterface $httpClient;
 
     public function __construct(
         CredentialsInterface $credentials,
-        \Psr\Http\Client\ClientInterface $httpClient
+        ClientInterface $httpClient
     ) {
         $this->credentials = $credentials;
         $this->httpClient = $httpClient;
     }
 
-    public function createService(string $serviceName): \Gladyshev\Yandex\Direct\ServiceInterface
+    public function createService(string $serviceName): ServiceInterface
     {
         if (!isset($this->services[$serviceName])) {
             $className = self::SERVICE_NAMESPACE . ucfirst($serviceName);
 
             if (!class_exists($className)) {
-                throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+                throw new ServiceNotFoundException(
                     $serviceName,
                     "Class '{$className}' is not found."
                 );
@@ -70,8 +83,8 @@ class Client implements ServiceFactoryInterface
 
             $classInstance = new $className($serviceName, $this->credentials, $this->httpClient);
 
-            if (!$classInstance instanceof \Gladyshev\Yandex\Direct\ServiceInterface) {
-                throw new \Gladyshev\Yandex\Direct\Exception\ServiceNotFoundException(
+            if (!$classInstance instanceof ServiceInterface) {
+                throw new ServiceNotFoundException(
                     $serviceName,
                     "Class '{$className}' must be an instance of '\Gladyshev\Yandex\Direct\ServiceInterface'."
                 );
@@ -83,7 +96,7 @@ class Client implements ServiceFactoryInterface
         return $this->services[$serviceName];
     }
 
-    public function __get(string $serviceName): \Gladyshev\Yandex\Direct\ServiceInterface
+    public function __get(string $serviceName): ServiceInterface
     {
         return $this->createService($serviceName);
     }
