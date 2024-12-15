@@ -4,3 +4,4 @@ build/
 runtime/
 cache/
 composer.lock
+.phpunit.result.cache
