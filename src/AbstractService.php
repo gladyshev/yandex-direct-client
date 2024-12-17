@@ -88,7 +88,7 @@ abstract class AbstractService implements ServiceInterface
         RequestInterface $request,
         ResponseInterface $response
     ): array {
-        $contents = $response->getBody()->getContents();
+        $contents = $response->getBody()->__toString();
         $parsedBody = json_decode($contents, true);
 
         if (!is_array($parsedBody)) {
