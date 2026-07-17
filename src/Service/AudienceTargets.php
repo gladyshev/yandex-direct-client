@@ -19,7 +19,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/add-docpage/
      */
-    public function add($AudienceTargets)
+    public function add(mixed $AudienceTargets)
     {
         return $this->call([
             'method' => 'add',
@@ -38,7 +38,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -60,7 +60,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -79,7 +79,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/resume-docpage/
      */
-    public function resume($SelectionCriteria)
+    public function resume(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'resume',
@@ -98,7 +98,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/setBids-docpage/
      */
-    public function setBids($Bids)
+    public function setBids(mixed $Bids)
     {
         return $this->call([
             'method' => 'setBids',
@@ -117,7 +117,7 @@ final class AudienceTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/audiencetargets/suspend-docpage/
      */
-    public function suspend($SelectionCriteria)
+    public function suspend(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'suspend',

@@ -22,7 +22,7 @@ final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/add-docpage/
      */
-    public function add($AdGroups)
+    public function add(mixed $AdGroups)
     {
         return $this->call([
             'method' => 'add',
@@ -41,7 +41,7 @@ final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -56,11 +56,11 @@ final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $MobileAppAdGroupFieldNames
-     * @param array $DynamicTextAdGroupFieldNames
-     * @param array $DynamicTextFeedAdGroupFieldNames
-     * @param array $SmartAdGroupFieldNames
-     * @param array $Page
+     * @param array|null $MobileAppAdGroupFieldNames
+     * @param array|null $DynamicTextAdGroupFieldNames
+     * @param array|null $DynamicTextFeedAdGroupFieldNames
+     * @param array|null $SmartAdGroupFieldNames
+     * @param array|null $Page
      *
      * @return array
      *
@@ -71,13 +71,13 @@ final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/delete-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $MobileAppAdGroupFieldNames = null,
-        $DynamicTextAdGroupFieldNames = null,
-        $DynamicTextFeedAdGroupFieldNames = null,
-        $SmartAdGroupFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $MobileAppAdGroupFieldNames = null,
+        mixed $DynamicTextAdGroupFieldNames = null,
+        mixed $DynamicTextFeedAdGroupFieldNames = null,
+        mixed $SmartAdGroupFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -96,7 +96,7 @@ final class AdGroups extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adgroups/update-docpage/
      */
-    public function update($AdGroups)
+    public function update(mixed $AdGroups)
     {
         return $this->call([
             'method' => 'update',

@@ -22,9 +22,9 @@ final class KeywordBids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $SearchFieldNames
-     * @param array $NetworkFieldNames
-     * @param array $Page
+     * @param array|null $SearchFieldNames
+     * @param array|null $NetworkFieldNames
+     * @param array|null $Page
      * @return array
      * @throws \Throwable
      * @throws \ReflectionException
@@ -32,11 +32,11 @@ final class KeywordBids extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $SearchFieldNames = null,
-        $NetworkFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $SearchFieldNames = null,
+        mixed $NetworkFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -55,7 +55,7 @@ final class KeywordBids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/set-docpage/
      */
-    public function set($KeywordBids)
+    public function set(mixed $KeywordBids)
     {
         return $this->call([
             'method' => 'set',
@@ -75,7 +75,7 @@ final class KeywordBids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordbids/setAuto-docpage/
      */
-    public function setAuto($KeywordBids)
+    public function setAuto(mixed $KeywordBids)
     {
         return $this->call([
             'method' => 'setAuto',

@@ -19,7 +19,7 @@ final class Sitelinks extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/add-docpage/
      */
-    public function add($SitelinksSets)
+    public function add(mixed $SitelinksSets)
     {
         return $this->call([
             'method' => 'add',
@@ -38,7 +38,7 @@ final class Sitelinks extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -61,7 +61,7 @@ final class Sitelinks extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/sitelinks/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 

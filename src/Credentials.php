@@ -6,14 +6,6 @@ namespace Gladyshev\Yandex\Direct;
 
 final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
 {
-    private string $token;
-    private ?string $masterToken;
-    private ?string $clientLogin;
-    private ?bool $useOperatorUnits;
-    private bool $isAgency;
-    private string $language;
-    private string $baseUrl;
-
     /**
      * @param string $token                 # OAuth2 токен доступа
      * @param string|null $masterToken      # Токен для финансовых операций (не поддерживается API V5)
@@ -24,21 +16,14 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
      * @param string $baseUrl               # URL сервера API
      */
     public function __construct(
-        string $token,
-        ?string $masterToken,
-        ?string $clientLogin,
-        ?bool $useOperatorUnits,
-        bool $isAgency,
-        string $language,
-        string $baseUrl
+        private readonly string $token,
+        private readonly ?string $masterToken,
+        private readonly ?string $clientLogin,
+        private readonly ?bool $useOperatorUnits,
+        private readonly bool $isAgency,
+        private readonly string $language,
+        private readonly string $baseUrl
     ) {
-        $this->token = $token;
-        $this->masterToken = $masterToken;
-        $this->clientLogin = $clientLogin;
-        $this->useOperatorUnits = $useOperatorUnits;
-        $this->language = $language;
-        $this->baseUrl = $baseUrl;
-        $this->isAgency = $isAgency;
     }
 
     public static function agency(
@@ -109,36 +94,43 @@ final class Credentials implements \Gladyshev\Yandex\Direct\CredentialsInterface
         );
     }
 
+    #[\Override]
     public function getToken(): string
     {
         return $this->token;
     }
 
+    #[\Override]
     public function getMasterToken(): ?string
     {
         return $this->masterToken;
     }
 
+    #[\Override]
     public function getClientLogin(): ?string
     {
         return $this->clientLogin;
     }
 
+    #[\Override]
     public function getUseOperatorUnits(): ?bool
     {
         return $this->useOperatorUnits;
     }
 
+    #[\Override]
     public function getLanguage(): string
     {
         return $this->language;
     }
 
+    #[\Override]
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
 
+    #[\Override]
     public function isAgency(): bool
     {
         return $this->isAgency;

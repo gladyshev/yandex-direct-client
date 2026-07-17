@@ -19,7 +19,7 @@ final class AdImages extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/add-docpage/
      */
-    public function add($AdImages)
+    public function add(mixed $AdImages)
     {
         return $this->call([
             'method' => 'add',
@@ -38,7 +38,7 @@ final class AdImages extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -60,7 +60,7 @@ final class AdImages extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/adimages/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 

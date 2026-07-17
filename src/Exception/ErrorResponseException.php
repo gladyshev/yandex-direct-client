@@ -6,81 +6,72 @@ namespace Gladyshev\Yandex\Direct\Exception;
 
 class ErrorResponseException extends \RuntimeException
 {
-    /**
-     * @var string
-     */
-    protected $detail;
-
-    /**
-     * @var \Psr\Http\Message\RequestInterface
-     */
-    protected $request;
-
-    /**
-     * @var \Psr\Http\Message\ResponseInterface
-     */
-    protected $response;
-
-    /**
-     * @var array
-     */
-    protected $error = [];
-
     public function __construct(
         string $message,
-        string $detail,
+        protected readonly string $detail,
         int $code,
-        \Psr\Http\Message\RequestInterface $request,
-        \Psr\Http\Message\ResponseInterface $response,
-        \Throwable $previous = null
+        protected readonly \Psr\Http\Message\RequestInterface $request,
+        protected readonly \Psr\Http\Message\ResponseInterface $response,
+        ?\Throwable $previous = null
     ) {
-        $this->detail = $detail;
-        $this->request = $request;
-        $this->response = $response;
-
-        parent::__construct(
-            $message,
-            $code,
-            $previous
-        );
+        parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return \Psr\Http\Message\RequestInterface
-     */
     public function getRequest(): \Psr\Http\Message\RequestInterface
     {
         return $this->request;
     }
 
-    /**
-     * @return \Psr\Http\Message\ResponseInterface
-     */
     public function getResponse(): \Psr\Http\Message\ResponseInterface
     {
         return $this->response;
     }
 
-    /**
-     * @return string
-     */
     public function getDetail(): string
     {
         return $this->detail;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         $str = 'Exception ' . __CLASS__ . " code {$this->code} with message '{$this->message}' in `{$this->file}`" . PHP_EOL;
         $str .= 'Details: ' . $this->detail . PHP_EOL;
         $str .= 'Stack trace:' . PHP_EOL . $this->getTraceAsString() . PHP_EOL;
         $str .= 'Request-Response:' . PHP_EOL;
-        $str .= '>>>' . \GuzzleHttp\Psr7\Message::toString($this->getRequest()) . PHP_EOL;
-        $str .= '<<<' . \GuzzleHttp\Psr7\Message::toString($this->getResponse()) . PHP_EOL;
+        $str .= '>>>' . $this->messageToString($this->getRequest()) . PHP_EOL;
+        $str .= '<<<' . $this->messageToString($this->getResponse()) . PHP_EOL;
 
         return $str;
+    }
+
+    private function messageToString(\Psr\Http\Message\MessageInterface $message): string
+    {
+        $str = match (true) {
+            $message instanceof \Psr\Http\Message\RequestInterface => $this->requestStartLine($message),
+            $message instanceof \Psr\Http\Message\ResponseInterface => $this->responseStartLine($message),
+            default => throw new \InvalidArgumentException('Unknown message type.'),
+        };
+
+        foreach ($message->getHeaders() as $name => $values) {
+            $str .= "\r\n" . $name . ': ' . implode(', ', $values);
+        }
+
+        return $str . "\r\n\r\n" . $message->getBody();
+    }
+
+    private function requestStartLine(\Psr\Http\Message\RequestInterface $request): string
+    {
+        $str = "{$request->getMethod()} {$request->getRequestTarget()} HTTP/{$request->getProtocolVersion()}";
+
+        if (!$request->hasHeader('host')) {
+            $str .= "\r\nHost: " . $request->getUri()->getHost();
+        }
+
+        return $str;
+    }
+
+    private function responseStartLine(\Psr\Http\Message\ResponseInterface $response): string
+    {
+        return "HTTP/{$response->getProtocolVersion()} {$response->getStatusCode()} {$response->getReasonPhrase()}";
     }
 }

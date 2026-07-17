@@ -8,7 +8,7 @@ use function Gladyshev\Yandex\Direct\get_param_names;
 
 final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
 {
-    private $headers = [];
+    private array $headers = [];
 
     /**
      * Спецификация отчета.
@@ -33,17 +33,17 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/reports/spec-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $ReportName,
-        $ReportType,
-        $DateRangeType,
-        $Page = null,
-        $OrderBy = null,
-        $IncludeVAT = 'YES',
-        $IncludeDiscount = 'YES',
-        $Format = 'TSV',
-        $Goals = []
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $ReportName,
+        mixed $ReportType,
+        mixed $DateRangeType,
+        mixed $Page = null,
+        mixed $OrderBy = null,
+        mixed $IncludeVAT = 'YES',
+        mixed $IncludeDiscount = 'YES',
+        mixed $Format = 'TSV',
+        mixed $Goals = []
     ): array {
         $params = compact(get_param_names(__METHOD__));
 
@@ -60,7 +60,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setProcessingMode($processingMode): self
+    public function setProcessingMode(mixed $processingMode): self
     {
         $this->headers['processingMode'] = $processingMode;
 
@@ -76,7 +76,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setReturnMoneyInMicros($returnMoneyInMicros = true): self
+    public function setReturnMoneyInMicros(mixed $returnMoneyInMicros = true): self
     {
         if (is_numeric($returnMoneyInMicros) || is_bool($returnMoneyInMicros)) {
             $returnMoneyInMicros = $returnMoneyInMicros ? 'true' : 'false';
@@ -93,7 +93,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipReportHeader($skipReportHeader = true): self
+    public function setSkipReportHeader(mixed $skipReportHeader = true): self
     {
         if (is_numeric($skipReportHeader) || is_bool($skipReportHeader)) {
             $skipReportHeader = $skipReportHeader ? 'true' : 'false';
@@ -110,7 +110,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipColumnHeader($skipColumnHeader = true): self
+    public function setSkipColumnHeader(mixed $skipColumnHeader = true): self
     {
         if (is_numeric($skipColumnHeader) || is_bool($skipColumnHeader)) {
             $skipColumnHeader = $skipColumnHeader ? 'true' : 'false';
@@ -127,7 +127,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
      * @return $this
      * @see https://tech.yandex.ru/direct/doc/reports/headers-docpage/
      */
-    public function setSkipReportSummary($skipReportSummary = true): self
+    public function setSkipReportSummary(mixed $skipReportSummary = true): self
     {
         if (is_numeric($skipReportSummary) || is_bool($skipReportSummary)) {
             $skipReportSummary = $skipReportSummary ? 'true' : 'false';
@@ -137,6 +137,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
         return $this;
     }
 
+    #[\Override]
     protected function handleResponse(
         \Psr\Http\Message\RequestInterface $request,
         \Psr\Http\Message\ResponseInterface $response
@@ -168,9 +169,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
             'request_id' => current($response->getHeader('RequestId'))
         ];
 
-        if ($response->getStatusCode() == 201
-            || $response->getStatusCode() == 202
-        ) {
+        if (in_array($response->getStatusCode(), [201, 202], true)) {
             $result['retryIn'] = current($response->getHeader('retryIn'));
             $result['reportsInQueue'] = current($response->getHeader('reportsInQueue'));
 
@@ -182,6 +181,7 @@ final class Reports extends \Gladyshev\Yandex\Direct\AbstractService
         return $result;
     }
 
+    #[\Override]
     protected function getHeaders(): array
     {
         return $this->headers + parent::getHeaders();

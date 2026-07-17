@@ -17,12 +17,11 @@ final class NegativeKeywordSharedSets extends \Gladyshev\Yandex\Direct\AbstractS
      * @param $NegativeKeywordSharedSets
      * @return array|\DOMDocument
      *
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \Yandex\Direct\Exception\Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/negativekeywordsharedsets/add-docpage/
      */
-    public function add($NegativeKeywordSharedSets)
+    public function add(mixed $NegativeKeywordSharedSets)
     {
         return $this->call([
             'method' => 'add',
@@ -38,12 +37,11 @@ final class NegativeKeywordSharedSets extends \Gladyshev\Yandex\Direct\AbstractS
      * @param $NegativeKeywordSharedSets
      * @return array|\DOMDocument
      *
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \Yandex\Direct\Exception\Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/negativekeywordsharedsets/update-docpage/
      */
-    public function update($NegativeKeywordSharedSets)
+    public function update(mixed $NegativeKeywordSharedSets)
     {
         return $this->call([
             'method' => 'update',
@@ -62,12 +60,11 @@ final class NegativeKeywordSharedSets extends \Gladyshev\Yandex\Direct\AbstractS
      * @return array|\DOMDocument
      *
      * @throws \ReflectionException
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \Yandex\Direct\Exception\Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/negativekeywordsharedsets/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -83,12 +80,11 @@ final class NegativeKeywordSharedSets extends \Gladyshev\Yandex\Direct\AbstractS
      * @param $SelectionCriteria
      * @return array|\DOMDocument
      *
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \Yandex\Direct\Exception\Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/negativekeywordsharedsets/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',

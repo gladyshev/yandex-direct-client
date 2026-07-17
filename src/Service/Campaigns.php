@@ -22,7 +22,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-dynamic-text-campaign-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/add-mobile-app-campaign-docpage/
      */
-    public function add($Campaigns)
+    public function add(mixed $Campaigns)
     {
         return $this->call([
             'method' => 'add',
@@ -39,7 +39,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/archive-docpage/
      */
-    public function archive($SelectionCriteria)
+    public function archive(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'archive',
@@ -56,7 +56,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -69,26 +69,26 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
     /**
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $TextCampaignFieldNames
-     * @param array $MobileAppCampaignFieldNames
-     * @param array $DynamicTextCampaignFieldNames
-     * @param array $CpmBannerCampaignFieldNames
-     * @param array $SmartCampaignFieldNames
-     * @param array $Page
+     * @param array|null $TextCampaignFieldNames
+     * @param array|null $MobileAppCampaignFieldNames
+     * @param array|null $DynamicTextCampaignFieldNames
+     * @param array|null $CpmBannerCampaignFieldNames
+     * @param array|null $SmartCampaignFieldNames
+     * @param array|null $Page
      * @return array
      * @throws \Throwable
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $TextCampaignFieldNames = null,
-        $MobileAppCampaignFieldNames = null,
-        $DynamicTextCampaignFieldNames = null,
-        $CpmBannerCampaignFieldNames = null,
-        $SmartCampaignFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $TextCampaignFieldNames = null,
+        mixed $MobileAppCampaignFieldNames = null,
+        mixed $DynamicTextCampaignFieldNames = null,
+        mixed $CpmBannerCampaignFieldNames = null,
+        mixed $SmartCampaignFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -105,7 +105,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/resume-docpage/
      */
-    public function resume($SelectionCriteria)
+    public function resume(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'resume',
@@ -122,7 +122,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/suspend-docpage/
      */
-    public function suspend($SelectionCriteria)
+    public function suspend(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'suspend',
@@ -139,7 +139,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/unarchive-docpage/
      */
-    public function unarchive($SelectionCriteria)
+    public function unarchive(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'unarchive',
@@ -159,7 +159,7 @@ final class Campaigns extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-dynamic-text-campaign-docpage/
      * @see https://tech.yandex.ru/direct/doc/ref-v5/campaigns/update-mobile-app-campaign-docpage/
      */
-    public function update($Campaigns)
+    public function update(mixed $Campaigns)
     {
         return $this->call([
             'method' => 'update',

@@ -21,7 +21,7 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/add-docpage/
      */
-    public function add($BidModifiers)
+    public function add(mixed $BidModifiers)
     {
         return $this->call([
             'method' => 'add',
@@ -40,7 +40,7 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -55,13 +55,13 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $MobileAdjustmentFieldNames
-     * @param array $DemographicsAdjustmentFieldNames
-     * @param array $RetargetingAdjustmentFieldNames
-     * @param array $RegionalAdjustmentFieldNames
-     * @param array $VideoAdjustmentFieldNames
-     * @param array $SmartAdAdjustmentFieldNames
-     * @param array $Page
+     * @param array|null $MobileAdjustmentFieldNames
+     * @param array|null $DemographicsAdjustmentFieldNames
+     * @param array|null $RetargetingAdjustmentFieldNames
+     * @param array|null $RegionalAdjustmentFieldNames
+     * @param array|null $VideoAdjustmentFieldNames
+     * @param array|null $SmartAdAdjustmentFieldNames
+     * @param array|null $Page
      *
      * @return array
      *
@@ -72,15 +72,15 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $MobileAdjustmentFieldNames = null,
-        $DemographicsAdjustmentFieldNames = null,
-        $RetargetingAdjustmentFieldNames = null,
-        $RegionalAdjustmentFieldNames = null,
-        $VideoAdjustmentFieldNames = null,
-        $SmartAdAdjustmentFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $MobileAdjustmentFieldNames = null,
+        mixed $DemographicsAdjustmentFieldNames = null,
+        mixed $RetargetingAdjustmentFieldNames = null,
+        mixed $RegionalAdjustmentFieldNames = null,
+        mixed $VideoAdjustmentFieldNames = null,
+        mixed $SmartAdAdjustmentFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -99,7 +99,7 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/set-docpage/
      */
-    public function setAuto($BidModifiers)
+    public function setAuto(mixed $BidModifiers)
     {
         return $this->call([
             'method' => 'setAuto',
@@ -118,7 +118,7 @@ final class BidModifiers extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bidmodifiers/toggle-docpage/
      */
-    public function toggle($BidModifierToggleItems)
+    public function toggle(mixed $BidModifierToggleItems)
     {
         return $this->call([
             'method' => 'toggle',

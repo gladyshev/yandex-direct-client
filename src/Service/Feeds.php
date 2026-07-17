@@ -29,7 +29,7 @@ final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/add-docpage/
      */
-    public function add($Feeds)
+    public function add(mixed $Feeds)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -52,7 +52,7 @@ final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -67,9 +67,9 @@ final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $FileFeedFieldNames
-     * @param array $UrlFeedFieldNames
-     * @param array $Page
+     * @param array|null $FileFeedFieldNames
+     * @param array|null $UrlFeedFieldNames
+     * @param array|null $Page
      *
      * @return array
      *
@@ -80,11 +80,11 @@ final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $FileFeedFieldNames = null,
-        $UrlFeedFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $FileFeedFieldNames = null,
+        mixed $UrlFeedFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -107,7 +107,7 @@ final class Feeds extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/feeds/update-docpage/
      */
-    public function update($Feeds)
+    public function update(mixed $Feeds)
     {
         $params = compact(get_param_names(__METHOD__));
 

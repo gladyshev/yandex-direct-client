@@ -16,20 +16,19 @@ final class Businesses extends \Gladyshev\Yandex\Direct\AbstractService
     /**
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $Page
+     * @param array|null $Page
      *
      * @return array|\DOMDocument
      *
      * @throws \ReflectionException
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
-     * @throws \Yandex\Direct\Exception\Exception
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/businesses/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 

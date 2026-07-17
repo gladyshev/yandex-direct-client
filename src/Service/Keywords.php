@@ -19,7 +19,7 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/add-docpage/
      */
-    public function add($Keywords)
+    public function add(mixed $Keywords)
     {
         return $this->call([
             'method' => 'add',
@@ -38,7 +38,7 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -54,14 +54,14 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $Page
+     * @param array|null $Page
      * @return array
      * @throws \Throwable
      * @throws \ReflectionException
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -79,7 +79,7 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      * @throws \Throwable
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/resume-docpage/
      */
-    public function resume($SelectionCriteria)
+    public function resume(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'resume',
@@ -98,7 +98,7 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/suspend-docpage/
      */
-    public function suspend($SelectionCriteria)
+    public function suspend(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'suspend',
@@ -117,7 +117,7 @@ final class Keywords extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywords/update-docpage/
      */
-    public function update($Keywords)
+    public function update(mixed $Keywords)
     {
         return $this->call([
             'method' => 'update',

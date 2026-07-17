@@ -3,36 +3,34 @@
 namespace Gladyshev\Yandex\Direct;
 
 use Gladyshev\Yandex\Direct\Exception\ErrorResponseException;
-use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use StdClass;
 
 abstract class AbstractService implements ServiceInterface
 {
-    private string $serviceName;
-    private CredentialsInterface $credentials;
-    private ClientInterface $httpClient;
-
     public function __construct(
-        string $serviceName,
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient
+        private readonly string $serviceName,
+        private readonly CredentialsInterface $credentials,
+        private readonly ClientInterface $httpClient,
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory
     ) {
-        $this->serviceName = $serviceName;
-        $this->credentials = $credentials;
-        $this->httpClient = $httpClient;
     }
 
+    #[\Override]
     public function call(array $params = []): array
     {
-        $request = new Request(
-            'POST',
-            $this->getUri(),
-            $this->getHeaders(),
-            $this->getBody($params)
-        );
+        $request = $this->requestFactory
+            ->createRequest('POST', $this->getUri())
+            ->withBody($this->streamFactory->createStream($this->getBody($params)));
+
+        foreach ($this->getHeaders() as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
 
         $response = $this->httpClient->sendRequest($request);
 
@@ -73,7 +71,10 @@ abstract class AbstractService implements ServiceInterface
         return $headers;
     }
 
-    protected function getBody(array $params): string
+    /**
+     * @return false|string
+     */
+    protected function getBody(array $params): string|false
     {
         if (empty($params['params'])) {
             $params = new StdClass();

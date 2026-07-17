@@ -6,16 +6,13 @@ namespace Gladyshev\Yandex\Direct\Exception;
 
 class ServiceNotFoundException extends \InvalidArgumentException
 {
-    protected $serviceName;
-
     public function __construct(
-        string $serviceName,
+        protected readonly string $serviceName,
         string $message = '',
         int $code = 0,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
-        $this->serviceName = $serviceName;
     }
 
     public function getServiceName(): string

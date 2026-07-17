@@ -21,7 +21,7 @@ final class Leads extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $Page
+     * @param array|null $Page
      * @return array
      *
      * @throws \Throwable
@@ -29,7 +29,7 @@ final class Leads extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/leads/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = $params = compact(get_param_names(__METHOD__));
 

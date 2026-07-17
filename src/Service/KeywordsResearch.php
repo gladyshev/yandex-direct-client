@@ -15,7 +15,7 @@ final class KeywordsResearch extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/keywordsresearch/hasSearchVolume-docpage/
      */
-    public function hasSearchVolume($SelectionCriteria, $FieldNames)
+    public function hasSearchVolume(mixed $SelectionCriteria, mixed $FieldNames)
     {
         return $this->call([
             'method' => 'hasSearchVolume',
@@ -34,11 +34,11 @@ final class KeywordsResearch extends \Gladyshev\Yandex\Direct\AbstractService
      * @return array|\DOMDocument
      *
      * @throws \Throwable
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/keywordsresearch/deduplicate-docpage/
      */
-    public function deduplicate($Keywords, $Operation = null)
+    public function deduplicate(mixed $Keywords, mixed $Operation = null)
     {
         return $this->call([
             'method' => 'hasSearchVolume',

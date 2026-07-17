@@ -25,6 +25,8 @@ use Gladyshev\Yandex\Direct\Service\Sitelinks;
 use Gladyshev\Yandex\Direct\Service\TurboPages;
 use Gladyshev\Yandex\Direct\Service\VCards;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 /**
  * @property AdExtensions $adExtensions
@@ -58,17 +60,15 @@ class Client implements ServiceFactoryInterface
      */
     private array $services = [];
 
-    private CredentialsInterface $credentials;
-    private ClientInterface $httpClient;
-
     public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient
+        private readonly CredentialsInterface $credentials,
+        private readonly ClientInterface $httpClient,
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory
     ) {
-        $this->credentials = $credentials;
-        $this->httpClient = $httpClient;
     }
 
+    #[\Override]
     public function createService(string $serviceName): ServiceInterface
     {
         if (!isset($this->services[$serviceName])) {
@@ -81,7 +81,13 @@ class Client implements ServiceFactoryInterface
                 );
             }
 
-            $classInstance = new $className($serviceName, $this->credentials, $this->httpClient);
+            $classInstance = new $className(
+                $serviceName,
+                $this->credentials,
+                $this->httpClient,
+                $this->requestFactory,
+                $this->streamFactory
+            );
 
             if (!$classInstance instanceof ServiceInterface) {
                 throw new ServiceNotFoundException(

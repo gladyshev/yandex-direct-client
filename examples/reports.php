@@ -7,8 +7,9 @@ $credentials = \Gladyshev\Yandex\Direct\Credentials::clientSandbox(
 );
 
 $httpClient = new \GuzzleHttp\Client;
+$httpFactory = new \GuzzleHttp\Psr7\HttpFactory;
 
-$client = new \Gladyshev\Yandex\Direct\Client($credentials, $httpClient);
+$client = new \Gladyshev\Yandex\Direct\Client($credentials, $httpClient, $httpFactory, $httpFactory);
 
 $report = $client->reports->get(
     /* SelectionCriteria */

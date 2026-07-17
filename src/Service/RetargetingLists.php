@@ -20,7 +20,7 @@ final class RetargetingLists extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/add-docpage/
 
      */
-    public function add($RetargetingLists)
+    public function add(mixed $RetargetingLists)
     {
         return $this->call([
             'method' => 'get',
@@ -39,7 +39,7 @@ final class RetargetingLists extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -61,7 +61,7 @@ final class RetargetingLists extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -80,7 +80,7 @@ final class RetargetingLists extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/retargetinglists/update-docpage/
      */
-    public function update($RetargetingLists)
+    public function update(mixed $RetargetingLists)
     {
         return $this->call([
             'method' => 'update',

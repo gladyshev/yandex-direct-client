@@ -20,11 +20,11 @@ final class Creatives extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $VideoExtensionCreativeFieldNames
-     * @param array $CpcVideoCreativeFieldNames
-     * @param array $CpmVideoCreativeFieldNames
-     * @param array $SmartCreativeFieldNames
-     * @param array $Page
+     * @param array|null $VideoExtensionCreativeFieldNames
+     * @param array|null $CpcVideoCreativeFieldNames
+     * @param array|null $CpmVideoCreativeFieldNames
+     * @param array|null $SmartCreativeFieldNames
+     * @param array|null $Page
      * @return array|DOMDocument
      *
      * @throws ErrorResponseException
@@ -34,13 +34,13 @@ final class Creatives extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://yandex.ru/dev/direct/doc/ref-v5/creatives/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $VideoExtensionCreativeFieldNames = null,
-        $CpcVideoCreativeFieldNames = null,
-        $CpmVideoCreativeFieldNames = null,
-        $SmartCreativeFieldNames = null,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $VideoExtensionCreativeFieldNames = null,
+        mixed $CpcVideoCreativeFieldNames = null,
+        mixed $CpmVideoCreativeFieldNames = null,
+        mixed $SmartCreativeFieldNames = null,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 

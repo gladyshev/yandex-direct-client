@@ -30,7 +30,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/add-docpage/
      */
-    public function add($SmartAdTargets)
+    public function add(mixed $SmartAdTargets)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -53,7 +53,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -68,7 +68,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @param array $SelectionCriteria
      * @param array $FieldNames
-     * @param array $Page
+     * @param array|null $Page
      *
      * @return array
      *
@@ -79,9 +79,9 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/get-docpage/
      */
     public function get(
-        $SelectionCriteria,
-        $FieldNames,
-        $Page = null
+        mixed $SelectionCriteria,
+        mixed $FieldNames,
+        mixed $Page = null
     ) {
         $params = compact(get_param_names(__METHOD__));
 
@@ -104,7 +104,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/resume-docpage/
      */
-    public function resume($SelectionCriteria)
+    public function resume(mixed $SelectionCriteria)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -127,7 +127,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/setBids-docpage/
      */
-    public function setBids($Bids)
+    public function setBids(mixed $Bids)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -150,7 +150,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/suspend-docpage/
      */
-    public function suspend($SelectionCriteria)
+    public function suspend(mixed $SelectionCriteria)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -173,7 +173,7 @@ final class SmartAdTargets extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/smartadtargets/update-docpage/
      */
-    public function update($SmartAdTargets)
+    public function update(mixed $SmartAdTargets)
     {
         $params = compact(get_param_names(__METHOD__));
 

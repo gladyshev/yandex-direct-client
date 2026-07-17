@@ -19,7 +19,7 @@ final class Bids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/set-docpage/
      */
-    public function set($Bids)
+    public function set(mixed $Bids)
     {
         return $this->call([
             'method' => 'set',
@@ -38,7 +38,7 @@ final class Bids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/setAuto-docpage/
      */
-    public function setAuto($Bids)
+    public function setAuto(mixed $Bids)
     {
         return $this->call([
             'method' => 'setAuto',
@@ -62,7 +62,7 @@ final class Bids extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/bids/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 

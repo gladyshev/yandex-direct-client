@@ -18,7 +18,7 @@ final class Dictionaries extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dictionaries/get-docpage/
      */
-    public function get($DictionaryNames)
+    public function get(mixed $DictionaryNames)
     {
         return $this->call([
             'method' => 'get',

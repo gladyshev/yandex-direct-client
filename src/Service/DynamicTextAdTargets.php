@@ -20,7 +20,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/add-docpage/
      */
-    public function add($Webpages)
+    public function add(mixed $Webpages)
     {
         return $this->call([
             'method' => 'add',
@@ -39,7 +39,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/delete-docpage/
      */
-    public function delete($SelectionCriteria)
+    public function delete(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'delete',
@@ -62,7 +62,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/get-docpage/
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -81,7 +81,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/resume-docpage/
      */
-    public function resume($SelectionCriteria)
+    public function resume(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'resume',
@@ -100,7 +100,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/setBids-docpage/
      */
-    public function setBids($Bids)
+    public function setBids(mixed $Bids)
     {
         return $this->call([
             'method' => 'setBids',
@@ -119,7 +119,7 @@ final class DynamicTextAdTargets extends \Gladyshev\Yandex\Direct\AbstractServic
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/dynamictextadtargets/suspend-docpage/
      */
-    public function suspend($SelectionCriteria)
+    public function suspend(mixed $SelectionCriteria)
     {
         return $this->call([
             'method' => 'suspend',

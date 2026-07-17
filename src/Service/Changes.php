@@ -23,7 +23,7 @@ final class Changes extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkDictionaries-docpage/
      */
-    public function checkDictionaries($Timestamp = null)
+    public function checkDictionaries(mixed $Timestamp = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -42,7 +42,7 @@ final class Changes extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/checkCampaigns-docpage/
      */
-    public function checkCampaigns($Timestamp)
+    public function checkCampaigns(mixed $Timestamp)
     {
         return $this->call([
             'method' => 'checkCampaigns',
@@ -66,7 +66,7 @@ final class Changes extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/changes/check-docpage/
      */
-    public function check($Timestamp, $FieldNames, $CampaignIds = null, $AdGroupIds = null, $AdIds = null)
+    public function check(mixed $Timestamp, mixed $FieldNames, mixed $CampaignIds = null, mixed $AdGroupIds = null, mixed $AdIds = null)
     {
         $params = compact(get_param_names(__METHOD__));
 

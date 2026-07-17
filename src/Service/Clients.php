@@ -17,7 +17,7 @@ final class Clients extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/clients/get-docpage/
      */
-    public function get($FieldNames)
+    public function get(mixed $FieldNames)
     {
         return $this->call([
             'method' => 'get',
@@ -34,11 +34,11 @@ final class Clients extends \Gladyshev\Yandex\Direct\AbstractService
      * @return array
      *
      * @throws \Throwable
-     * @throws \Yandex\Direct\Exception\ErrorResponseException
+     * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/clients/update-docpage/
      */
-    public function update($Clients)
+    public function update(mixed $Clients)
     {
         return $this->call([
             'method' => 'update',

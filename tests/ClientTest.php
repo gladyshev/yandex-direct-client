@@ -13,9 +13,13 @@ class ClientTest extends TestCase
 
     public function setUp(): void
     {
+        $httpFactory = new \GuzzleHttp\Psr7\HttpFactory;
+
         $this->client = new \Gladyshev\Yandex\Direct\Client(
             new \Gladyshev\Yandex\Direct\Tests\Mocks\Credentials,
-            new \GuzzleHttp\Client
+            new \GuzzleHttp\Client,
+            $httpFactory,
+            $httpFactory
         );
     }
 

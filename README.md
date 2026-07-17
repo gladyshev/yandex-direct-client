@@ -8,7 +8,7 @@ Yandex Direct API v5 PHP client
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/badges/quality-score.png?b=v4.x)](https://scrutinizer-ci.com/g/gladyshev/yandex-direct-client/?branch=v4.x)
 
 ## Требования
- * PHP 7.2 и выше
+ * PHP 8.4 и выше
 
 ## Установка  
 ```bash

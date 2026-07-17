@@ -20,7 +20,7 @@ final class AgencyClients extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/get-docpage
      */
-    public function get($SelectionCriteria, $FieldNames, $Page = null)
+    public function get(mixed $SelectionCriteria, mixed $FieldNames, mixed $Page = null)
     {
         return $this->call([
             'method' => 'get',
@@ -44,7 +44,7 @@ final class AgencyClients extends \Gladyshev\Yandex\Direct\AbstractService
      *
      * @see https://tech.yandex.ru/direct/doc/ref-v5/agencyclients/add-docpage/
      */
-    public function add($Login, $FirstName, $LastName, $Currency, $Notification, $Grants = null, $Settings = null)
+    public function add(mixed $Login, mixed $FirstName, mixed $LastName, mixed $Currency, mixed $Notification, mixed $Grants = null, mixed $Settings = null)
     {
         $params = compact(get_param_names(__METHOD__));
 
@@ -59,12 +59,14 @@ final class AgencyClients extends \Gladyshev\Yandex\Direct\AbstractService
      * главных представителей рекламодателя.
      *
      * @inheritDoc
+     *
      * @param $Clients
+     *
      * @throws \Throwable
      *
      * @see https://yandex.ru/dev/direct/doc/ref-v5/agencyclients/update-docpage/
      */
-    public function update($Clients)
+    public function update(mixed $Clients): array
     {
         return $this->call([
             'method' => 'update',
@@ -74,6 +76,7 @@ final class AgencyClients extends \Gladyshev\Yandex\Direct\AbstractService
         ]);
     }
 
+    #[\Override]
     protected function getHeaders(): array
     {
         $headers = parent::getHeaders();
